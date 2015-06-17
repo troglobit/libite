@@ -46,7 +46,7 @@ MAKEFLAGS   = --no-print-directory --silent
 
 DISTFILES   = README LICENSE
 HEADERS     = lite.h
-OBJS       := copyfile.o dir.o fexist.o fisdir.o fmode.o rsync.o
+OBJS       := chomp.o copyfile.o dir.o fexist.o fisdir.o fmode.o rsync.o
 OBJS       += strlcpy.o strlcat.o strtonum.o
 DEPS       := $(OBJS:.o=.d)
 JUNK        = *~ *.bak *.map .*.d *.d DEADJOE semantic.cache *.gdb *.elf core core.*

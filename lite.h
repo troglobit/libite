@@ -33,6 +33,8 @@
 #include <sys/param.h> /* MAX(), isset(), setbit(), TRUE, FALSE, et consortes. :-) */
 #include <unistd.h>
 
+char   *chomp      (char *str);
+
 int     fexist     (char *file);
 int     fisdir     (char *file);
 mode_t  fmode      (char *file);

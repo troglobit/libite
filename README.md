@@ -8,20 +8,19 @@ missing C library functions.
 Generic Functions
 -----------------
 
+- `chomp(str)`
+
+  Perl like chomp function, chop off last char if newline.
+
+- `copyfile(src, dst, len, symlink)`
+
+  Like the shell `cp(1)` and `dd(1),` can also create symlinks.
+
 - `dir(dir, ext, filter, list, strip)`
 
   Wrapper for `scandir()` with optional filter.  Returns a list of
   names: files and directories that must be freed after use.  See
   the unit test at the bottom for an example.
-
-- `rsync(src, dst, delete, *filter())`
-
-  Very simple `rsync()` to copy files files and directories
-  recursively.
-
-- `copyfile(src, dst, len, symlink)`
-
-  Like the shell `cp(1)` and `dd(1),` can also create symlinks.
 
 - `fexist(file)`
 
@@ -34,6 +33,11 @@ Generic Functions
 - `fmode(file)`
 
   Returns the `mode_t` bits of a file or directory.
+
+- `rsync(src, dst, delete, *filter())`
+
+  Very simple `rsync()` to copy files files and directories
+  recursively.
 
 
 OpenBSD Functions
@@ -50,7 +54,6 @@ TODO
 ----
 
 - Improve documentation, possibly use kdoc or gdoc2 to generate docs from API.
-- Add `chomp()` from Finit
 
 
 <!--
