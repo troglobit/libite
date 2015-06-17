@@ -1,6 +1,6 @@
 /* Perl inspired chomp() implementation.
  *
- * Copyright (c) 2014  Joachim Nilsson <troglobit@gmail.com>
+ * Copyright (c) 2014-2015  Joachim Nilsson <troglobit@gmail.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -19,34 +19,46 @@
 #include <string.h>
 
 /**
- * chomp - Perl like chomp function, chop off last char if newline.
+ * chomp - Perl like chomp function, chop off last char(s) if newline.
  * @str: String to chomp
+ *
+ * This function is like Perl chomp, but it's set to chop of all
+ * trailing newlines.
  *
  * Returns:
  * If @str is a valid pointer this function returns @str, otherwise
  * @errno is set to %EINVAL and this function returns %NULL.
  */
-char *chomp (char *str)
+char *chomp(char *str)
 {
-   char *p;
+	char *p;
 
-   if (!str)
-   {
-      errno = EINVAL;
-      return NULL;
-   }
+	if (!str || strlen(str) < 1) {
+		errno = EINVAL;
+		return NULL;
+	}
 
-   p = strrchr (str, '\n');
-   if (p)
-      *p = 0;
+	p = str + strlen(str) - 1;
+        while (*p == '\n')
+		*p-- = 0;
 
-   return str;
+	return str;
 }
+
+#ifdef UNITTEST
+#include <stdio.h>
+int main(void)
+{
+	int i; char t[][16] = { "hej\ndej", "Slime\n\n\\n", "Tripple\n\n\n", "" };
+	for (i = 0; t[i][0]; i++) printf("'%s'\n", chomp(t[i])); return 0;
+}
+#endif
 
 /**
  * Local Variables:
+ *  compile-command: "gcc -DUNITTEST -o chompy chomp.c && ./chompy"
  *  version-control: t
- *  indent-tabs-mode: nil
- *  c-file-style: "ellemtel"
+ *  indent-tabs-mode: t
+ *  c-file-style: "linux"
  * End:
  */
