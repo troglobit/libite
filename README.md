@@ -4,6 +4,41 @@
 Libite, or `-lite`, is a light-weight library of utility functions and
 missing C library functions.
 
+Helper Macros
+-------------
+
+- `blkdev(dev)`
+
+Create block device
+
+- `chardev(dev)`
+
+Create character device
+
+- `erase(path)`
+
+  Erase file/directory with `remove()`.  Errors on stderr
+
+- `makedir(path)`
+
+  Create directory, like `mkdir()`.  Errors on stderr
+
+- `makefifo(path)`
+
+  Create a FIFO, like `mkfifo()`.  Errors on stderr
+
+- `touch(path)`
+
+  Create a file, or update mtime.  Errors on stderr
+
+- `S_ISEXEC(mode_t m)`
+
+Mysteriously missing from GLIBC
+
+- `UNUSED(var)`
+
+Shorter and more readable version of `var __attribute__ ((unused))`
+
 
 Generic Functions
 -----------------
