@@ -1,5 +1,5 @@
-`-lite`: A compilation of missing C-lib functions
-=================================================
+`-lite`: The missing C-lib functions
+====================================
 
 Libite, or `-lite`, is a light-weight library of utility functions and
 missing C library functions.
