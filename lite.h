@@ -25,6 +25,7 @@
 #ifndef FINIT_LITE_H_
 #define FINIT_LITE_H_
 
+#include <error.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/stat.h>
@@ -53,6 +54,32 @@ size_t  strlcat    (char *dst, const char *src, size_t siz);
 #ifndef strtonum
 long long strtonum (const char *numstr, long long minval, long long maxval, const char **errstrp);
 #endif
+
+#ifndef touch
+# define touch(x) do { if (mknod((x), S_IFREG|0644, 0) && errno != EEXIST) error(0, errno, "Failed creating %s", x); } while (0)
+#endif
+#ifndef makedir
+# define makedir(x, p) do { if (mkdir(x, p) && errno != EEXIST) error(0, errno, "Failed creating directory %s", x); } while (0)
+#endif
+#ifndef makefifo
+# define makefifo(x, p) do { if (mkfifo(x, p) && errno != EEXIST) error(0, errno, "Failed creating FIFO %s", x); } while (0)
+#endif
+#ifndef erase
+# define erase(x) do { if (remove(x) && errno != ENOENT) error(0, errno, "Failed removing %s", x); } while (0)
+#endif
+#ifndef chardev
+# define chardev(x,m,maj,min) mknod((x), S_IFCHR|(m), makedev((maj),(min)))
+#endif
+#ifndef blkdev
+# define blkdev(x,m,maj,min) mknod((x), S_IFBLK|(m), makedev((maj),(min)))
+#endif
+#ifndef S_ISEXEC
+# define S_ISEXEC(m) (((m) & S_IXUSR) == S_IXUSR)
+#endif
+#ifndef UNUSED
+#define UNUSED(x) UNUSED_ ## x __attribute__ ((unused))
+#endif
+
 
 static inline int fisslashdir(char *dir)
 {
