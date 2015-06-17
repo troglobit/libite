@@ -25,7 +25,6 @@
 #include <sys/types.h>
 
 #include "lite.h"
-#include "../helpers.h"
 
 static int copy(char *src, char *dst);
 static int mdir(char *buf, size_t buf_len, char *dir, char *name, mode_t mode);
