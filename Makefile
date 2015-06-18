@@ -36,7 +36,7 @@ STRIP      ?= $(CROSS)strip
 INSTALL    := install --backup=off
 STRIPINST  := $(INSTALL) -s --strip-program=$(CROSS)strip -m 0755
 
-ifneq ($(STATIC), 1)
+ifndef STATIC
 CFLAGS     += -fPIC
 endif
 CFLAGS     += -Os
@@ -79,7 +79,7 @@ $(OBJS): Makefile
 
 $(SOLIB): Makefile $(OBJS)
 	@printf "  LINK    %s\n" $@
-	@$(CC) $(LDFLAGS) -shared -Wl,-soname,$@ -o $@ $(OBJS) -lrt -lcrypt
+	@$(CC) $(LDFLAGS) -shared -Wl,-soname,$@ -o $@ $(OBJS)
 
 $(STATICLIB): Makefile $(OBJS)
 	@printf "  ARCHIVE $@\n"
@@ -94,26 +94,30 @@ ifndef STATIC
 endif
 
 install-dev:
-	@install -d $(DESTDIR)$(incdir)
-	@for file in $(HEADERS); do	                                \
-		printf "  INSTALL $(DESTDIR)$(incdir)/$$file\n";	\
-		$(INSTALL) -m 0644 $$file $(DESTDIR)$(incdir)/$$file;	\
+	@install -d $(DESTDIR)$(incdir)/$(LIBNAME)
+	@for file in $(HEADERS); do	                                		\
+		printf "  INSTALL $(DESTDIR)$(incdir)/$(LIBNAME)/$$file\n";		\
+		$(INSTALL) -m 0644 $$file $(DESTDIR)$(incdir)/$(LIBNAME)/$$file;	\
 	done
 ifdef STATIC
 	@printf "  INSTALL $(DESTDIR)$(libdir)/$(STATICLIB)\n"
 	@install -d $(DESTDIR)$(libdir)
 	@$(INSTALL) $(STATICLIB) $(DESTDIR)$(libdir)/$(STATICLIB)
 endif
+	@install -d $(DESTDIR)$(datadir)
+	@for file in $(DISTFILES); do					\
+		printf "  INSTALL $(DESTDIR)$(datadir)/$$file\n";	\
+		install -m 0644 $$file $(DESTDIR)$(datadir)/$$file;	\
+	done
 
 install: install-exec install-dev
 
 uninstall:
+	-@$(RM) -r $(DESTDIR)$(datadir)
+	-@$(RM) -r $(DESTDIR)$(incdir)/$(LIBNAME)
 	-@$(RM) $(DESTDIR)$(libdir)/$(SOLIB)
 	-@$(RM) $(DESTDIR)$(libdir)/$(SYMLIB)
 	-@$(RM) $(DESTDIR)$(libdir)/$(STATICLIB)
-	-@for file in $(HEADERS); do			\
-		$(RM) $(DESTDIR)$(incdir)/$$file;	\
-	done
 
 strip: $(TARGET)
 	@printf "  STRIP   %s\n" $(TARGET)
