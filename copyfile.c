@@ -52,14 +52,15 @@ static int adjust_target(char *src, char **dst);
  *
  * Returns:
  * The number of bytes copied, zero may be error (check errno!), but it
- * may also indicate that @src was empty. If @src is a directory errno
- * will be set to %EISDIR since copyfile() is not recursive.
+ * may also indicate that @src was empty.  If @src is a directory errno
+ * will be set to %EISDIR since copyfile() is not recursive.  If @src
  */
 ssize_t copyfile(char *src, char *dst, int len, int sym)
 {
 	char *buffer;
 	int in, out, isdir = 0, saved_errno = 0;
 	ssize_t num, size = 0;
+	struct stat sb;
 
 	errno = 0;
 
@@ -75,18 +76,28 @@ ssize_t copyfile(char *src, char *dst, int len, int sym)
 	/* Check if target is a directory, then append src filename. */
 	isdir = adjust_target(src, &dst);
 
-	if (sym) {
+	/* Check if the source file is a symlink ... */
+	if (stat(src, &sb)) {
+		size = -1;
+		goto exit;
+	}
+
+	/* ... only try readlink() if symlink and @sym is set. */
+	if (sym && (sb.st_mode & S_IFMT) == S_IFLNK) {
 		size = readlink(src, buffer, BUFSIZ);
 		if (size > 0) {
-			if (size >= (ssize_t) BUFSIZ) {
+			if (size >= (ssize_t)BUFSIZ) {
 				saved_errno = ENOBUFS;
-				goto exit;
+				size = -1;
+			} else {
+				buffer[size] = 0;
+				size = !symlink(buffer, dst);
 			}
-
-			buffer[size] = 0;
-			size = !symlink(buffer, dst);
-			goto exit;
 		}
+
+		/* Don't fall back to copy, that is a potentially
+		 * dangerous race condition, see CWE-367. */
+		goto exit;
 	}
 
 	/* 0: copy entire file */
@@ -365,11 +376,11 @@ int main(void)
 	return 0;
 }
 #endif
-#endif				/* UNITTEST */
+#endif /* UNITTEST */
 
 /**
  * Local Variables:
- *  compile-command: "gcc -g -I../include -o unittest -DUNITTEST copyfile.c && ./unittest"
+ *  compile-command: "gcc -g -I../include -o copy -DUNITTEST copyfile.c fisdir.c fexist.c fmode.c && ./copy"
  *  version-control: t
  *  indent-tabs-mode: t
  *  c-file-style: "linux"
