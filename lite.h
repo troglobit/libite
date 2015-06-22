@@ -39,6 +39,7 @@ int     fexist     (char *file);
 int     fisdir     (char *file);
 mode_t  fmode      (char *file);
 
+FILE   *tempfile   (void);
 ssize_t copyfile   (char *src, char *dst, int len, int sym);
 int     movefile   (char *src, char *dst);
 int     copy_filep (FILE *src, FILE *dst);
