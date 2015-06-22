@@ -39,7 +39,7 @@ STRIPINST  := $(INSTALL) -s --strip-program=$(CROSS)strip -m 0755
 CFLAGS     += -fPIC
 CFLAGS     += -Os
 CPPFLAGS   += -D_GNU_SOURCE
-CPPFLAGS   += -W -Wall -Werror
+CPPFLAGS   += -W -Wall
 ARFLAGS     = crus
 MAKEFLAGS   = --no-print-directory --silent
 

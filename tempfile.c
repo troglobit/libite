@@ -21,6 +21,11 @@
 #include <stdio.h>		/* fdopen() */
 #include <sys/stat.h>		/* umask() */
 
+#ifndef  O_TMPFILE		/* Too old GLIBC or kernel */
+#warning O_TMPFILE missing on your system, tempfile() may not work!
+#define  O_TMPFILE 020200000	/* Define and let it fail at runtime */
+#endif
+
 /**
  * tempfile - A secure tmpfile() replacement
  *
@@ -28,6 +33,8 @@
  * GLIBC.  The function uses the Linux specific %O_TMPFILE and %O_EXCL
  * for security.  When the %FILE is fclose()'ed the file contents is
  * lost.  The file is hidden in the %_PATH_TMP directory on the system.
+ *
+ * This function requires Linux 3.11, or later, due to %O_TMPFILE.
  *
  * Returns:
  * An open %FILE pointer, or %NULL on error.

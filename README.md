@@ -74,6 +74,12 @@ Generic Functions
   Very simple `rsync()` to copy files files and directories
   recursively.
 
+- `tempfile()`
+
+  Secure replacement for `tmpfile()`.  Creates an invisible temporary
+  file in `/tmp` that is removed when the returned %FILE pointer is
+  closed.
+
 
 OpenBSD Functions
 -----------------
