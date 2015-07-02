@@ -83,8 +83,8 @@ Generic Functions
 - `tempfile()`
 
   Secure replacement for `tmpfile()`.  Creates an invisible temporary
-  file in `/tmp` that is removed when the returned %FILE pointer is
-  closed.
+  file in `/tmp` that is removed when the returned `FILE` pointer is
+  closed.  **Note:** Requires Linux v3.11, or later.
 
 
 OpenBSD Functions
@@ -96,6 +96,7 @@ The following are the popular OpenBSD string functions.
 - `strlcat(dst, src, len)`
 - `strtonum()`
 - [`sys/queue.h`][4] API
+
 
 TODO
 ----
