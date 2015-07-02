@@ -2,7 +2,13 @@
 ====================================
 
 Libite, or `-lite`, is a light-weight library of utility functions and
-missing C library functions.
+missing C library functions.  It holds a many functions previously found
+in [Finit][1], complemented with a few of my own and some from the
+[OpenBSD][2] project, most notably their famous string functions:
+[strlcpy(3)][3] and [strlcat(3)][3].  It also holds the very useful *BSD
+linked list API [sys/queue.h][4], which is a much more up to date
+version than GLIBC carries!  GLIBC does not have the `_SAFE` macros for
+traversing lists while deleting/freeing nodes.
 
 Helper Macros
 -------------
@@ -89,13 +95,17 @@ The following are the popular OpenBSD string functions.
 - `strlcpy(dst, src, len)`
 - `strlcat(dst, src, len)`
 - `strtonum()`
-
+- [`sys/queue.h`][4] API
 
 TODO
 ----
 
 - Improve documentation, possibly use kdoc or gdoc2 to generate docs from API.
 
+[1]: https://github.com/troglobit/finit
+[2]: http://www.openbsd.org/
+[3]: http://www.openbsd.org/cgi-bin/man.cgi?query=strlcpy
+[4]: http://www.openbsd.org/cgi-bin/man.cgi/OpenBSD-current/man3/LIST_EMPTY.3
 
 <!--
   -- Local Variables:
