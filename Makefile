@@ -55,11 +55,7 @@ LIBNAME     = $(NAME)
 SOLIB       = $(LIBNAME).so.$(VER)
 SYMLIB      = $(LIBNAME).so
 STATICLIB   = $(LIBNAME).a
-ifdef STATIC
-TARGET      = $(STATICLIB)
-else
-TARGET      = $(SOLIB)
-endif
+TARGET      = $(STATICLIB) $(SOLIB)
 
 # Default install paths
 prefix     ?= /usr/local
@@ -85,12 +81,10 @@ $(STATICLIB): Makefile $(OBJS)
 	@$(AR) $(ARFLAGS) $@ $(OBJS)
 
 install-exec: all
-ifndef STATIC
 	@printf "  INSTALL $(DESTDIR)$(libdir)/$(SOLIB)\n"
 	@install -d $(DESTDIR)$(libdir)
 	@$(STRIPINST) $(SOLIB) $(DESTDIR)$(libdir)/$(SOLIB)
 	@ln -sf $(SOLIB) $(DESTDIR)$(libdir)/$(SYMLIB)
-endif
 
 install-dev:
 	@install -d $(DESTDIR)$(incdir)/$(LIBNAME)
@@ -98,11 +92,9 @@ install-dev:
 		printf "  INSTALL $(DESTDIR)$(incdir)/$(LIBNAME)/$$file\n";		\
 		$(INSTALL) -m 0644 $$file $(DESTDIR)$(incdir)/$(LIBNAME)/$$file;	\
 	done
-ifdef STATIC
 	@printf "  INSTALL $(DESTDIR)$(libdir)/$(STATICLIB)\n"
 	@install -d $(DESTDIR)$(libdir)
 	@$(INSTALL) $(STATICLIB) $(DESTDIR)$(libdir)/$(STATICLIB)
-endif
 	@install -d $(DESTDIR)$(datadir)
 	@for file in $(DISTFILES); do					\
 		printf "  INSTALL $(DESTDIR)$(datadir)/$$file\n";	\
