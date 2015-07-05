@@ -234,51 +234,6 @@ exit:
 	return errno = result;
 }
 
-/**
- * fsendfile - copy data between file streams
- * @out: Destination stream
- * @in:  Source stream
- * @sz:  Size in bytes to copy.
- *
- * @out may be NULL, in which case @sz bytes are read and discarded
- * from @in. This is useful for streams where seeks are not
- * permitted. Additionally @sz may be the special value zero (0) in
- * which case fsendfile will copy until EOF is seen on @src.
- *
- * Returns:
- * The number of bytes copied. If there was an error, -1 is returned
- * and errno will be set accordingly.
- */
-size_t fsendfile (FILE *out, FILE *in, size_t sz)
-{
-	char *buf;
-	size_t blk = BUFSIZ, num = 0, tot = 0;
-
-	buf = (char *)malloc(BUFSIZ);
-	if (!buf)
-		return -1;
-
-	while (!sz || tot < sz) {
-		if (sz && ((sz - tot) < BUFSIZ))
-			blk = sz - tot;
-
-		num = fread(buf, 1, blk, in);
-		if (num == 0)
-			break;
-
-		if (out && (fwrite(buf, num, 1, out) != 1)) {
-			num = -1;
-			break;
-		}
-
-		tot += num;
-	}
-
-	free(buf);
-
-	return (num == (size_t)-1) ? (size_t)-1 : tot;
-}
-
 /* Tests if dst is a directory, if so, reallocates dst and appends src filename returning 1 */
 static int adjust_target(char *src, char **dst)
 {
