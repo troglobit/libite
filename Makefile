@@ -42,14 +42,15 @@ CPPFLAGS   += -D_GNU_SOURCE
 CPPFLAGS   += -W -Wall
 ARFLAGS     = crus
 
-ifdef SILENT
-Q           = @
-PRINT       = @printf
-MAKEFLAGS   = --no-print-directory --silent
-else
+# Default to silent build, use V=1 to get verbose mode.
+ifeq ($V,1)
 Q           =
 PRINT       = @true
 MAKEFLAGS   =
+else
+Q           = @
+PRINT       = @printf
+MAKEFLAGS   = --no-print-directory --silent
 endif
 
 DISTFILES   = README LICENSE
