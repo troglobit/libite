@@ -41,7 +41,16 @@ CFLAGS     += -Os
 CPPFLAGS   += -D_GNU_SOURCE
 CPPFLAGS   += -W -Wall
 ARFLAGS     = crus
+
+ifdef SILENT
+Q           = @
+PRINT       = @printf
 MAKEFLAGS   = --no-print-directory --silent
+else
+Q           =
+PRINT       = @true
+MAKEFLAGS   =
+endif
 
 DISTFILES   = README LICENSE
 HEADERS     = lite.h
@@ -73,30 +82,30 @@ all: $(TARGET)
 $(OBJS): Makefile
 
 $(SOLIB): Makefile $(OBJS)
-	@printf "  LINK    %s\n" $@
-	@$(CC) $(LDFLAGS) -shared -Wl,-soname,$@ -o $@ $(OBJS)
+	$(PRINT) "  LINK    %s\n" $@
+	$(Q)$(CC) $(LDFLAGS) -shared -Wl,-soname,$@ -o $@ $(OBJS)
 
 $(STATICLIB): Makefile $(OBJS)
-	@printf "  ARCHIVE $@\n"
-	@$(AR) $(ARFLAGS) $@ $(OBJS)
+	$(Q)$(PRINT) "  ARCHIVE $@\n"
+	$(Q)$(AR) $(ARFLAGS) $@ $(OBJS)
 
 install-exec: all
-	@printf "  INSTALL $(DESTDIR)$(libdir)/$(SOLIB)\n"
-	@install -d $(DESTDIR)$(libdir)
-	@$(STRIPINST) $(SOLIB) $(DESTDIR)$(libdir)/$(SOLIB)
-	@ln -sf $(SOLIB) $(DESTDIR)$(libdir)/$(SYMLIB)
+	$(PRINT) "  INSTALL $(DESTDIR)$(libdir)/$(SOLIB)\n"
+	$(Q)install -d $(DESTDIR)$(libdir)
+	$(Q)$(STRIPINST) $(SOLIB) $(DESTDIR)$(libdir)/$(SOLIB)
+	$(Q)ln -sf $(SOLIB) $(DESTDIR)$(libdir)/$(SYMLIB)
 
 install-dev:
-	@install -d $(DESTDIR)$(incdir)/$(LIBNAME)
-	@for file in $(HEADERS); do	                                		\
+	$(Q)install -d $(DESTDIR)$(incdir)/$(LIBNAME)
+	$(Q)for file in $(HEADERS); do	                                		\
 		printf "  INSTALL $(DESTDIR)$(incdir)/$(LIBNAME)/$$file\n";		\
 		$(INSTALL) -m 0644 $$file $(DESTDIR)$(incdir)/$(LIBNAME)/$$file;	\
 	done
-	@printf "  INSTALL $(DESTDIR)$(libdir)/$(STATICLIB)\n"
-	@install -d $(DESTDIR)$(libdir)
-	@$(INSTALL) $(STATICLIB) $(DESTDIR)$(libdir)/$(STATICLIB)
-	@install -d $(DESTDIR)$(datadir)
-	@for file in $(DISTFILES); do					\
+	$(PRINT) "  INSTALL $(DESTDIR)$(libdir)/$(STATICLIB)\n"
+	$(Q)install -d $(DESTDIR)$(libdir)
+	$(Q)$(INSTALL) $(STATICLIB) $(DESTDIR)$(libdir)/$(STATICLIB)
+	$(Q)install -d $(DESTDIR)$(datadir)
+	$(Q)for file in $(DISTFILES); do					\
 		printf "  INSTALL $(DESTDIR)$(datadir)/$$file\n";	\
 		install -m 0644 $$file $(DESTDIR)$(datadir)/$$file;	\
 	done
@@ -104,31 +113,31 @@ install-dev:
 install: install-exec install-dev
 
 uninstall:
-	-@$(RM) -r $(DESTDIR)$(datadir)
-	-@$(RM) -r $(DESTDIR)$(incdir)/$(LIBNAME)
-	-@$(RM) $(DESTDIR)$(libdir)/$(SOLIB)
-	-@$(RM) $(DESTDIR)$(libdir)/$(SYMLIB)
-	-@$(RM) $(DESTDIR)$(libdir)/$(STATICLIB)
+	-$(Q)$(RM) -r $(DESTDIR)$(datadir)
+	-$(Q)$(RM) -r $(DESTDIR)$(incdir)/$(LIBNAME)
+	-$(Q)$(RM) $(DESTDIR)$(libdir)/$(SOLIB)
+	-$(Q)$(RM) $(DESTDIR)$(libdir)/$(SYMLIB)
+	-$(Q)$(RM) $(DESTDIR)$(libdir)/$(STATICLIB)
 
 strip: $(TARGET)
-	@printf "  STRIP   %s\n" $(TARGET)
-	@$(STRIP) --strip-unneeded $(TARGET)
-	@size $(TARGET)
+	$(Q)$(PRINT) "  STRIP   %s\n" $(TARGET)
+	$(Q)$(STRIP) --strip-unneeded $(TARGET)
+	$(Q)size $(TARGET)
 
 # Runs Clang scan-build on the whole tree
 check: clean
-	@scan-build $(MAKE) all
+	$(Q)scan-build $(MAKE) all
 
 clean:
-	-@$(RM) $(OBJS) $(DEPS) $(TARGET) $(SOLIB) $(STATICLIB)
+	-$(Q)$(RM) $(OBJS) $(DEPS) $(TARGET) $(SOLIB) $(STATICLIB)
 
 distclean:
-	-@$(RM) $(JUNK) unittest *.o *.a *.so* *.unittest
+	-$(Q)$(RM) $(JUNK) unittest *.o *.a *.so* *.unittest
 
 dist:
-	@echo "Building .xz tarball of $(PKG) in parent dir..."
+	$(Q)echo "Building .xz tarball of $(PKG) in parent dir..."
 	git archive --format=tar --prefix=$(PKG)/ v$(VERSION) | xz >../$(ARCHIVE)
-	@(cd ..; md5sum $(ARCHIVE) | tee $(ARCHIVE).md5)
+	$(Q)(cd ..; md5sum $(ARCHIVE) | tee $(ARCHIVE).md5)
 
 # Include automatically generated rules
 -include $(DEPS)
