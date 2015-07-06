@@ -28,8 +28,8 @@
 
 /**
  * fsendfile - copy data between file streams
- * @dst: Destination stream
  * @src: Source stream
+ * @dst: Destination stream
  * @len: Number of bytes to copy
  *
  * @dst may be %NULL, in which case @len bytes are read and discarded
@@ -41,7 +41,7 @@
  * The number of bytes copied.  If an error is detected -1 is returned
  * and @errno will be set accordingly.
  */
-size_t fsendfile(FILE *dst, FILE *src, size_t len)
+size_t fsendfile(FILE *src, FILE *dst, size_t len)
 {
 	char *buf;
 	size_t blk = BUFSIZ, num = 0, tot = 0;
@@ -94,7 +94,7 @@ int main(void)
                 src = fopen(files[i], "r");
                 dst = fopen(files[i + 1], "w");
 		fprintf(stderr, "fsendfile(%s, %s, 512)\t", files[i], files[i + 1]);
-		if (-1 == fsendfile(dst, src, 512))
+		if (-1 == fsendfile(src, dst, 512))
 			perror("Failed");
 
 		if (!access(files[i + 1], F_OK))

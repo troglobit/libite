@@ -63,6 +63,11 @@ Generic Functions
   names: files and directories that must be freed after use.  See
   the unit test at the bottom for an example.
 
+- `fcopyfile(src, dst)`
+
+  Like `copyfile()` but uses already open `FILE *` pointers.  Copies
+  from current file positions to current file positions until EOF.
+
 - `fexist(file)`
 
   Check for the existance of a file, returns True(1) or False(0).
@@ -74,6 +79,18 @@ Generic Functions
 - `fmode(file)`
 
   Returns the `mode_t` bits of a file or directory.
+
+- `fsendfile(src, dst, len)`
+
+  Copy data between file streams, very similar to `fcopyfile()`, but
+  `dst` is allowed to be `NULL` to be able to read and discard `len`
+  bytes from `src`.
+
+- `movefile(src, dst)`
+
+  Like `copyfile()`, but renames `src` to `dst`, or recreates symlink
+  with the `dst` name.  On successful operation the source is removed
+  and the function returns POSIX OK (0).
 
 - `rsync(src, dst, delete, *filter())`
 
