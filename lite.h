@@ -1,7 +1,7 @@
 /* Collection of utility funcs and C library extensions for finit & its plugins
  *
  * Copyright (c) 2008-2010  Claudio Matsuoka <cmatsuoka@gmail.com>
- * Copyright (c) 2008-2014  Joachim Nilsson <troglobit@gmail.com>
+ * Copyright (c) 2008-2015  Joachim Nilsson <troglobit@gmail.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -42,7 +42,7 @@ mode_t  fmode      (char *file);
 FILE   *tempfile   (void);
 ssize_t copyfile   (char *src, char *dst, int len, int sym);
 int     movefile   (char *src, char *dst);
-int     copy_filep (FILE *src, FILE *dst);
+int     fcopyfile  (FILE *src, FILE *dst);
 size_t  fsendfile  (FILE *out, FILE *in, size_t sz);
 
 int     dir        (const char *dir, const char *type, int (*filter) (const char *file), char ***list, int strip);
@@ -119,6 +119,9 @@ static inline int string_case_compare (const char *a, const char *b)
 {
    return strlen (a) == strlen (b) && !strcasecmp (a, b);
 }
+
+/* Compat */
+#define copy_filep(src, dst) fcopyfile(src,dst);
 
 #endif /* FINIT_LITE_H_ */
 

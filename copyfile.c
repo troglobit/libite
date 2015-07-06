@@ -23,23 +23,71 @@
 
 #include <errno.h>
 #include <fcntl.h>
-#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <sys/param.h> /* MAX(), isset(), setbit(), TRUE, FALSE, et consortes. :-) */
 #include <sys/stat.h>
-#include <sys/types.h>
-#include <unistd.h>
 
 #include "lite.h"
 
-static int adjust_target(char *src, char **dst);
+
+/* Tests if dst is a directory, if so, reallocates dst and appends src filename returning 1 */
+static int adjust_target(char *src, char **dst)
+{
+	int isdir = 0;
+
+	if (fisdir(*dst)) {
+		int slash = 0;
+		char *tmp, *ptr = strrchr(src, '/');
+
+		if (!ptr)
+			ptr = src;
+		else
+			ptr++;
+
+		tmp = malloc(strlen(*dst) + strlen(ptr) + 2);
+		if (!tmp) {
+			errno = EISDIR;
+			return 0;
+		}
+
+		isdir = 1;	/* Free dst before exit! */
+		slash = fisslashdir(*dst);
+
+		sprintf(tmp, "%s%s%s", *dst, slash ? "" : "/", ptr);
+		*dst = tmp;
+	}
+
+	return isdir;
+}
+
+/* Actual copy loop, used by both copyfile() and fcopyfile()
+ * breaks loop on error and EOF */
+static ssize_t do_copy(int in, int out, size_t num, char *buffer, size_t len)
+{
+	ssize_t ret = 0, size = 0;
+
+	do {
+		size_t count = num > len ? len : num;
+
+		ret = read(in, buffer, count);
+		if (ret <= 0) {
+			if (ret == -1 && EINTR == errno)
+				continue;
+			break;
+		}
+
+		if (ret > 0)
+			size += write(out, buffer, ret);
+		num  -= count;
+	} while (num > 0);
+
+	return size;
+}
 
 /**
  * copyfile - Copy a file to another.
- * @src: Source file.
- * @dst: Target file.
+ * @src: Full path name to source file.
+ * @dst: Full path name to target file.
  * @len: Number of bytes to copy, zero (0) for entire file.
  * @sym: Should symlinks be recreated (1) or followed (0)
  *
@@ -48,19 +96,18 @@ static int adjust_target(char *src, char **dst);
  * the finit project, http://helllabs.org/finit/, which is a reimplementation
  * of fastinit for the Asus EeePC.
  *
- * Only some small changes to save stack space have been introduced.
- *
  * Returns:
  * The number of bytes copied, zero may be error (check errno!), but it
- * may also indicate that @src was empty.  If @src is a directory errno
- * will be set to %EISDIR since copyfile() is not recursive.  If @src
+ * may also indicate that @src was empty.  If @src is a directory @errno
+ * will be set to %EISDIR since copyfile() is not recursive.
  */
 ssize_t copyfile(char *src, char *dst, int len, int sym)
 {
 	char *buffer;
 	int in, out, isdir = 0, saved_errno = 0;
-	ssize_t num, size = 0;
-	struct stat sb;
+	size_t num;
+	ssize_t size = 0;
+	struct stat st;
 
 	errno = 0;
 
@@ -77,13 +124,13 @@ ssize_t copyfile(char *src, char *dst, int len, int sym)
 	isdir = adjust_target(src, &dst);
 
 	/* Check if the source file is a symlink ... */
-	if (stat(src, &sb)) {
+	if (stat(src, &st)) {
 		size = -1;
 		goto exit;
 	}
 
 	/* ... only try readlink() if symlink and @sym is set. */
-	if (sym && (sb.st_mode & S_IFMT) == S_IFLNK) {
+	if (sym && (st.st_mode & S_IFMT) == S_IFLNK) {
 		size = readlink(src, buffer, BUFSIZ);
 		if (size > 0) {
 			if (size >= (ssize_t)BUFSIZ) {
@@ -102,7 +149,9 @@ ssize_t copyfile(char *src, char *dst, int len, int sym)
 
 	/* 0: copy entire file */
 	if (len == 0)
-		len = INT_MAX; /* XXX: 2047 MiB should sufficient ... */
+		num = st.st_size;
+	else
+		num = (size_t)len;
 
 	in = open(src, O_RDONLY);
 	if (in < 0) {
@@ -117,14 +166,9 @@ ssize_t copyfile(char *src, char *dst, int len, int sym)
 		goto exit;
 	}
 
-	do {
-		int clen = len > BUFSIZ ? BUFSIZ : len;
-
-		num = read(in, buffer, clen);
-		if (num > 0)
-			size += write(out, buffer, num);
-		len -= clen;
-	} while (len > 0 && num == BUFSIZ);
+	size = do_copy(in, out, num, buffer, BUFSIZ);
+	if (!size && errno)
+		saved_errno = errno;
 
 	close(out);
 	close(in);
@@ -164,7 +208,7 @@ int movefile(char *src, char *dst)
 	if (rename(src, dst)) {
 		if (errno == EXDEV) {
 			errno = 0;
-			copyfile(src, dst, 0, 0);
+			copyfile(src, dst, 0, 1);
 			if (errno)
 				result = 1;
 			else
@@ -181,107 +225,42 @@ int movefile(char *src, char *dst)
 }
 
 /**
- * copy_filep - Copy between FILE *fp.
+ * fcopyfile - Copy between FILE *fp.
  * @src: Source FILE.
  * @dst: Destination FILE.
  *
- * Function takes signals into account and will restart the syscalls as long
- * as error is %EINTR.
+ * Function takes signals into account and will restart the syscalls as
+ * long as error is %EINTR.
  *
  * Returns:
  * POSIX OK(0), or non-zero with errno set on error.
  */
-int copy_filep(FILE *src, FILE *dst)
+int fcopyfile(FILE *src, FILE *dst)
 {
-	int result = 0;
-	char *buf;
+	int ret;
+	char *buffer;
 
-	if (!src || !dst)
-		return EINVAL;
-
-	buf = (char *)malloc(BUFSIZ);
-	if (!buf)
-		return errno;
-
-	while (1) {
-		errno = 0;
-		if (!fgets(buf, BUFSIZ, src)) {
-			if (errno == EINTR) {
-				clearerr(src);
-				continue;
-			}
-
-			if (feof(src))
-				break;
-
-			result = errno;
-			goto exit;
-		}
-
-		while (EOF == fputs(buf, dst)) {
-			if (errno == EINTR) {
-				clearerr(dst);
-				continue;
-			}
-
-			result = errno;
-			goto exit;
-		}
+	if (!src || !dst) {
+		errno = EINVAL;
+		return -1;
 	}
 
-exit:
-	free(buf);
-	return errno = result;
-}
+	buffer = malloc(BUFSIZ);
+	if (!buffer)
+		return -1;
 
-/* Tests if dst is a directory, if so, reallocates dst and appends src filename returning 1 */
-static int adjust_target(char *src, char **dst)
-{
-	int isdir = 0;
+	ret = do_copy(fileno(src), fileno(dst), BUFSIZ, buffer, BUFSIZ);
+	if (ret > 0)
+		ret = 0;
+	else if (errno)
+		ret = -1;
 
-	if (fisdir(*dst)) {
-		int slash = 0;
-		char *tmp, *ptr = strrchr(src, '/');
+	free(buffer);
 
-		if (!ptr)
-			ptr = src;
-		else
-			ptr++;
-
-		tmp = malloc(strlen(*dst) + strlen(ptr) + 2);
-		if (!tmp) {
-			errno = EISDIR;
-			return 0;
-		}
-
-		isdir = 1;	/* Free dst before exit! */
-		slash = fisslashdir(*dst);
-
-		sprintf(tmp, "%s%s%s", *dst, slash ? "" : "/", ptr);
-		*dst = tmp;
-	}
-
-	return isdir;
+	return ret;
 }
 
 #ifdef UNITTEST
-#include <stdio.h>
-/* XXX: Make a real set of unit tests ... */
-#if 0
-int main(int argc, char *argv[])
-{
-	if (argc < 3) {
-		fprintf(stderr,
-			"Usage: %s <src> <dst>\nCopies the <src> file to the <dst> file.\n",
-			argv[0]);
-		return 1;
-	}
-
-	printf("Copying file %s to %s\n", argv[1], argv[2]);
-
-	return copyfile(argv[1], argv[2], 0, 0);
-}
-#else
 int main(void)
 {
 	int i = 0;
@@ -295,11 +274,11 @@ int main(void)
 
 	fprintf(stderr, "\n=>Start testing copy_filep()\n");
 	while (files[i]) {
-		fprintf(stderr, "copy_filep(%s, %s)\t", files[i],
+		fprintf(stderr, "fcopyfile(%s, %s)\t", files[i],
 			files[i + 1]);
 		src = fopen(files[i], "r");
 		dst = fopen(files[i + 1], "w");
-		if (copy_filep(src, dst))
+		if (fcopyfile(src, dst))
 			perror("Failed");
 
 		if (src)
@@ -330,12 +309,11 @@ int main(void)
 
 	return 0;
 }
-#endif
 #endif /* UNITTEST */
 
 /**
  * Local Variables:
- *  compile-command: "gcc -g -I../include -o copy -DUNITTEST copyfile.c fisdir.c fexist.c fmode.c && ./copy"
+ *  compile-command: "gcc -g -o coppa -DUNITTEST copyfile.c fisdir.c fexist.c fmode.c && ./coppa"
  *  version-control: t
  *  indent-tabs-mode: t
  *  c-file-style: "linux"
