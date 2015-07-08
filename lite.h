@@ -51,7 +51,9 @@ int     makepath   (char *dir);
 int     dir        (const char *dir, const char *type, int (*filter) (const char *file), char ***list, int strip);
 int     rsync      (char *src, char *dst, int delete, int (*filter) (const char *file));
 
-int     pidfile    (const char *basename);
+int     pidfile       (const char *basename);
+int     pidfile_signal(const char *pidfile, int signal);
+int     pidfile_read  (const char *pidfile);
 
 #ifndef strlcpy
 size_t  strlcpy    (char *dst, const char *src, size_t siz);
@@ -126,7 +128,9 @@ static inline int string_case_compare (const char *a, const char *b)
 }
 
 /* Compat */
-#define copy_filep(src, dst) fcopyfile(src,dst);
+#define copy_filep(src, dst) fcopyfile(src,dst)
+#define pidfile_read_pid(file) pifile_read(file)
+#define signal_pidfile(file, signo) pidfile_signal(file,signo)
 
 #endif /* FINIT_LITE_H_ */
 

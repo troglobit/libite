@@ -116,6 +116,14 @@ Generic Functions
   may still exist even though the program is no longer running.  This
   is only a problem for clients.
 
+- `pidfile_read(pidfile)`
+
+  Read PID from pid file created by `pidfile()`.
+
+- `pidfile_signal(pidfile, signal)`
+
+  Send signal to PID found in pid file created by `pidfile()`.
+
 - `rsync(src, dst, delete, *filter())`
 
   Very simple `rsync()` to copy files files and directories
