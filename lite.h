@@ -45,6 +45,9 @@ int     movefile   (char *src, char *dst);
 int     fcopyfile  (FILE *src, FILE *dst);
 size_t  fsendfile  (FILE *src, FILE *dst, size_t len);
 
+int     mkpath     (char *dir, mode_t mode);
+int     makepath   (char *dir);
+
 int     dir        (const char *dir, const char *type, int (*filter) (const char *file), char ***list, int strip);
 int     rsync      (char *src, char *dst, int delete, int (*filter) (const char *file));
 

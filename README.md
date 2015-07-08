@@ -86,6 +86,14 @@ Generic Functions
   `dst` is allowed to be `NULL` to be able to read and discard `len`
   bytes from `src`.
 
+- `makepath(dir)`
+
+  Create all components of the specified directory.
+
+- `mkpath(dir, mode)`
+
+  Like `makepath()`, but also takes a `mode_t` permission mode argument.
+
 - `movefile(src, dst)`
 
   Like `copyfile()`, but renames `src` to `dst`, or recreates symlink
