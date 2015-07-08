@@ -51,6 +51,8 @@ int     makepath   (char *dir);
 int     dir        (const char *dir, const char *type, int (*filter) (const char *file), char ***list, int strip);
 int     rsync      (char *src, char *dst, int delete, int (*filter) (const char *file));
 
+int     pidfile    (const char *basename);
+
 #ifndef strlcpy
 size_t  strlcpy    (char *dst, const char *src, size_t siz);
 #endif

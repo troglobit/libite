@@ -100,6 +100,22 @@ Generic Functions
   with the `dst` name.  On successful operation the source is removed
   and the function returns POSIX OK (0).
 
+- `pidfile(basename)`
+
+  Write a daemon pid file.  Creates a pidfile in `_PATH_VARRUN` using
+  either `basename` or, if `basename` is `NULL`, `__progname`.  The
+  file name has the form `/var/run/basename.pid`.
+
+  Use this function to create a pid file for your daemon when it is
+  ready to receive signals.  A client application may poll for the
+  existence of this file, so make sure to have your signal handlers
+  properly setup before calling this function.
+  
+  The pidfile is removed when the program exits, using an `atexit()`
+  handler.  However, depending on how the program terminates the file
+  may still exist even though the program is no longer running.  This
+  is only a problem for clients.
+
 - `rsync(src, dst, delete, *filter())`
 
   Very simple `rsync()` to copy files files and directories
