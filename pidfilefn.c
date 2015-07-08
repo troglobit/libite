@@ -19,7 +19,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
-#include <unistd.h>
 
 extern char *chomp(char *str);
 
@@ -45,9 +44,6 @@ int pidfile_read(const char *pidfile)
 		errno = EINVAL;
 		return -1;
 	}
-
-	if (access(pidfile, F_OK) < 0)
-		return -1;
 
 	fp = fopen(pidfile, "r");
 	if (!fp)
@@ -89,7 +85,7 @@ int pidfile_signal(const char *pidfile, int signal)
 
 	ret = kill(pid, signal);
 	if ((ret == -1) || (signal == SIGTERM) || (signal == SIGKILL))
-		remove(pidfile);
+		(void)remove(pidfile);
 
 	return 0;
 }
