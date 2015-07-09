@@ -53,7 +53,8 @@ int     rsync      (char *src, char *dst, int delete, int (*filter) (const char 
 
 int     pidfile       (const char *basename);
 int     pidfile_signal(const char *pidfile, int signal);
-int     pidfile_read  (const char *pidfile);
+pid_t   pidfile_read  (const char *pidfile);
+pid_t   pidfile_poll  (const char *pidfile);
 
 #ifndef strlcpy
 size_t  strlcpy    (char *dst, const char *src, size_t siz);

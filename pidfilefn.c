@@ -34,7 +34,7 @@ extern char *chomp(char *str);
  * be translated this function returns zero (0), on success this function returns
  * a PID value greater than one. PID 1 is reserved for the system init process.
  */
-int pidfile_read(const char *pidfile)
+pid_t pidfile_read(const char *pidfile)
 {
 	int pid = 0;
 	char buf[16];
@@ -60,6 +60,32 @@ int pidfile_read(const char *pidfile)
                 }
 	}
 	fclose(fp);
+
+	return pid;
+}
+
+/**
+ * pidfile_poll - Poll for the existence of a pidfile and return PID
+ * @pidfile: Path to pidfile to poll for
+ *
+ * This function polls for the pidfile at @pidfile for at most 5 seconds
+ * before timing out. If the file is created within that time span the
+ * file is read and its PID contents returned.
+ *
+ * Returns:
+ * The PID read from @pidfile, or zero on timeout.
+ */
+pid_t pidfile_poll(const char *pidfile)
+{
+	pid_t pid = 0;
+	int tries = 0;
+
+	/* Timeout = 100 * 50ms = 5s */
+	while ((pid = pidfile_read(pidfile)) <= 0 && tries++ < 100)
+		usleep(50000);	/* Wait 50ms between retries */
+
+	if (pid < 0)
+		pid = 0;
 
 	return pid;
 }
@@ -95,17 +121,29 @@ int pidfile_signal(const char *pidfile, int signal)
 #ifdef UTEST_PIDFN
 #define PIDFILE "/var/run/unittest.pid"
 
-static void sig_handler(int signo)
+static void sigterm_handler(int signo)
 {
 	fprintf(stderr, "Exiting ...\n");
 }
 
+static void sigalrm_handler(int signo)
+{
+	fprintf(stderr, "Testing pidfile() ...\n");
+	pidfile(NULL);
+}
+
 int main(void)
 {
-	signal(SIGTERM, sig_handler);
+	signal(SIGTERM, sigterm_handler);
+	signal(SIGALRM, sigalrm_handler);
+	alarm(3);
 
-	fprintf(stderr, "Testing pidfile() ...\n");
-        pidfile(NULL);
+	fprintf(stderr, "Testing pidfile_poll() ...\n");
+	if (!pidfile_poll(PIDFILE))
+		fprintf(stderr, "Timed out!\n");
+	else
+		fprintf(stderr, "We got signal!\n");
+
 	system("ls -ld " PIDFILE);
 
 	fprintf(stderr, "Reading pid file, should be %d ...\n", getpid());
