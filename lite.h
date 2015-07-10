@@ -27,6 +27,7 @@
 
 #include <error.h>
 #include <stdio.h>
+#include <stdint.h>    /* uint8_t, uint16_t, uint32_t, INT32_MAX, etc. */
 #include <string.h>
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -105,7 +106,7 @@ static inline int fisslashdir(char *dir)
 static inline int atonum(const char *str)
 {
 	int val = -1;
-	char *errstr;
+	const char *errstr;
 
 	if (str) {
 		val = strtonum(str, 0, INT32_MAX, &errstr);
