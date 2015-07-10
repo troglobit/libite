@@ -116,6 +116,8 @@ Generic Functions
   may still exist even though the program is no longer running.  This
   is only a problem for clients.
 
+  See below for link to OpenBSD man page.
+
 - `pidfile_read(pidfile)`
 
   Read PID from pid file created by `pidfile()`.
@@ -141,10 +143,25 @@ OpenBSD Functions
 
 The following are the popular OpenBSD string functions.
 
+- `pidfile(basename)`
+
+  http://www.openbsd.org/cgi-bin/man.cgi/OpenBSD-current/man3/pidfile.3
+
 - `strlcpy(dst, src, len)`
+
+  http://www.openbsd.org/cgi-bin/man.cgi/OpenBSD-current/man3/strlcpy.3
+
 - `strlcat(dst, src, len)`
+
+  http://www.openbsd.org/cgi-bin/man.cgi/OpenBSD-current/man3/strlcat.3
+
 - `strtonum()`
+
+  http://www.openbsd.org/cgi-bin/man.cgi/OpenBSD-current/man3/strtonum.3
+
 - [`sys/queue.h`][4] API
+
+  http://www.openbsd.org/cgi-bin/man.cgi/OpenBSD-current/man3/LIST_EMPTY.3
 
 
 TODO
