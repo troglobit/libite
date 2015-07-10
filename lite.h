@@ -45,6 +45,8 @@ int     movefile   (char *src, char *dst);
 int     fcopyfile  (FILE *src, FILE *dst);
 size_t  fsendfile  (FILE *src, FILE *dst, size_t len);
 
+int     ifconfig   (char *ifname, char *addr, char *mask, int up);
+
 int     mkpath     (char *dir, mode_t mode);
 int     makepath   (char *dir);
 

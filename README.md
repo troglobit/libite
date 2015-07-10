@@ -86,6 +86,11 @@ Generic Functions
   `dst` is allowed to be `NULL` to be able to read and discard `len`
   bytes from `src`.
 
+- `ifconfig(ifname, addr, mask, up)`
+
+  Basic ifconfig like operations on an interface.  Only supports IPv4
+  adresses.  Note that mask is not CIDR notation.
+
 - `makepath(dir)`
 
   Create all components of the specified directory.
