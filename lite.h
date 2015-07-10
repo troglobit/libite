@@ -101,6 +101,20 @@ static inline int fisslashdir(char *dir)
                          return 0;
 }
 
+/* Convert string to natural number (0-2147483647), returns -1 on error. */
+static inline int atonum(const char *str)
+{
+	int val = -1;
+	char *errstr;
+
+	if (str) {
+		val = strtonum(str, 0, INT32_MAX, &errstr);
+		if (errstr)
+			return -1;
+	}
+
+	return val;
+}
 
 /* Validate string, non NULL and not zero length */
 static inline int string_valid (const char *s)

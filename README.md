@@ -13,6 +13,11 @@ traversing lists while deleting/freeing nodes.
 Helper Macros
 -------------
 
+- `atonum(str)`
+
+  Convert string to natural number, works for 32-bit non-negative
+  integers.  Returns -1 on error.
+
 - `blkdev(dev)`
 
 Create block device
