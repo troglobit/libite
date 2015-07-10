@@ -63,7 +63,7 @@ int ifconfig(char *ifname, char *addr, char *mask, int up)
 		}
 
 		/* Non-zero IP address */
-		if (mask && strcmp(addr, "0.0.0.0")) {
+		if (mask && addr && strcmp(addr, "0.0.0.0")) {
 			if (inet_pton(AF_INET, mask, &sin->sin_addr) == -1)
 				ret = ioctl(sd, SIOCSIFNETMASK, &ifr);
 		}
