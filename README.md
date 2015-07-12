@@ -31,11 +31,11 @@ Helper Macros
 
 - `blkdev(dev)`
 
-Create block device
+  Create block device
 
 - `chardev(dev)`
 
-Create character device
+  Create character device
 
 - `erase(path)`
 
@@ -55,11 +55,11 @@ Create character device
 
 - `S_ISEXEC(mode_t m)`
 
-Mysteriously missing from GLIBC
+  Mysteriously missing from GLIBC
 
 - `UNUSED(var)`
 
-Shorter and more readable version of `var __attribute__ ((unused))`
+  Shorter and more readable version of `var __attribute__ ((unused))`
 
 
 Generic Functions
