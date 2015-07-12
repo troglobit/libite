@@ -1,14 +1,25 @@
-`-lite`: The missing C-lib functions
-====================================
+That missing *frog DNA* you've been looking for
+===============================================
 
-Libite, or `-lite`, is a light-weight library of utility functions and
-missing C library functions.  It holds a many functions previously found
-in [Finit][1], complemented with a few of my own and some from the
-[OpenBSD][2] project, most notably their famous string functions:
-[strlcpy(3)][3] and [strlcat(3)][3].  It also holds the very useful *BSD
-linked list API [sys/queue.h][4], which is a much more up to date
-version than GLIBC carries!  GLIBC does not have the `_SAFE` macros for
-traversing lists while deleting/freeing nodes.
+Libite is a lightweight library of *frog DNA*.  It can be used to fill
+the gaps in any dinosaur project.  It holds useful functions and macros
+developed by both [Finit][1] and the [OpenBSD][2] project.  Most notably
+the string functions: [strlcpy(3)][3], [strlcat(3)][3] and the highly
+useful *BSD [sys/queue.h][4] API.
+
+Libite aims to fill in the gaps missing in GLIBC/EGLIBC.  (It does not
+aimo to become another [GLIB][5] though.)  One such gap in GLIBC is the
+missing `_SAFE` macros in `sys/queue.h` &mdash; highly recommended when
+traversing lists to delete/free nodes.
+
+The code is open sourced under a mix of the [MIT/X11 license][MIT], the
+[ISC license][ISC] used by OpenBSD, and [BSD licenses][BSD], all of them
+are extremely liberal and can be used freely in proprietary software if
+needed.
+
+For an introduction to why Libite happened, and how you can use it, see
+[this blog post][6].
+
 
 Helper Macros
 -------------
@@ -16,7 +27,7 @@ Helper Macros
 - `atonum(str)`
 
   Convert string to natural number, works for 32-bit non-negative
-  integers.  Returns -1 on error.
+  integers.  Returns -1 on error.  (Uses `strtonum()` internally.)
 
 - `blkdev(dev)`
 
@@ -169,7 +180,7 @@ The following are the popular OpenBSD string functions.
 
   http://www.openbsd.org/cgi-bin/man.cgi/OpenBSD-current/man3/strtonum.3
 
-- [`sys/queue.h`][4] API
+- `sys/queue.h` API
 
   http://www.openbsd.org/cgi-bin/man.cgi/OpenBSD-current/man3/LIST_EMPTY.3
 
@@ -178,11 +189,18 @@ TODO
 ----
 
 - Improve documentation, possibly use kdoc or gdoc2 to generate docs from API.
+- Continuously, update OpenBSD functions/macros.
 
 [1]: https://github.com/troglobit/finit
 [2]: http://www.openbsd.org/
 [3]: http://www.openbsd.org/cgi-bin/man.cgi?query=strlcpy
 [4]: http://www.openbsd.org/cgi-bin/man.cgi/OpenBSD-current/man3/LIST_EMPTY.3
+[5]: https://developer.gnome.org/glib/
+[6]: http://troglobit.com/blog/2015/07/02/howto-using-lite-with-a-git-based-application/
+[MIT]: https://en.wikipedia.org/wiki/MIT_License
+[ISC]: https://en.wikipedia.org/wiki/ISC_license
+[BSD]: https://en.wikipedia.org/wiki/BSD_licenses
+
 
 <!--
   -- Local Variables:
