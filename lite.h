@@ -146,9 +146,9 @@ static inline int string_case_compare (const char *a, const char *b)
 }
 
 /* Compat */
-#define copy_filep(src, dst) fcopyfile(src,dst)
-#define pidfile_read_pid(file) pifile_read(file)
-#define signal_pidfile(file, signo) pidfile_signal(file,signo)
+#define copy_filep       (src, dst)    fcopyfile      (src,dst)
+#define pidfile_read_pid (file)        pifile_read    (file)
+#define signal_pidfile   (file, signo) pidfile_signal (file,signo)
 
 #endif /* FINIT_LITE_H_ */
 

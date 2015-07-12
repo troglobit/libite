@@ -313,7 +313,7 @@ int main(void)
 
 /**
  * Local Variables:
- *  compile-command: "gcc -g -o coppa -DUNITTEST copyfile.c fisdir.c fexist.c fmode.c && ./coppa"
+ *  compile-command: "gcc -g -o coppy -DUNITTEST copyfile.c fisdir.c fexist.c fmode.c && ./coppy"
  *  version-control: t
  *  indent-tabs-mode: t
  *  c-file-style: "linux"
