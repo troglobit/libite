@@ -1,5 +1,5 @@
-That missing *frog DNA* you've been looking for
-===============================================
+-lite | Frog DNA, basically
+===========================
 
 Libite is a lightweight library of *frog DNA*.  It can be used to fill
 the gaps in any dinosaur project.  It holds useful functions and macros
