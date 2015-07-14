@@ -136,6 +136,10 @@ clean:
 distclean:
 	-$(Q)$(RM) $(JUNK) unittest *.o *.a *.so* *.unittest
 
+# When called from GNU configure and build system
+distdir:
+	@git archive --format=tar HEAD | (cd $(distdir); tar xf -)
+
 dist:
 	$(Q)echo "Building .xz tarball of $(PKG) in parent dir..."
 	git archive --format=tar --prefix=$(PKG)/ v$(VERSION) | xz >../$(ARCHIVE)
