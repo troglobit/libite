@@ -25,7 +25,7 @@
 #ifndef FINIT_LITE_H_
 #define FINIT_LITE_H_
 
-#include <error.h>
+#include <err.h>
 #include <stdio.h>
 #include <stdint.h>    /* uint8_t, uint16_t, uint32_t, INT32_MAX, etc. */
 #include <string.h>
@@ -70,16 +70,16 @@ long long strtonum (const char *numstr, long long minval, long long maxval, cons
 #endif
 
 #ifndef touch
-# define touch(x) do { if (mknod((x), S_IFREG|0644, 0) && errno != EEXIST) error(0, errno, "Failed creating %s", x); } while (0)
+# define touch(x) do { if (mknod((x), S_IFREG|0644, 0) && errno != EEXIST) warn("Failed creating %s", x); } while (0)
 #endif
 #ifndef makedir
-# define makedir(x, p) do { if (mkdir(x, p) && errno != EEXIST) error(0, errno, "Failed creating directory %s", x); } while (0)
+# define makedir(x, p) do { if (mkdir(x, p) && errno != EEXIST) warn("Failed creating directory %s", x); } while (0)
 #endif
 #ifndef makefifo
-# define makefifo(x, p) do { if (mkfifo(x, p) && errno != EEXIST) error(0, errno, "Failed creating FIFO %s", x); } while (0)
+# define makefifo(x, p) do { if (mkfifo(x, p) && errno != EEXIST) warn("Failed creating FIFO %s", x); } while (0)
 #endif
 #ifndef erase
-# define erase(x) do { if (remove(x) && errno != ENOENT) error(0, errno, "Failed removing %s", x); } while (0)
+# define erase(x) do { if (remove(x) && errno != ENOENT) warn("Failed removing %s", x); } while (0)
 #endif
 #ifndef chardev
 # define chardev(x,m,maj,min) mknod((x), S_IFCHR|(m), makedev((maj),(min)))
