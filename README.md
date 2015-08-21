@@ -57,6 +57,31 @@ Helper Macros
 
   Mysteriously missing from GLIBC
 
+- `ISCLR(word,bit)`
+
+  Is bit in (integer) word cleared?
+
+- `ISSET(word,bit)`
+
+  Is bit in (integer) word set?
+
+- `ISOTHER(word,bit)`
+
+  Is any other bits, except bit, in (integer) word set?
+
+- `SETBIT(word,bit)`
+
+  Set bit in (integer) word.
+
+- `CLRBIT(word,bit)`
+
+  Clear bit in (integer) word.
+
+- `NELEMS(array)`
+
+  Returns the number of elements in an array.  From the great book, The
+  Practice of Programming, by Kernighan and Pike.
+
 - `UNUSED(var)`
 
   Shorter and more readable version of `var __attribute__ ((unused))`

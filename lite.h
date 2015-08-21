@@ -87,9 +87,34 @@ long long strtonum (const char *numstr, long long minval, long long maxval, cons
 #ifndef blkdev
 # define blkdev(x,m,maj,min) mknod((x), S_IFBLK|(m), makedev((maj),(min)))
 #endif
+
 #ifndef S_ISEXEC
 # define S_ISEXEC(m) (((m) & S_IXUSR) == S_IXUSR)
 #endif
+
+/* Unline isset(), setbit() et al, these work with integers/shorts/longwords/etc. */
+#ifndef ISCLR
+#define ISCLR(word,bit)   ((word &   (1 << (bit)) ? 0 : 1))
+#endif
+#ifndef ISSET
+#define ISSET(word,bit)   ((word &   (1 << (bit)) ? 1 : 0))
+#endif
+#ifndef ISOTHER
+#define ISOTHER(word,bit) ((word &  ~(1 << (bit)) ? 1 : 0)) /* Is any other bit set? */
+#endif
+#ifndef SETBIT
+#define SETBIT(word,bit)   (word |=  (1 << (bit)))
+#endif
+#ifndef CLRBIT
+#define CLRBIT(word,bit)   (word &= ~(1 << (bit)))
+#endif
+
+/* From The Practice of Programming, by Kernighan and Pike */
+#ifndef NELEMS
+#define NELEMS(array) (sizeof(array) / sizeof(array[0]))
+#endif
+
+/* Mark a function variable as unused, useful for generic callbacks */
 #ifndef UNUSED
 #define UNUSED(x) UNUSED_ ## x __attribute__ ((unused))
 #endif
