@@ -120,7 +120,11 @@ int pidfile_signal(const char *pidfile, int signal)
 
 /********************************* UNIT TESTS ************************************/
 #ifdef UNITTEST
-#define PIDFILE "/tmp/pidfilefn.test.pid"
+#include <paths.h>
+#include "lite.h"
+
+extern char *__progname;
+static char PIDFILE[42];
 
 static void sigterm_handler(int signo)
 {
@@ -131,10 +135,15 @@ static void sigalrm_handler(int signo)
 {
 	printf("Testing pidfile() ...\n");
 	pidfile(NULL);
+
+	if (!fexist(PIDFILE))
+		err(1, "pidfile() failed creating %s", PIDFILE);
 }
 
 int main(void)
 {
+	snprintf(PIDFILE, sizeof(PIDFILE), "%s%s.pid", _PATH_VARRUN, __progname);
+
 	signal(SIGTERM, sigterm_handler);
 	signal(SIGALRM, sigalrm_handler);
 	alarm(1);
@@ -144,8 +153,6 @@ int main(void)
 		printf("Timed out!\n");
 	else
 		printf("We got signal!\n");
-
-	system("ls -ld " PIDFILE);
 
 	printf("Reading pid file, should be %d ...\n", getpid());
         printf("=> %d\n", pidfile_read(PIDFILE));

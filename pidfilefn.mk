@@ -1,5 +1,5 @@
-OBJS        = pidfile.o chomp.o
-TARGET      = $(OBJS) pidfilefn.test clean
-CPPFLAGS    = -D_PATHS_H_ -D_PATH_VARRUN="\"/tmp/\""
+OBJS        = pidfile.o chomp.o fexist.o
+ASROOT      = 1
+TARGET      = clean $(OBJS) pidfilefn.test
 
 include rules.mk

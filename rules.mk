@@ -25,6 +25,13 @@ REDIRECT    = >/dev/null
 MAKEFLAGS   = --no-print-directory --silent
 endif
 
+# Some tests may need to be run as root, e.g. pidfile()
+ifeq ($(ASROOT), 1)
+SUDO        = sudo -n
+else
+SUDO        =
+endif
+
 # Default install paths
 prefix     ?= /usr/local
 libdir     ?= $(prefix)/lib
@@ -40,10 +47,11 @@ incdir     ?= $(prefix)/include
 	$(PRINT) "  LINK    $(subst $(ROOTDIR)/,,$(shell pwd)/)$@\n"
 	$(Q)$(CC) $(CFLAGS) $(LDFLAGS) -Wl,-Map,$@.map -o $@ $^ $(LDLIBS$(LDLIBS-$(@)))
 
+.PHONY: %.test
 %.test: %.c
 	$(PRINT) "  TEST    $(subst $(ROOTDIR)/,,$(shell pwd)/)$(@:.test=)\n"
 	$(Q)$(CC) $(CFLAGS) $(CPPFLAGS) -g -o $@ -DUNITTEST $< $(OBJS)
-	$(Q)@./$@ $(REDIRECT)
+	$(Q)$(SUDO) ./$@ $(REDIRECT)
 
 
 # Default build rules for both main and unit test makefiles
