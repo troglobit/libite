@@ -65,6 +65,7 @@ incdir     ?= $(prefix)/include
 include rules.mk
 
 test:
+	$(MAKE) -f chomp.mk
 	$(MAKE) -f rsync.mk
 
 $(OBJS): Makefile

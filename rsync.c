@@ -293,7 +293,7 @@ int main(int argc, char *argv[])
 
 /**
  * Local Variables:
- *  compile-command: "make -f rsync.mk"
+ *  compile-command: "make V=1 -f rsync.mk"
  *  version-control: t
  *  indent-tabs-mode: t
  *  c-file-style: "linux"
