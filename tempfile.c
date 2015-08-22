@@ -63,7 +63,7 @@ int main(void)
 
 /**
  * Local Variables:
- *  compile-command: "gcc -D_GNU_SOURCE -DUNITTEST -o tempy tempfile.c && ./tempy"
+ *  compile-command: "make V=1 -f tempfile.mk"
  *  version-control: t
  *  indent-tabs-mode: t
  *  c-file-style: "linux"

@@ -58,6 +58,7 @@ test:
 	$(MAKE) -f makepath.mk
 	$(MAKE) -f pidfilefn.mk
 	$(MAKE) -f rsync.mk
+	$(MAKE) -f tempfile.mk
 
 $(OBJS): Makefile
 
