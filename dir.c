@@ -123,7 +123,7 @@ int dir(const char *dir, const char *type, int (*filter) (const char *file), cha
 #include <errno.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-#include "otn/c.h"
+#include "lite.h"
 
 #define DIR_TYPE_IMAGE  ".img"
 #define DIR_TYPE_SYSLOG ""
@@ -138,7 +138,7 @@ int simulate_files(int creat)
 		"rr109.img", "rx100.img", "rx107.img", "rm957.img", "messages"
 	};
 
-	for (i = 0; i < ARRAY_ELEMENTS(files); i++) {
+	for (i = 0; i < NELEMS(files); i++) {
 		if (creat)
 			touch(files[i]);
 		else
@@ -217,11 +217,11 @@ int main(int argc, char *argv[])
 
 	return 0;
 }
-#endif				/* UNITTEST */
+#endif /* UNITTEST */
 
 /**
  * Local Variables:
- *  compile-command: "gcc -g -DUNITTEST -o unittest dir.c"
+ *  compile-command: "make V=1 -f dir.mk"
  *  version-control: t
  *  indent-tabs-mode: t
  *  c-file-style: "linux"

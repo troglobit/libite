@@ -67,6 +67,7 @@ include rules.mk
 test:
 	$(MAKE) -f chomp.mk
 	$(MAKE) -f copyfile.mk
+	$(MAKE) -f dir.mk
 	$(MAKE) -f pidfilefn.mk
 	$(MAKE) -f rsync.mk
 
