@@ -5,4 +5,6 @@ language: c
 # We don't need to install packages, use dockerized build, quicker
 sudo: false
 
-script: make
+script:
+  - make
+  - make test
