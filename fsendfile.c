@@ -77,6 +77,7 @@ size_t fsendfile(FILE *src, FILE *dst, size_t len)
 }
 
 #ifdef UNITTEST
+#include <err.h>
 #include <unistd.h>
 
 int main(void)
@@ -93,12 +94,12 @@ int main(void)
 	while (files[i]) {
                 src = fopen(files[i], "r");
                 dst = fopen(files[i + 1], "w");
-		fprintf(stderr, "fsendfile(%s, %s, 512)\t", files[i], files[i + 1]);
+		printf("fsendfile(%s, %s, 512)\t", files[i], files[i + 1]);
 		if (-1 == fsendfile(src, dst, 512))
-			perror("Failed");
+			err(1, "Failed fsendfile(%s, %s)", files[i], files[i + 1]);
 
 		if (!access(files[i + 1], F_OK))
-			fprintf(stderr, "OK => %s\n", files[i + 1]);
+			printf("OK => %s\n", files[i + 1]);
 
 		remove(files[i + 1]);
 		i += 2;
@@ -110,7 +111,7 @@ int main(void)
 
 /**
  * Local Variables:
- *  compile-command: "gcc -g -o sendy -DUNITTEST fsendfile.c && ./sendy"
+ *  compile-command: "make V=1 -f fsendfile.mk"
  *  version-control: t
  *  indent-tabs-mode: t
  *  c-file-style: "linux"
