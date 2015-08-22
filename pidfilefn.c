@@ -119,17 +119,17 @@ int pidfile_signal(const char *pidfile, int signal)
 
 
 /********************************* UNIT TESTS ************************************/
-#ifdef UTEST_PIDFN
-#define PIDFILE "/var/run/unittest.pid"
+#ifdef UNITTEST
+#define PIDFILE "/tmp/pidfilefn.test.pid"
 
 static void sigterm_handler(int signo)
 {
-	fprintf(stderr, "Exiting ...\n");
+	printf("Exiting ...\n");
 }
 
 static void sigalrm_handler(int signo)
 {
-	fprintf(stderr, "Testing pidfile() ...\n");
+	printf("Testing pidfile() ...\n");
 	pidfile(NULL);
 }
 
@@ -137,20 +137,20 @@ int main(void)
 {
 	signal(SIGTERM, sigterm_handler);
 	signal(SIGALRM, sigalrm_handler);
-	alarm(3);
+	alarm(1);
 
-	fprintf(stderr, "Testing pidfile_poll() ...\n");
+	printf("Testing pidfile_poll() ...\n");
 	if (!pidfile_poll(PIDFILE))
-		fprintf(stderr, "Timed out!\n");
+		printf("Timed out!\n");
 	else
-		fprintf(stderr, "We got signal!\n");
+		printf("We got signal!\n");
 
 	system("ls -ld " PIDFILE);
 
-	fprintf(stderr, "Reading pid file, should be %d ...\n", getpid());
-        fprintf(stderr, "=> %d\n", pidfile_read(PIDFILE));
+	printf("Reading pid file, should be %d ...\n", getpid());
+        printf("=> %d\n", pidfile_read(PIDFILE));
 
-        fprintf(stderr, "Signalling ourselves ...\n");
+        printf("Signalling ourselves ...\n");
 
 	return pidfile_signal(PIDFILE, SIGTERM);
 }
@@ -158,7 +158,7 @@ int main(void)
 
 /**
  * Local Variables:
- *  compile-command: "gcc -g -o unittest -DUTEST_PIDFN pidfile.c chomp.c pidfilefn.c && ./unittest"
+ *  compile-command: "make V=1 -f pidfilefn.mk"
  *  version-control: t
  *  indent-tabs-mode: t
  *  c-file-style: "linux"
