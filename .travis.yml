@@ -2,8 +2,9 @@
 # Defaults to GNU GCC and autotools: ./configure && make && make test
 language: c
 
-# We don't need to install packages, use dockerized build, quicker
-sudo: false
+# Some of the autotests may use sudo, so use non-dockerized build atm.
+# http://stackoverflow.com/questions/26299552/travis-sudo-is-disabled
+sudo: true
 
 script:
   - make
