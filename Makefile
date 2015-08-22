@@ -19,10 +19,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
-.PHONY: all install clean
-
-# Figure out root of library, unless used as submodule
-ROOTDIR    ?= $(shell pwd)
+.PHONY: install test
 
 #VERSION    = $(shell git tag -l | tail -1)
 VERSION    ?= 1.0.0
@@ -41,17 +38,6 @@ CFLAGS     += -Os
 CPPFLAGS   += -D_GNU_SOURCE
 CPPFLAGS   += -W -Wall
 ARFLAGS     = crus
-
-# Default to silent build, use V=1 to get verbose mode.
-ifeq ($V,1)
-Q           =
-PRINT       = @true
-MAKEFLAGS   =
-else
-Q           = @
-PRINT       = @printf
-MAKEFLAGS   = --no-print-directory --silent
-endif
 
 DISTFILES   = README LICENSE
 HEADERS     = lite.h
@@ -78,8 +64,8 @@ incdir     ?= $(prefix)/include
 #include <rules.mk>
 include rules.mk
 
-# Build rules
-all: $(TARGET)
+test:
+	$(MAKE) -f rsync.mk
 
 $(OBJS): Makefile
 
@@ -129,12 +115,6 @@ strip: $(TARGET)
 # Runs Clang scan-build on the whole tree
 check: clean
 	$(Q)scan-build $(MAKE) all
-
-clean:
-	-$(Q)$(RM) $(OBJS) $(DEPS) $(TARGET) $(SOLIB) $(STATICLIB)
-
-distclean:
-	-$(Q)$(RM) $(JUNK) unittest *.o *.a *.so* *.unittest
 
 # When called from GNU configure and build system
 distdir:
