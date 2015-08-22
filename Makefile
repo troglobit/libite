@@ -50,10 +50,11 @@ TARGET      = $(STATICLIB) $(SOLIB)
 #include <rules.mk>
 include rules.mk
 
-test:
+test: clean
 	$(MAKE) -f chomp.mk
 	$(MAKE) -f copyfile.mk
 	$(MAKE) -f dir.mk
+	$(MAKE) -f fexist.mk
 	$(MAKE) -f fsendfile.mk
 	$(MAKE) -f makepath.mk
 	$(MAKE) -f pidfilefn.mk
