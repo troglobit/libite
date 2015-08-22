@@ -66,6 +66,7 @@ include rules.mk
 
 test:
 	$(MAKE) -f chomp.mk
+	$(MAKE) -f copyfile.mk
 	$(MAKE) -f rsync.mk
 
 $(OBJS): Makefile

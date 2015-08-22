@@ -261,6 +261,8 @@ int fcopyfile(FILE *src, FILE *dst)
 }
 
 #ifdef UNITTEST
+#include <err.h>
+
 int main(void)
 {
 	int i = 0;
@@ -272,14 +274,15 @@ int main(void)
 	};
 	FILE *src, *dst;
 
-	fprintf(stderr, "\n=>Start testing copy_filep()\n");
+	printf("=>Start testing fcopyfile()\n");
 	while (files[i]) {
-		fprintf(stderr, "fcopyfile(%s, %s)\t", files[i],
-			files[i + 1]);
+		printf("fcopyfile(%s, %s)\t", files[i], files[i + 1]);
 		src = fopen(files[i], "r");
 		dst = fopen(files[i + 1], "w");
-		if (fcopyfile(src, dst))
-			perror("Failed");
+		if (fcopyfile(src, dst)) {
+			if (!fisdir(files[i + 1]))
+			    err(1, "Failed fcopyfile(%s, %s)", files[i], files[i + 1]);
+		}
 
 		if (src)
 			fclose(src);
@@ -287,21 +290,23 @@ int main(void)
 			fclose(dst);
 
 		if (fexist(files[i + 2]))
-			fprintf(stderr, "OK => %s\n", files[i + 2]);
+			printf("OK => %s", files[i + 2]);
+		printf("\n");
 
 		erase(files[i + 2]);
 		i += 3;
 	}
 
-	printf("\n\n=>Start testing copyfile()\n");
+	printf("\n=>Start testing copyfile()\n");
 	i = 0;
 	while (files[i]) {
-		fprintf(stderr, "copyfile(%s, %s)\t", files[i], files[i + 1]);
+		printf("copyfile(%s, %s)\t", files[i], files[i + 1]);
 		if (!copyfile(files[i], files[i + 1], 0, 0))
-			perror("Failed");
+			err(1, "Failed copyfile(%s, %s)", files[i], files[i + 1]);
 
 		if (fexist(files[i + 2]))
-			fprintf(stderr, "OK => %s\n", files[i + 2]);
+			printf("OK => %s", files[i + 2]);
+		printf("\n");
 
 		erase(files[i + 2]);
 		i += 3;
@@ -313,7 +318,7 @@ int main(void)
 
 /**
  * Local Variables:
- *  compile-command: "gcc -g -o coppy -DUNITTEST copyfile.c fisdir.c fexist.c fmode.c && ./coppy"
+ *  compile-command: "make V=1 -f copyfile.mk"
  *  version-control: t
  *  indent-tabs-mode: t
  *  c-file-style: "linux"
