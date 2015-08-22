@@ -99,6 +99,9 @@ int main(void)
 		NULL
 	};
 
+	for (i = 0; list[i]; i++)
+		rmdir(list[i]);
+
 	printf("Testing makepath() ...\n");
 	for (i = 0; list[i] && !ret; i++)
 		ret = test_makepath(list[i]);
