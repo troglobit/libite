@@ -55,6 +55,7 @@ test: clean
 	$(MAKE) -f copyfile.mk
 	$(MAKE) -f dir.mk
 	$(MAKE) -f fexist.mk
+	$(MAKE) -f fisdir.mk
 	$(MAKE) -f fsendfile.mk
 	$(MAKE) -f makepath.mk
 	$(MAKE) -f pidfilefn.mk
