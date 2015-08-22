@@ -1,5 +1,6 @@
 -lite | Frog DNA, basically
 ===========================
+[![Travis Status][]][Travis]
 
 Libite is a lightweight library of *frog DNA*.  It can be used to fill
 the gaps in any dinosaur project.  It holds useful functions and macros
@@ -225,7 +226,8 @@ TODO
 [MIT]: https://en.wikipedia.org/wiki/MIT_License
 [ISC]: https://en.wikipedia.org/wiki/ISC_license
 [BSD]: https://en.wikipedia.org/wiki/BSD_licenses
-
+[Travis]: https://travis-ci.org/troglobit/libite
+[Travis Status]: https://travis-ci.org/troglobit/libite.png?branch=master
 
 <!--
   -- Local Variables:
