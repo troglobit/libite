@@ -27,17 +27,9 @@ NAME        = libite
 PKG         = $(NAME)-$(VERSION)
 ARCHIVE     = $(PKG).tar.xz
 
-CC         ?= $(CROSS)gcc
-AR         ?= $(CROSS)ar
-STRIP      ?= $(CROSS)strip
-INSTALL    := install --backup=off
-STRIPINST  := $(INSTALL) -s --strip-program=$(CROSS)strip -m 0755
-
 CFLAGS     += -fPIC
 CFLAGS     += -Os
-CPPFLAGS   += -D_GNU_SOURCE
 CPPFLAGS   += -W -Wall
-ARFLAGS     = crus
 
 DISTFILES   = README LICENSE
 HEADERS     = lite.h
@@ -54,12 +46,6 @@ SYMLIB      = $(LIBNAME).so
 STATICLIB   = $(LIBNAME).a
 TARGET      = $(STATICLIB) $(SOLIB)
 
-# Default install paths
-prefix     ?= /usr/local
-libdir     ?= $(prefix)/lib
-datadir    ?= $(prefix)/share/doc/$(LIBNAME)
-incdir     ?= $(prefix)/include
-
 # This magic trick looks like a comment, but works on BSD PMake
 #include <rules.mk>
 include rules.mk
@@ -69,6 +55,7 @@ test:
 	$(MAKE) -f copyfile.mk
 	$(MAKE) -f dir.mk
 	$(MAKE) -f fsendfile.mk
+	$(MAKE) -f makepath.mk
 	$(MAKE) -f pidfilefn.mk
 	$(MAKE) -f rsync.mk
 

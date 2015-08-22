@@ -55,7 +55,7 @@ int makepath(char *dir)
 
 /********************************* UNIT TESTS ************************************/
 #ifdef UNITTEST
-#include <stdio.h>
+#include "lite.h"
 
 int checkpath(char *dir)
 {
@@ -63,7 +63,8 @@ int checkpath(char *dir)
 	struct stat sb;
 
 	snprintf(tmp, sizeof(tmp), "ls -ld %s", dir);
-	system(tmp);
+	if (system(tmp))
+		perror("system");
 
 	if (!stat(dir, &sb) && S_ISDIR(sb.st_mode))
 		return 0;
@@ -98,11 +99,11 @@ int main(void)
 		NULL
 	};
 
-	fprintf(stderr, "Testing makepath() ...\n");
+	printf("Testing makepath() ...\n");
 	for (i = 0; list[i] && !ret; i++)
 		ret = test_makepath(list[i]);
 
-	fprintf(stderr, "\nCleaning up ...\n");
+	printf("\nCleaning up ...\n");
 	for (i = 0; list[i]; i++)
 		rmdir(list[i]);
 
@@ -112,7 +113,7 @@ int main(void)
 
 /**
  * Local Variables:
- *  compile-command: "gcc -g -o unittest -D_GNU_SOURCE -DUNITTEST makepath.c && ./unittest"
+ *  compile-command: "make V=1 -f makepath.mk"
  *  version-control: t
  *  indent-tabs-mode: t
  *  c-file-style: "linux"
