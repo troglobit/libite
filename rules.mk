@@ -18,11 +18,13 @@ Q           =
 PRINT       = @true
 REDIRECT    =
 MAKEFLAGS   =
+VERBOSE     = -v
 else
 Q           = @
 PRINT       = @printf
 REDIRECT    = >/dev/null
 MAKEFLAGS   = --no-print-directory --silent
+VERBOSE     =
 endif
 
 # Some tests may need to be run as root, e.g. pidfile()
@@ -51,7 +53,8 @@ incdir     ?= $(prefix)/include
 %.test: %.c
 	$(PRINT) "  TEST    $(subst $(ROOTDIR)/,,$(shell pwd)/)$(@:.test=)\n"
 	$(Q)$(CC) $(CFLAGS) $(CPPFLAGS) -g -o $@ -DUNITTEST $< $(OBJS)
-	$(Q)$(SUDO) ./$@ $(REDIRECT)
+	$(Q)$(RM) $(OBJS)
+	$(Q)$(SUDO) ./$@ $(VERBOSE) $(REDIRECT)
 
 
 # Default build rules for both main and unit test makefiles
