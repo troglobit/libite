@@ -59,6 +59,7 @@ test: clean
 	$(MAKE) -f fsendfile.mk
 	$(MAKE) -f makepath.mk
 	$(MAKE) -f pidfilefn.mk
+	$(MAKE) -f progress.mk
 	$(MAKE) -f rsync.mk
 	$(MAKE) -f tempfile.mk
 	$(MAKE) -f tree.mk

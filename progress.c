@@ -70,7 +70,7 @@ static void bye(void)
 	showcursor();
 }
 
-int main(int argc __attribute__((unused)), char const *argv[] __attribute__((unused)))
+int main(void)
 {
 	int i, percent, block = 0, num = 85;
 
@@ -94,7 +94,7 @@ int main(int argc __attribute__((unused)), char const *argv[] __attribute__((unu
 
 /**
  * Local Variables:
- *  compile-command: "gcc -g -I../../include -o unittest -DUNITTEST progress.c; and ./unittest"
+ *  compile-command: "make V=1 -f progress.mk"
  *  version-control: t
  *  indent-tabs-mode: t
  *  c-file-style: "linux"
