@@ -62,11 +62,11 @@
 #define showcursor()          fputs ("\e[?25h", stdout)
 
 /* Esc[Value;...;Valuem       - Set Graphics Mode */
-#define __set_gm(attr,color,val)                                        \
-        if (!color)                                                     \
-                printf("\e[%dm", attr);                                 \
-        else                                                            \
-                printf("\e[%d;%dm", color & 0x10 ? 1 : 0, (color & 0xF) + val)
+#define __set_gm(attr,color,val)					\
+	if (!color)							\
+		printf("\e[%dm", attr);					\
+	else								\
+		printf("\e[%d;%dm", color & 0x10 ? 1 : 0, (color & 0xF) + val)
 #define textattr(attr)        __set_gm(attr, 0, 0)
 #define textcolor(color)      __set_gm(RESETATTR, color, 30)
 #define textbackground(color) __set_gm(RESETATTR, color, 40)
@@ -76,6 +76,7 @@
 /**
  * Local Variables:
  *  version-control: t
- *  c-file-style: "ellemtel"
+ *  indent-tabs-mode: t
+ *  c-file-style: "linux"
  * End:
  */
