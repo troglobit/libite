@@ -198,7 +198,8 @@ static int prune(char *dst, char **new_files, int new_num)
 #define SRC  BASE "src/"
 #define DST  BASE "dst/"
 
-char *files[] = {
+static int verbose = 0;
+static char *files[] = {
 	SRC "sub1/1.tst",
 	SRC "sub1/2.tst",
 	SRC "sub1/3.tst",
@@ -240,51 +241,64 @@ void setup_test(void)
 	}
 }
 
-int run_test()
+static void tree(char *heading, char *dir)
 {
+	if (verbose) {
+		char cmd[128];
+
+		if (heading)
+			puts(heading);
+
+		snprintf(cmd, sizeof(cmd), "tree -np %s", dir);
+		if (system(cmd))
+			perror("Failed calling tree, not installed perhaps");
+	}
+}
+
+int run_test(void)
+{
+	int result = 0;
+
 #if 0
 	setup_test();
-	puts("Before:");
-	system("tree -np " BASE);
+	tree("Before:", BASE);
 
-	rsync(SRC, DST, 0, NULL);
-	puts("After:");
-	system("tree -np " BASE);
+	result += rsync(SRC, DST, 0, NULL);
+	tree("After:", BASE);
 	cleanup_test();
 #endif
 
 	setup_test();
-	rsync(BASE "src", DST, 0, NULL);
-	puts("Only partial rsync of src <-- No slash!");
-	system("tree -np " BASE);
+	result += rsync(BASE "src", DST, 0, NULL);
+	tree("Only partial rsync of src <-- No slash!", BASE);
 #if 0
 	cleanup_test();
 	setup_test();
-	rsync(BASE "src/sub1", BASE "dst", 0, NULL);
-	puts("Only partial rsync of src/sub1 <-- No slashes!!");
-	system("tree -np " BASE);
+	result += rsync(BASE "src/sub1", BASE "dst", 0, NULL);
+	tree("Only partial rsync of src/sub1 <-- No slashes!!", BASE);
 
 	cleanup_test();
 	setup_test();
-	rsync(BASE "src/sub1/", DST, 0, NULL);
-	puts("Only partial rsync of src/sub1/");
-	system("tree -np " BASE);
+	result += rsync(BASE "src/sub1/", DST, 0, NULL);
+	tree("Only partial rsync of src/sub1/", BASE);
 
 	cleanup_test();
 	setup_test();
-	rsync(BASE "src/sub1", DST, 0, NULL);
-	puts("Only partial rsync of src/sub1 <-- No slash!");
-	system("tree -np " BASE);
+	result += rsync(BASE "src/sub1", DST, 0, NULL);
+	tree("Only partial rsync of src/sub1 <-- No slash!", BASE);
 
-	rsync("/etc", "/var/tmp", 0, NULL);
-	puts("Real life test:");
-	system("tree -np /var/tmp");
+	result += rsync("/etc", "/var/tmp", 0, NULL);
+	tree("Real life test:", "/var/tmp");
 #endif
-	return 0;
+
+	return result;
 }
 
 int main(int argc, char *argv[])
 {
+	if (argc > 1)
+		verbose = !strncmp("-v", argv[1], 2);
+
 	atexit(cleanup_test);
 
 	return run_test();
