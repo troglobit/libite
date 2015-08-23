@@ -17,6 +17,7 @@
 
 #include <paths.h>
 #include <fcntl.h>		/* O_TMPFILE requires -D_GNU_SOURCE */
+#include <linux/version.h>
 #include <stdlib.h>		/* mkstemp() */
 #include <stdio.h>		/* fdopen() */
 #include <sys/stat.h>		/* umask() */
@@ -41,6 +42,7 @@
  */
 FILE *tempfile(void)
 {
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,11,0)
 	int fd;
 	mode_t oldmask;
 
@@ -51,6 +53,10 @@ FILE *tempfile(void)
 		return NULL;
 
 	return fdopen(fd, "rw");
+#else
+#warning Too old kernel, reverting to wrap unsafe tmpfile() ...
+	return tmpfile();
+#endif
 }
 
 #ifdef UNITTEST
