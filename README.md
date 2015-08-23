@@ -173,6 +173,13 @@ Generic Functions
 
   Send signal to PID found in pid file created by `pidfile()`.
 
+- `progress(percent, max_width)`
+
+  Simple ASCII progress bar with a spinner.  Start it with `percent=0`
+  and set the `max_width=chars` to indicate width of the progress bar.
+  Called multiple times with the same percentage value cause spinner to
+  spin.
+
 - `rsync(src, dst, delete, *filter())`
 
   Very simple `rsync()` to copy files files and directories
@@ -187,9 +194,11 @@ Generic Functions
   **Note:** Requires Linux v3.11, or later, will fall back to the old
     and unsafe `tmpfile()` on older systems.
 
-- `tree()`
+- `tree(path, show_perms)`
 
-  Very simple `/bin/tree` replacement.
+  Very simple `/bin/tree` replacement.  Draw ASCII tree of `path`, with
+  optional listing of file and directory permissions if `show_perms` is
+  set.  The `path` argument should be a directory.
 
 
 OpenBSD Functions
