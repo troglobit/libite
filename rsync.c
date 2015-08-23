@@ -241,7 +241,7 @@ void setup_test(void)
 	}
 }
 
-static void tree(char *heading, char *dir)
+static void check_tree(char *heading, char *dir)
 {
 	if (verbose) {
 		char cmd[128];
@@ -249,9 +249,7 @@ static void tree(char *heading, char *dir)
 		if (heading)
 			puts(heading);
 
-		snprintf(cmd, sizeof(cmd), "tree -np %s", dir);
-		if (system(cmd))
-			perror("Failed calling tree, not installed perhaps");
+		tree(dir, 1);
 	}
 }
 
@@ -261,34 +259,34 @@ int run_test(void)
 
 #if 0
 	setup_test();
-	tree("Before:", BASE);
+	check_tree("Before:", BASE);
 
 	result += rsync(SRC, DST, 0, NULL);
-	tree("After:", BASE);
+	check_tree("After:", BASE);
 	cleanup_test();
 #endif
 
 	setup_test();
 	result += rsync(BASE "src", DST, 0, NULL);
-	tree("Only partial rsync of src <-- No slash!", BASE);
+	check_tree("Only partial rsync of src <-- No slash!", BASE);
 #if 0
 	cleanup_test();
 	setup_test();
 	result += rsync(BASE "src/sub1", BASE "dst", 0, NULL);
-	tree("Only partial rsync of src/sub1 <-- No slashes!!", BASE);
+	check_tree("Only partial rsync of src/sub1 <-- No slashes!!", BASE);
 
 	cleanup_test();
 	setup_test();
 	result += rsync(BASE "src/sub1/", DST, 0, NULL);
-	tree("Only partial rsync of src/sub1/", BASE);
+	check_tree("Only partial rsync of src/sub1/", BASE);
 
 	cleanup_test();
 	setup_test();
 	result += rsync(BASE "src/sub1", DST, 0, NULL);
-	tree("Only partial rsync of src/sub1 <-- No slash!", BASE);
+	check_tree("Only partial rsync of src/sub1 <-- No slash!", BASE);
 
 	result += rsync("/etc", "/var/tmp", 0, NULL);
-	tree("Real life test:", "/var/tmp");
+	check_tree("Real life test:", "/var/tmp");
 #endif
 
 	return result;
