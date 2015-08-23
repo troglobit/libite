@@ -43,7 +43,6 @@ static void get_perms(struct stat *st, char *buf, size_t len)
 {
 	mode_t m = st->st_mode;
 
-//	printf("%#o\n", m);
 	snprintf(buf, len, "[%c%c%c%c%c%c%c%c%c%c] ",
 		 S_ISCHR(m) ? 'c' : S_ISBLK(m) ? 'b' : S_ISFIFO(m) ? 'p' : S_ISLNK(m) ? 'l' : S_ISSOCK(m) ? 's' : '-',
 		 (m & S_IRUSR) ? 'r' : '-',
@@ -58,7 +57,7 @@ static void get_perms(struct stat *st, char *buf, size_t len)
 		);
 }
 
-static int descend(char *path, int perms, char *pfx)
+static int descend(char *path, int show_perms, char *pfx)
 {
 	int result = 0;
 	struct stat st;
@@ -87,10 +86,8 @@ static int descend(char *path, int perms, char *pfx)
 
 				snprintf(buf, sizeof(buf), "%s/%s", path, namelist[i]->d_name);
 				if (!lstat(buf, &st)) {
-					if (perms) {
-//						printf("buf: %s --> ", buf);
+					if (show_perms)
 						get_perms(&st, p, sizeof(p));
-					}
 					if ((st.st_mode & S_IFMT) == S_IFDIR)
 						t = '/';
 					if (S_ISLNK(st.st_mode)) {
@@ -102,7 +99,7 @@ static int descend(char *path, int perms, char *pfx)
 
 				printf("%s%s%c%s\n", p, namelist[i]->d_name, t, s);
 				if (t == '/')
-					result += descend(buf, perms, dir);
+					result += descend(buf, show_perms, dir);
 
 				free(namelist[i]);
 			}
