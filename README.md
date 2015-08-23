@@ -182,7 +182,14 @@ Generic Functions
 
   Secure replacement for `tmpfile()`.  Creates an invisible temporary
   file in `/tmp` that is removed when the returned `FILE` pointer is
-  closed.  **Note:** Requires Linux v3.11, or later.
+  closed.
+  
+  **Note:** Requires Linux v3.11, or later, will fall back to the old
+    and unsafe `tmpfile()` on older systems.
+
+- `tree()`
+
+  Very simple `/bin/tree` replacement.
 
 
 OpenBSD Functions

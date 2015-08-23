@@ -69,6 +69,8 @@ size_t  strlcat    (char *dst, const char *src, size_t siz);
 long long strtonum (const char *numstr, long long minval, long long maxval, const char **errstrp);
 #endif
 
+int tree(char *path, int show_perms);
+
 #ifndef touch
 # define touch(x) do { if (mknod((x), S_IFREG|0644, 0) && errno != EEXIST) warn("Failed creating %s", x); } while (0)
 #endif
