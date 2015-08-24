@@ -1,6 +1,6 @@
-/* Very simple termios based progress bar
+/* Simple termios based progress bar
  *
- * Copyright (c) 2012, 2013  Joachim Nilsson <troglobit@gmail.com>
+ * Copyright (c) 2012-2015  Joachim Nilsson <troglobit@gmail.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -17,31 +17,58 @@
 
 #include <limits.h>		/* INT_MAX */
 #include <stdio.h>
+#include <string.h>
 
 #include "conio.h"
 
-static char spinner(void)
-{
-	static int i = INT_MAX;
-	char *states = "|/-\\";
-//	char *states = ".oOo";
-//	char *states = ".oO°Oo.";
-//	char *states = "v<^>";
-//	char *states = ".oO@*";
+#define SPINNER_THROB   ".oOo"
+#define SPINNER_PULSAR  ".oO°Oo."
+#define SPINNER_ARROW   "v<^>"
+#define SPINNER_STAR    ".oO@*"
+#define SPINNER_DEFAULT "|/-\\"
 
-	/* Subtract to get clockwise spinning. */
-	return states[i-- % 4];	/* % Number of states */
+static char spinner(char *style)
+{
+	size_t num;
+	static unsigned int i = 0;
+
+	if (!style)
+		style = SPINNER_DEFAULT;
+	num = strlen(style);
+
+	return style[i++ % num]; /* % Number of states in style */
 }
 
+/**
+ * progress - Advanced ASCII progress bar with spinner
+ * @percent: Start first call with this set to 0, end with 100
+ * @max_width: Max width of progress bar, in total characters.
+ *
+ * This function draws an advanced ASCII progressbar at the current
+ * line.  It always start from the first column.
+ *
+ * The progress bar will hide the cursor if started with @percent 0 and
+ * show it again at the end, when called with @percent 100.
+ *
+ * While being called with the same percentage the spinner will spin,
+ * to show the user the process hasn't frozen.
+ *
+ * If the output TTY cannot interpret control characters, like \r, it is
+ * advised to instead used the progress_simple() function.
+ */
 void progress(int percent, int max_width)
 {
-	int i, bar = percent * max_width / 100;
+	int i, bar;
+
+	/* Adjust for progress bar overhead */
+	max_width -= 10;
 
 	if (0 == percent)
 		hidecursor();
 
-	fprintf(stderr, "\r%3d%% %c [", percent, spinner());
+	fprintf(stderr, "\r%3d%% %c [", percent, spinner(NULL));
 
+	bar = percent * max_width / 100;
 	for (i = 0; i < max_width; i++) {
 		if (i > bar)
 			fputc(' ', stderr);
@@ -58,6 +85,35 @@ void progress(int percent, int max_width)
 	}
 }
 
+void progress_simple(int percent)
+{
+	static int last = 1;
+	int ratio, numout;
+
+	if (!percent && last) {
+		last = 0;
+		fputs("0%       25%       50%       75%       100%\n"
+		      "|---------+---------+---------+---------|\n"
+		      "|", stderr);
+		return;
+	}
+
+	ratio = 40 * percent / 100;
+	numout = ratio - last;
+
+	if (ratio <= last)
+		return;
+
+	last = ratio;
+
+	while (numout--) {
+		if (ratio != 40 || numout)
+			putc('=', stderr);
+		else
+			putc('|', stderr);
+	}
+}
+
 #ifdef UNITTEST
 #include <stdlib.h>		/* atexit() */
 #include <unistd.h>		/* usleep() */
@@ -70,23 +126,40 @@ static void bye(void)
 	showcursor();
 }
 
-int main(void)
+static void testit(int fn, int percent)
+{
+	if (fn)
+		progress(percent, MAX_WIDTH);
+	else
+		progress_simple(percent);
+}
+
+static void test(int fn)
 {
 	int i, percent, block = 0, num = 85;
-
-	atexit(bye);
-	hidecursor();
 
 	while (block < num) {
 		percent = block * 100 / num;
 		for (i = 0; i < 10; i++) {
-			progress(percent, MAX_WIDTH);
-			msleep(2);
+			testit(fn, percent);
+			msleep(5);
 		}
 		block++;
-		msleep(50);
+		msleep(10);
 	}
-	progress(100, MAX_WIDTH);
+	testit(fn, 100);
+}
+
+int main(void)
+{
+	atexit(bye);
+	hidecursor();
+
+	printf("\nAdvanced:\n");
+	test(1);
+	printf("\nSimple:\n");
+	test(0);
+	printf("\n");
 
 	return 0;
 }
