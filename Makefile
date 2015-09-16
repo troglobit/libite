@@ -22,13 +22,12 @@
 .PHONY: install test
 
 #VERSION    = $(shell git tag -l | tail -1)
-VERSION    ?= 1.1.0-beta2
+VERSION    ?= 1.1.0
 NAME        = libite
 PKG         = $(NAME)-$(VERSION)
 ARCHIVE     = $(PKG).tar.xz
 
 CFLAGS     += -fPIC
-CFLAGS     += -Os
 CPPFLAGS   += -W -Wall
 
 DISTFILES   = README LICENSE
