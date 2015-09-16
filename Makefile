@@ -22,7 +22,7 @@
 .PHONY: install test
 
 #VERSION    = $(shell git tag -l | tail -1)
-VERSION    ?= 1.1.0-beta1
+VERSION    ?= 1.1.0-beta2
 NAME        = libite
 PKG         = $(NAME)-$(VERSION)
 ARCHIVE     = $(PKG).tar.xz
@@ -39,7 +39,7 @@ OBJS       += strlcpy.o strlcat.o strtonum.o tempfile.o tree.o
 DEPS       := $(OBJS:.o=.d)
 JUNK        = *~ *.bak *.map .*.d *.d DEADJOE semantic.cache *.gdb *.elf core core.*
 
-VER         = 1
+VER         = 2
 LIBNAME     = $(NAME)
 SOLIB       = $(LIBNAME).so.$(VER)
 SYMLIB      = $(LIBNAME).so
