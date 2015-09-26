@@ -71,7 +71,7 @@ $(SOLIB): Makefile $(OBJS)
 
 $(STATICLIB): Makefile $(OBJS)
 	$(Q)$(PRINT) "  ARCHIVE $@\n"
-	$(Q)$(AR) $(ARFLAGS) $@ $(OBJS)
+	$(Q)$(AR) $(ARFLAGS) $@ $(OBJS) 2>/dev/null
 
 install-exec: all
 	$(PRINT) "  INSTALL $(DESTDIR)$(libdir)/$(SOLIB)\n"
