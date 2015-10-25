@@ -207,6 +207,20 @@ int main(void)
 	}
 	printf("ftp is inet port %d\n", val);
 
+	val = fgetint("/etc/group", "x:\n", "utmp");
+	if (val == -1) {
+		perror("Failed locating group 'utmp'");
+		return 1;
+	}
+	printf("utmp is gid %d\n", val);
+
+	val = fgetint("/etc/passwd", "x:\n", "nobody");
+	if (val == -1) {
+		perror("Failed locating user 'nobody'");
+		return 1;
+	}
+	printf("nobody is uid %d\n", val);
+
 	return 0;
 }
 #endif
