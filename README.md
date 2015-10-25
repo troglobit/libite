@@ -133,6 +133,29 @@ Generic Functions
   Basic ifconfig like operations on an interface.  Only supports IPv4
   adresses.  Note that mask is not CIDR notation.
 
+- `lfopen(file, sep)`, `lfclose(lf)`
+
+  API for parsing UNIX style configuration files like `/etc/protocols`
+  and `/etc/services`.
+
+- `lftok(lf)`
+
+  Read tokens, delimeted by `sep`, from file opened with `lfopen()`.
+
+- `lfgetkey(lf, key)`
+
+  Find `key` in file opened with `lfopen()`, return value/argument.
+
+- `lfgetint(lf, key)`
+
+  Wrapper for `lfgetkey()`, returns positive integer value to `key`,
+  or `-1` if `key` is not found.
+
+- `fgetint(file, sep, key)`
+
+  Wrapper for `lfopen()`, `lfgetint()`, and `lfclose()`.  Useful for
+  when only reading a single `key` from a file.
+
 - `makepath(dir)`
 
   Create all components of the specified directory.
