@@ -47,8 +47,9 @@ lfile_t *lfopen(char *file, char *sep)
 	/* Use calloc for clearing buf on behalf of lftok() */
 	lf = calloc(sizeof(*lf), sizeof(char));
 	if (lf) {
-		lf->fp  = fopen(file, "r");
-		lf->sep = sep;
+		lf->fp   = fopen(file, "r");
+		lf->sep  = sep;
+		lf->save = lf->buf;
 
 		if (!lf->fp) {
 			free(lf);
