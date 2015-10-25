@@ -34,6 +34,8 @@
 #include <sys/param.h> /* MAX(), isset(), setbit(), TRUE, FALSE, et consortes. :-) */
 #include <unistd.h>
 
+typedef struct lfile lfile_t;
+
 char   *chomp      (char *str);
 
 int     fexist     (char *file);
@@ -47,6 +49,13 @@ int     fcopyfile  (FILE *src, FILE *dst);
 size_t  fsendfile  (FILE *src, FILE *dst, size_t len);
 
 int     ifconfig   (char *ifname, char *addr, char *mask, int up);
+
+lfile_t*lfopen     (char *file, char *sep);
+void    lfclose    (lfile_t *lf);
+char   *lftok      (lfile_t *lf);
+char   *lfgetkey   (lfile_t *lf, char *key);
+int     lfgetint   (lfile_t *lf, char *key);
+int     fgetint    (char *file, char *sep, char *key);
 
 int     mkpath     (char *dir, mode_t mode);
 int     makepath   (char *dir);

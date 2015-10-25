@@ -21,7 +21,7 @@
 #include <string.h>		/* strlen(), strncmp(), strtok_r() */
 #include <sys/param.h>		/* MAX() */
 
-typedef struct {
+typedef struct lfile {
 	FILE *fp;
 	char buf[256];
 	char *sep, *save;
