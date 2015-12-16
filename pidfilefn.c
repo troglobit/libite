@@ -142,6 +142,8 @@ static void sigalrm_handler(int signo)
 
 int main(void)
 {
+	char cmd[80];
+
 	snprintf(PIDFILE, sizeof(PIDFILE), "%s%s.pid", _PATH_VARRUN, __progname);
 
 	signal(SIGTERM, sigterm_handler);
@@ -157,6 +159,13 @@ int main(void)
 	printf("Reading pid file, should be %d ...\n", getpid());
         printf("=> %d\n", pidfile_read(PIDFILE));
 
+	/* Occular verification that calling pidfile() again updates mtime */
+	snprintf(cmd, sizeof(cmd), "ls -l --full-time %s", PIDFILE);
+	system(cmd);
+	printf("Before ^^ pidfile() vv after ...\n");
+	pidfile(NULL);
+	system(cmd);
+	
         printf("Signalling ourselves ...\n");
 
 	return pidfile_signal(PIDFILE, SIGTERM);
