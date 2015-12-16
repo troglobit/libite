@@ -83,6 +83,9 @@ pidfile(const char *basename)
 	}
 	(void) fclose(f);
 
+	if (pidfile_pid == pid)
+		return (0);
+
 	pidfile_pid = pid;
 	if (atexit(pidfile_cleanup) < 0) {
 		save_errno = errno;
