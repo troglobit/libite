@@ -70,6 +70,4 @@ Initial extraction of frog DNA from [Finit][].  See [README][] for API details.
 [v1.1.0]: https://github.com/troglobit/libite/compare/v1.0.0...v1.1.0
 [v1.0.0]: https://github.com/troglobit/libite/compare/TAIL...v1.0.0
 [Finit]:  https://github.com/troglobit/finit/
-[TODO.md]: https://github.com/troglobit/libite/blob/master/TODO.md
-[README.md]: https://github.com/troglobit/libite/blob/v1.0.0/README.md
-[ChangeLog.md]: https://github.com/troglobit/libite/blob/master/ChangeLog.md
+[README]: https://github.com/troglobit/libite/blob/v1.0.0/README.md
