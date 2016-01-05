@@ -32,7 +32,7 @@ CPPFLAGS   += -W -Wall
 LDFLAGS     = $(EXTRA_LDFLAGS)
 
 DISTFILES   = README LICENSE
-HEADERS     = lite.h
+HEADERS     = lite.h queue.h conio.h
 OBJS       := chomp.o copyfile.o dir.o fexist.o fisdir.o fmode.o fsendfile.o
 OBJS       += ifconfig.o lfile.o makepath.o pidfile.o pidfilefn.o progress.o
 OBJS       += rsync.o strlcpy.o strlcat.o strtonum.o tempfile.o tree.o
