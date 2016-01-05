@@ -22,7 +22,7 @@
 .PHONY: install test
 
 #VERSION    = $(shell git tag -l | tail -1)
-VERSION     = 1.2.0
+VERSION     = 1.3.0-dev
 NAME        = libite
 PKG         = $(NAME)-$(VERSION)
 ARCHIVE     = $(PKG).tar.xz
@@ -31,7 +31,7 @@ CFLAGS     += -fPIC
 CPPFLAGS   += -W -Wall
 LDFLAGS     = $(EXTRA_LDFLAGS)
 
-DISTFILES   = README LICENSE
+DISTFILES   = README ChangeLog LICENSE
 HEADERS     = lite.h
 OBJS       := chomp.o copyfile.o dir.o fexist.o fisdir.o fmode.o fsendfile.o
 OBJS       += ifconfig.o lfile.o makepath.o pidfile.o pidfilefn.o progress.o
