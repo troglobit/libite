@@ -50,6 +50,10 @@ Helper Macros
 
   Create a FIFO, like `mkfifo()`.  Errors on stderr
 
+- `min(a,b)`/`max(a,b)`
+
+  These macros take care to avoid double evaluation.
+
 - `touch(path)`
 
   Create a file, or update mtime.  Errors on stderr

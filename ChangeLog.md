@@ -4,6 +4,16 @@ Change Log
 All notable changes to the project are documented in this file.
 
 
+[UNRELEASED][] - v1.3.0
+-----------------------
+
+### Changes
+- Add highly useful typeless `min()`/`max()` macros to `lite.h`,
+  courtesy of Tobias Waldekranz
+- Add BSD `queue.h` and Borland inspired `conio.h` to `install-dev`
+  target.  Needed by [Finit][].
+
+
 [v1.2.0][] - 2015-11-23
 -----------------------
 
@@ -41,7 +51,7 @@ All notable changes to the project are documented in this file.
 - Add support for running autotests from Travis
 - Add `progress()` simple progress bar
 - Add `tree()` simple command line tree replacement
-- Bump `SONAME` to `libite.so.2` on behalf of Finit
+- Bump `SONAME` to `libite.so.2` on behalf of [Finit][]
 
 ### Fixes
 - `pidfile()` upgrade to OpenBSD r1.11
@@ -58,6 +68,7 @@ Initial extraction of frog DNA from [Finit][].  See [README][] for API details.
 [v1.1.1]: https://github.com/troglobit/libite/compare/v1.1.0...v1.1.1
 [v1.1.0]: https://github.com/troglobit/libite/compare/v1.0.0...v1.1.0
 [v1.0.0]: https://github.com/troglobit/libite/compare/TAIL...v1.0.0
+[Finit]:  https://github.com/troglobit/finit/
 [TODO.md]: https://github.com/troglobit/libite/blob/master/TODO.md
 [README.md]: https://github.com/troglobit/libite/blob/v1.0.0/README.md
 [ChangeLog.md]: https://github.com/troglobit/libite/blob/master/ChangeLog.md
