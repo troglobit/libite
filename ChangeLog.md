@@ -58,12 +58,13 @@ All notable changes to the project are documented in this file.
 - Lots of README updates, fixes and additions
 
 
-[1.0.0][] - 2015-07-12
-----------------------
+[v1.0.0][] - 2015-07-12
+-----------------------
 
 Initial extraction of frog DNA from [Finit][].  See [README][] for API details.
 
-[UNRELEASED]: https://github.com/troglobit/libuev/compare/v1.2.0...HEAD
+
+[UNRELEASED]: https://github.com/troglobit/libite/compare/v1.2.0...HEAD
 [v1.2.0]: https://github.com/troglobit/libite/compare/v1.1.1...v1.2.0
 [v1.1.1]: https://github.com/troglobit/libite/compare/v1.1.0...v1.1.1
 [v1.1.0]: https://github.com/troglobit/libite/compare/v1.0.0...v1.1.0
