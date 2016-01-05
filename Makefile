@@ -90,13 +90,15 @@ install-dev:
 	$(PRINT) "  INSTALL $(DESTDIR)$(libdir)/$(STATICLIB)\n"
 	$(Q)install -d $(DESTDIR)$(libdir)
 	$(Q)$(INSTALL) $(STATICLIB) $(DESTDIR)$(libdir)/$(STATICLIB)
+
+install-data:
 	$(Q)install -d $(DESTDIR)$(datadir)
-	$(Q)for file in $(DISTFILES); do					\
+	$(Q)for file in $(DISTFILES); do				\
 		printf "  INSTALL $(DESTDIR)$(datadir)/$$file\n";	\
 		install -m 0644 $$file $(DESTDIR)$(datadir)/$$file;	\
 	done
 
-install: install-exec install-dev
+install: install-exec install-dev install-data
 
 uninstall:
 	-$(Q)$(RM) -r $(DESTDIR)$(datadir)
