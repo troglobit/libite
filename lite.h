@@ -181,6 +181,20 @@ static inline int string_case_compare (const char *a, const char *b)
    return strlen (a) == strlen (b) && !strcasecmp (a, b);
 }
 
+#define min(a,b)				\
+	({					\
+		__typeof__ (a) _a = (a);	\
+		__typeof__ (b) _b = (b);	\
+		_a < _b ? _a : _b;		\
+	})
+
+#define max(a,b)				\
+	({					\
+		__typeof__ (a) _a = (a);	\
+		__typeof__ (b) _b = (b);	\
+		_a > _b ? _a : _b;		\
+	})
+
 /* Compat */
 #define copy_filep(src,dst)        fcopyfile(src,dst)
 #define pidfile_read_pid(file)     pifile_read(file)
