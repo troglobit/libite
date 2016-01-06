@@ -176,20 +176,24 @@ Generic Functions
 
 - `pidfile(basename)`
 
-  Write a daemon pid file.  Creates a pidfile in `_PATH_VARRUN` using
-  either `basename` or, if `basename` is `NULL`, `__progname`.  The
-  file name has the form `/var/run/basename.pid`.
+  Create a daemon PID file in `_PATH_VARRUN` using either `basename` or,
+  if `basename` is `NULL`, `__progname`.  The file name has the form
+  `/var/run/basename.pid`.
 
-  Use this function to create a pid file for your daemon when it is
+  Use this function to create a PID file for your daemon when it is
   ready to receive signals.  A client application may poll for the
   existence of this file, so make sure to have your signal handlers
   properly setup before calling this function.
-  
+
   The pidfile is removed when the program exits, using an `atexit()`
   handler.  However, depending on how the program terminates the file
   may still exist even though the program is no longer running.  This
   is only a problem for clients.
 
+  Calling this function multiple times updates the mtime of the file.
+  Only one `atexit()` handler is created, regardless of the amount of
+  times the function is called.
+  
   See below for link to OpenBSD man page.
 
 - `pidfile_read(pidfile)`
