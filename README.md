@@ -241,6 +241,9 @@ The following are the popular OpenBSD string functions.
 
   http://www.openbsd.org/cgi-bin/man.cgi/OpenBSD-current/man3/pidfile.3
 
+  **Note:** this version of `pidfile()` has been extended to handle it
+    being called multiple times.  See previous section for details.
+
 - `strlcpy(dst, src, len)`
 
   http://www.openbsd.org/cgi-bin/man.cgi/OpenBSD-current/man3/strlcpy.3
