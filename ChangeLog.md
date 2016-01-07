@@ -16,6 +16,7 @@ All notable changes to the project are documented in this file.
   support for circular queues (CIRCLEQ).
 - Update `strlcpy.c` to OpenBSD v1.12, readability fixes.
 - Update `strlcat.c` to OpenBSD v1.14, readability fixes.
+- Update `strtonum.c` to OpenBSD v1.7, tiniest of style tweaks.
 
 
 [v1.2.0][] - 2015-11-23
