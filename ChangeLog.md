@@ -12,6 +12,8 @@ All notable changes to the project are documented in this file.
   courtesy of Tobias Waldekranz
 - Add BSD `queue.h` and Borland inspired `conio.h` to `install-dev`
   target.  Needed by [Finit][].
+- Note, this release update `queue.h` to OpenBSD v1.43, which removes
+  support for circular queues (CIRCLEQ).
 
 
 [v1.2.0][] - 2015-11-23
