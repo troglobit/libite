@@ -37,7 +37,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-static char *pidfile_path;
+#ifndef pidfile
+static char *pidfile_path = NULL;
 static pid_t pidfile_pid;
 
 static void pidfile_cleanup(void);
@@ -83,6 +84,10 @@ pidfile(const char *basename)
 	}
 	(void) fclose(f);
 
+	/*
+	 * LITE extension, no need to set up another atexit() handler
+	 * if user only called us to update the mtime of the PID file
+	 */
 	if (pidfile_pid == pid)
 		return (0);
 
@@ -107,3 +112,4 @@ pidfile_cleanup(void)
 	if (pidfile_path != NULL && pidfile_pid == getpid())
 		(void) unlink(pidfile_path);
 }
+#endif
