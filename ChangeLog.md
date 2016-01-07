@@ -4,7 +4,7 @@ Change Log
 All notable changes to the project are documented in this file.
 
 
-[UNRELEASED][] - v1.3.0
+[v1.3.0][] - 2016-01-07
 -----------------------
 
 ### Changes
@@ -17,6 +17,12 @@ All notable changes to the project are documented in this file.
 - Update `strlcpy.c` to OpenBSD v1.12, readability fixes.
 - Update `strlcat.c` to OpenBSD v1.14, readability fixes.
 - Update `strtonum.c` to OpenBSD v1.7, tiniest of style tweaks.
+
+### Fixes
+- Only update mtime if `pidfile()` is called more than once, do not
+  install multiple `atexit()` handlers.
+- Add `#ifndef pidfile`, as for other BSD functions, in case the user
+  already have a local copy, or a C library with one.
 
 
 [v1.2.0][] - 2015-11-23

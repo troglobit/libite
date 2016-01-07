@@ -1,6 +1,6 @@
-# libite -- Light-weight utility functions and C-library extensions
+# libite (LITE) -- Collection of frog DNA
 # 
-# Copyright (c) 2008-2015  Joachim Nilsson <troglobit@gmail.com>
+# Copyright (c) 2008-2016  Joachim Nilsson <troglobit@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,7 @@
 .PHONY: install test
 
 #VERSION    = $(shell git tag -l | tail -1)
-VERSION     = 1.3.0-dev
+VERSION     = 1.3.0
 NAME        = libite
 PKG         = $(NAME)-$(VERSION)
 ARCHIVE     = $(PKG).tar.xz
