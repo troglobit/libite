@@ -14,6 +14,7 @@ All notable changes to the project are documented in this file.
   target.  Needed by [Finit][].
 - Note, this release update `queue.h` to OpenBSD v1.43, which removes
   support for circular queues (CIRCLEQ).
+- Update `strlcpy.c` to OpenBSD v1.12, readability fixes.
 
 
 [v1.2.0][] - 2015-11-23
