@@ -1,4 +1,4 @@
-/* Collection of utility funcs and C library extensions for finit & its plugins
+/* Collection of frog DNA
  *
  * Copyright (c) 2008-2010  Claudio Matsuoka <cmatsuoka@gmail.com>
  * Copyright (c) 2008-2016  Joachim Nilsson <troglobit@gmail.com>
@@ -22,8 +22,8 @@
  * THE SOFTWARE.
  */
 
-#ifndef FINIT_LITE_H_
-#define FINIT_LITE_H_
+#ifndef LITE_H_
+#define LITE_H_
 
 #include <err.h>
 #include <stdio.h>
@@ -200,7 +200,7 @@ static inline int string_case_compare (const char *a, const char *b)
 #define pidfile_read_pid(file)     pifile_read(file)
 #define signal_pidfile(file,signo) pidfile_signal(file,signo)
 
-#endif /* FINIT_LITE_H_ */
+#endif /* LITE_H_ */
 
 /**
  * Local Variables:
