@@ -3,6 +3,12 @@ Change Log
 
 All notable changes to the project are documented in this file.
 
+v1.4.0 - [UNRELEASED][]
+-----------------------
+
+### Changes
+- Change to GNU configure and build system
+
 
 [v1.3.0][] - 2016-01-07
 -----------------------
@@ -75,10 +81,17 @@ All notable changes to the project are documented in this file.
 Initial extraction of frog DNA from [Finit][].  See [README][] for API details.
 
 
-[UNRELEASED]: https://github.com/troglobit/libite/compare/v1.2.0...HEAD
+[UNRELEASED]: https://github.com/troglobit/libite/compare/v1.3.0...HEAD
+[v1.3.0]: https://github.com/troglobit/libite/compare/v1.2.0...v1.3.0
 [v1.2.0]: https://github.com/troglobit/libite/compare/v1.1.1...v1.2.0
 [v1.1.1]: https://github.com/troglobit/libite/compare/v1.1.0...v1.1.1
 [v1.1.0]: https://github.com/troglobit/libite/compare/v1.0.0...v1.1.0
 [v1.0.0]: https://github.com/troglobit/libite/compare/TAIL...v1.0.0
 [Finit]:  https://github.com/troglobit/finit/
 [README]: https://github.com/troglobit/libite/blob/v1.0.0/README.md
+
+<!--
+  -- Local Variables:
+  -- mode: markdown
+  -- End:
+  -->
