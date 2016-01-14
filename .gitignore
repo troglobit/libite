@@ -5,6 +5,8 @@
 *.so.*
 *.a
 .deps
+.libs
+tmp/
 compile
 config.*
 configure
@@ -19,3 +21,4 @@ Makefile.in
 aclocal.m4
 ar-lib
 autom4te.cache
+libite*
