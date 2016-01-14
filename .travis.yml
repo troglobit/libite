@@ -6,6 +6,8 @@ language: c
 # http://stackoverflow.com/questions/26299552/travis-sudo-is-disabled
 sudo: true
 
+#  - make test
 script:
-  - make
-  - make test
+  - ./autogen.sh
+  - ./configure --disable-silent-rules
+  - make -j5 clean all
