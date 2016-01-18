@@ -261,6 +261,18 @@ The following are the popular OpenBSD string functions.
   http://www.openbsd.org/cgi-bin/man.cgi/OpenBSD-current/man3/LIST_EMPTY.3
 
 
+Build & Install
+---------------
+
+The library is built for and developed on GNU/Linux systems as a light
+weight utility library.  Libite (LITE) employs the de facto standard GNU
+configure and build system:
+
+    ./configure
+    make all
+    make install
+
+
 TODO
 ----
 
