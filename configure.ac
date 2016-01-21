@@ -1,7 +1,6 @@
 # Use v2.61 for backwards compat with Ubuntu 12.04 LTS
 AC_PREREQ([2.61])
 AC_INIT(libite, 1.4.0-dev, https://github.com/troglobit/libite/issues)
-AM_MAINTAINER_MODE
 AM_INIT_AUTOMAKE([1.11 foreign no-dist-gzip dist-xz])
 AM_SILENT_RULES([yes])
 
