@@ -6,7 +6,7 @@ Libite is a lightweight library of *frog DNA*.  It can be used to fill
 the gaps in any dinosaur project.  It holds useful functions and macros
 developed by both [Finit][1] and the [OpenBSD][2] project.  Most notably
 the string functions: [strlcpy(3)][3], [strlcat(3)][3] and the highly
-useful *BSD [sys/queue.h][4] API.
+useful *BSD [sys/queue.h][4] and [sys/tree.h][7] API's.
 
 Libite aims to fill in the gaps missing in GLIBC/EGLIBC.  (It does not
 aimo to become another [GLIB][5] though.)  One such gap in GLIBC is the
@@ -237,7 +237,7 @@ Generic Functions
 OpenBSD Functions
 -----------------
 
-The following are the popular OpenBSD string functions.
+The following are popular OpenBSD functions and highly useful macros.
 
 - `pidfile(basename)`
 
@@ -264,6 +264,12 @@ The following are the popular OpenBSD string functions.
 
   http://www.openbsd.org/cgi-bin/man.cgi/OpenBSD-current/man3/LIST_EMPTY.3
 
+- `sys/tree.h` API
+
+  Niels Provos' famous splay and red-black tree implementation.
+
+  http://www.openbsd.org/cgi-bin/man.cgi/OpenBSD-current/man3/SPLAY_FOREACH.3
+
 
 Build & Install
 ---------------
@@ -289,6 +295,7 @@ TODO
 [4]: http://www.openbsd.org/cgi-bin/man.cgi/OpenBSD-current/man3/LIST_EMPTY.3
 [5]: https://developer.gnome.org/glib/
 [6]: http://troglobit.com/blog/2015/07/02/howto-using-lite-with-a-git-based-application/
+[7]: http://www.openbsd.org/cgi-bin/man.cgi/OpenBSD-current/man3/SPLAY_FOREACH.3
 [MIT]: https://en.wikipedia.org/wiki/MIT_License
 [ISC]: https://en.wikipedia.org/wiki/ISC_license
 [BSD]: https://en.wikipedia.org/wiki/BSD_licenses

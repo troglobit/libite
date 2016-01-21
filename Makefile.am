@@ -1,7 +1,7 @@
 ACLOCAL_AMFLAGS     = -I m4
 
 lib_LTLIBRARIES     = libite.la
-include_HEADERS     = lite.h queue.h conio.h
+include_HEADERS     = lite.h queue.h conio.h tree.h
 libite_la_SOURCES   = chomp.c copyfile.c dir.c fexist.c fisdir.c fmode.c fsendfile.c	\
 			ifconfig.c lfile.c makepath.c pidfile.c pidfilefn.c progress.c	\
 			rsync.c strlcpy.c strlcat.c strtonum.c tempfile.c tree.c
