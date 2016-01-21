@@ -21,6 +21,7 @@
 #include <signal.h>
 #include <unistd.h>
 
+extern char *__pidfile_name;
 extern char *chomp(char *str);
 
 /**
@@ -126,12 +127,12 @@ int pidfile_signal(const char *pidfile, int signal)
 extern char *__progname;
 static char PIDFILE[42];
 
-static void sigterm_handler(int signo)
+static void sigterm_handler(int UNUSED(signo))
 {
 	printf("Exiting ...\n");
 }
 
-static void sigalrm_handler(int signo)
+static void sigalrm_handler(int UNUSED(signo))
 {
 	printf("Testing pidfile() ...\n");
 	pidfile(NULL);
@@ -158,6 +159,10 @@ int main(void)
 
 	printf("Reading pid file, should be %d ...\n", getpid());
         printf("=> %d\n", pidfile_read(PIDFILE));
+
+	printf("\nComparing __pidfile_name with our guessed PID filename ...\n");
+	printf("strcmp(\"%s\",\n       \"%s\") => %s\n\n", __pidfile_name, PIDFILE,
+	       !strcmp(__pidfile_name, PIDFILE) ? "OK" : "FAIL");
 
 	/* Occular verification that calling pidfile() again updates mtime */
 	snprintf(cmd, sizeof(cmd), "ls -l --full-time %s", PIDFILE);

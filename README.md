@@ -177,8 +177,10 @@ Generic Functions
 - `pidfile(basename)`
 
   Create a daemon PID file in `_PATH_VARRUN` using either `basename` or,
-  if `basename` is `NULL`, `__progname`.  The file name has the form
-  `/var/run/basename.pid`.
+  if `basename` is `NULL`, `__progname`.  The resulting file name is
+  available to the user as a read-only pointer:
+
+        extern char *__pidfile_name;
 
   Use this function to create a PID file for your daemon when it is
   ready to receive signals.  A client application may poll for the
@@ -242,7 +244,9 @@ The following are the popular OpenBSD string functions.
   http://www.openbsd.org/cgi-bin/man.cgi/OpenBSD-current/man3/pidfile.3
 
   **Note:** this version of `pidfile()` has been extended to handle it
-    being called multiple times.  See previous section for details.
+  being called multiple times, and also to export the path to the PID
+  file `__pidfile_name`, similar to `__progname`.  See previous section
+  for details.
 
 - `strlcpy(dst, src, len)`
 
