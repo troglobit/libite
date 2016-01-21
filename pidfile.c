@@ -43,6 +43,7 @@ static pid_t pidfile_pid;
 
 static void pidfile_cleanup(void);
 
+const  char *__pidfile_name = NULL;
 extern char *__progname;
 
 int
@@ -58,6 +59,7 @@ pidfile(const char *basename)
 	if (pidfile_path != NULL) {
 		free(pidfile_path);
 		pidfile_path = NULL;
+		__pidfile_name = NULL;
 	}
 
 	/* _PATH_VARRUN includes trailing / */
@@ -101,6 +103,7 @@ pidfile(const char *basename)
 		errno = save_errno;
 		return (-1);
 	}
+	__pidfile_name = pidfile_path;
 
 	return (0);
 }
