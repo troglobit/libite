@@ -8,7 +8,7 @@ libite_la_SOURCES   = chomp.c copyfile.c dir.c fexist.c fisdir.c fmode.c fsendfi
 
 libite_la_CPPFLAGS  = -D_GNU_SOURCE
 libite_la_CFLAGS    = -W -Wall -Wextra
-libite_la_LDFLAGS   = $(AM_LDFLAGS) -version-info 2:0:0
+libite_la_LDFLAGS   = $(AM_LDFLAGS) -version-info 2:1:0
 
 doc_DATA            = README LICENSE
 #EXTRA_DIST          = README.md AUTHORS LICENSE ChangeLog.md
