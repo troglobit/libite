@@ -3,11 +3,15 @@ Change Log
 
 All notable changes to the project are documented in this file.
 
-v1.4.0 - [UNRELEASED][]
+[v1.4.0][] - 2016-01-22
 -----------------------
 
 ### Changes
 - Change to GNU configure and build system
+- Add Niels Provos' splay and red-black tree implementation from OpenBSD
+  `sys/tree.h`, r1.14
+- Make `pidfile()` file name accessible as `__pidfile_name`
+- Step ABI revision to 2.1, with help from http://250bpm.com/blog:41
 
 
 [v1.3.0][] - 2016-01-07
@@ -81,7 +85,8 @@ v1.4.0 - [UNRELEASED][]
 Initial extraction of frog DNA from [Finit][].  See [README][] for API details.
 
 
-[UNRELEASED]: https://github.com/troglobit/libite/compare/v1.3.0...HEAD
+[UNRELEASED]: https://github.com/troglobit/libite/compare/v1.4.0...HEAD
+[v1.4.0]: https://github.com/troglobit/libite/compare/v1.3.0...v1.4.0
 [v1.3.0]: https://github.com/troglobit/libite/compare/v1.2.0...v1.3.0
 [v1.2.0]: https://github.com/troglobit/libite/compare/v1.1.1...v1.2.0
 [v1.1.1]: https://github.com/troglobit/libite/compare/v1.1.0...v1.1.1
