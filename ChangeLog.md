@@ -3,6 +3,16 @@ Change Log
 
 All notable changes to the project are documented in this file.
 
+[v1.4.1][] - 2016-01-22
+-----------------------
+
+### Fixes
+- Fix install path for include files, regression in v1.4.0 With the
+  introduction of GNU autotools include file namespace was unfortunately
+  lost.  All include files were therefore installed in $(prefix)/include
+  instead of $(prefix)/include/libite.
+
+
 [v1.4.0][] - 2016-01-22
 -----------------------
 
@@ -85,7 +95,8 @@ All notable changes to the project are documented in this file.
 Initial extraction of frog DNA from [Finit][].  See [README][] for API details.
 
 
-[UNRELEASED]: https://github.com/troglobit/libite/compare/v1.4.0...HEAD
+[UNRELEASED]: https://github.com/troglobit/libite/compare/v1.4.1...HEAD
+[v1.4.1]: https://github.com/troglobit/libite/compare/v1.4.0...v1.4.1
 [v1.4.0]: https://github.com/troglobit/libite/compare/v1.3.0...v1.4.0
 [v1.3.0]: https://github.com/troglobit/libite/compare/v1.2.0...v1.3.0
 [v1.2.0]: https://github.com/troglobit/libite/compare/v1.1.1...v1.2.0
