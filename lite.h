@@ -130,12 +130,16 @@ int tree(char *path, int show_perms);
 #define UNUSED(x) UNUSED_ ## x __attribute__ ((unused))
 #endif
 
-
+/* Does directory end with a slash? */
 static inline int fisslashdir(char *dir)
 {
-   if (!dir)             return 0;
-   if (strlen (dir) > 0) return dir[strlen (dir) - 1] == '/';
-                         return 0;
+   if (!dir)
+	   return 0;
+
+   if (strlen(dir) > 0)
+	   return dir[strlen(dir) - 1] == '/';
+
+   return 0;
 }
 
 /* Convert string to natural number (0-2147483647), returns -1 on error. */
