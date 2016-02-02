@@ -11,7 +11,7 @@ libite_la_CFLAGS    = -W -Wall -Wextra
 libite_la_LDFLAGS   = $(AM_LDFLAGS) -version-info 2:1:0
 
 doc_DATA            = README.md LICENSE
-EXTRA_DIST          = README.md LICENSE AUTHORS ChangeLog.md
+EXTRA_DIST          = README.md LICENSE ChangeLog.md
 
 ## Generate MD5 checksum file
 MD5 = md5sum
