@@ -3,6 +3,13 @@ Change Log
 
 All notable changes to the project are documented in this file.
 
+v1.4.3 - [UNRELEASED][]
+-----------------------
+
+### Fixes
+- Remove symlinks to Markdown files from GIT
+- Distribute and install Markdown files: README.md, etc.
+
 
 [v1.4.2][] - 2016-01-23
 -----------------------
