@@ -3,7 +3,7 @@ Change Log
 
 All notable changes to the project are documented in this file.
 
-v1.4.3 - [UNRELEASED][]
+[v1.4.3][] - 2016-02-02
 -----------------------
 
 ### Fixes
@@ -111,7 +111,8 @@ v1.4.3 - [UNRELEASED][]
 Initial extraction of frog DNA from [Finit][].  See [README][] for API details.
 
 
-[UNRELEASED]: https://github.com/troglobit/libite/compare/v1.4.2...HEAD
+[UNRELEASED]: https://github.com/troglobit/libite/compare/v1.4.3...HEAD
+[v1.4.3]: https://github.com/troglobit/libite/compare/v1.4.2...v1.4.3
 [v1.4.2]: https://github.com/troglobit/libite/compare/v1.4.1...v1.4.2
 [v1.4.1]: https://github.com/troglobit/libite/compare/v1.4.0...v1.4.1
 [v1.4.0]: https://github.com/troglobit/libite/compare/v1.3.0...v1.4.0
