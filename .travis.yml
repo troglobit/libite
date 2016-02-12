@@ -4,7 +4,8 @@ language: c
 
 # Some of the autotests may use sudo, so use non-dockerized build atm.
 # http://stackoverflow.com/questions/26299552/travis-sudo-is-disabled
-sudo: true
+#sudo: true
+sudo: false
 
 #  - make test
 script:
