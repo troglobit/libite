@@ -24,7 +24,8 @@
 
 #ifndef  O_TMPFILE		/* Too old GLIBC or kernel */
 #warning O_TMPFILE missing on your system, tempfile() may not work!
-#define  O_TMPFILE 020200000	/* Define and let it fail at runtime */
+#define  __O_TMPFILE 020000000
+#define  O_TMPFILE (__O_TMPFILE | O_DIRECTORY) /* Define and let it fail at runtime */
 #endif
 
 /**
