@@ -7,6 +7,11 @@ language: c
 #sudo: true
 sudo: false
 
+# Test build with both GCC and Clang (LLVM)
+compiler:
+  - gcc
+  - clang
+
 #  - make test
 script:
   - ./autogen.sh
