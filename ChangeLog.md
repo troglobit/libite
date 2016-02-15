@@ -3,6 +3,17 @@ Change Log
 
 All notable changes to the project are documented in this file.
 
+
+[v1.4.4][UNRELEASED] - 2016-02-XX
+---------------------------------
+
+### Fixes
+- Fix issue #3: `tempfile()` fails with bad `O_TMPFILE` on some embedded
+  targets, in particular PowerPC.  On systems with older GLIBC but with
+  a sufficiently new kernel `O_TMPFILE` is missing and the local libite
+  definition was wrong, hard coded for x86.  Fixed by Johan Askerin.
+
+
 [v1.4.3][] - 2016-02-02
 -----------------------
 
@@ -112,6 +123,7 @@ Initial extraction of frog DNA from [Finit][].  See [README][] for API details.
 
 
 [UNRELEASED]: https://github.com/troglobit/libite/compare/v1.4.3...HEAD
+[v1.4.4]: https://github.com/troglobit/libite/compare/v1.4.3...v1.4.4
 [v1.4.3]: https://github.com/troglobit/libite/compare/v1.4.2...v1.4.3
 [v1.4.2]: https://github.com/troglobit/libite/compare/v1.4.1...v1.4.2
 [v1.4.1]: https://github.com/troglobit/libite/compare/v1.4.0...v1.4.1
