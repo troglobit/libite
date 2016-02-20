@@ -7,6 +7,6 @@ Name: @PACKAGE@
 Description: Frog DNA, basically
 Version: @VERSION@
 Requires:
-Libs: -L${libdir} -lite @LTLIBINTL@
+Libs: -L${libdir} -lite
 Cflags: -I${includedir}
 
