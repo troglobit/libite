@@ -8,10 +8,10 @@ developed by both [Finit][1] and the [OpenBSD][2] project.  Most notably
 the string functions: [strlcpy(3)][3], [strlcat(3)][3] and the highly
 useful *BSD [sys/queue.h][4] and [sys/tree.h][7] API's.
 
-Libite aims to fill in the gaps missing in GLIBC/EGLIBC.  (It does not
-aimo to become another [GLIB][5] though.)  One such gap in GLIBC is the
-missing `_SAFE` macros in `sys/queue.h` &mdash; highly recommended when
-traversing lists to delete/free nodes.
+Libite is the frog DNA missing in GNU libc.  However, -lite does not aim
+to become another [GLIB][5]!  One noticeable gap in GLIBC is the missing
+`_SAFE` macros in tje BSD `sys/queue.h` API &mdash; highly recommended
+when traversing lists to delete/free nodes.
 
 The code is open sourced under a mix of the [MIT/X11 license][MIT], the
 [ISC license][ISC] used by OpenBSD, and [BSD licenses][BSD], all of them
@@ -20,6 +20,25 @@ needed.
 
 For an introduction to why Libite happened, and how you can use it, see
 [this blog post][6].
+
+
+Using -lite
+-----------
+
+Libite is by default installed as a library and a set of include files.
+To prevent clashing with include files of the same name -lite employs a
+include file namespace `lite/`, which is recommended to use in your
+applications:
+
+    #include <lite/lite.h>
+    #include <lite/conio.h>
+    #include <lite/queue.h>
+    #include <lite/tree.h>
+
+The output from the `pkg-config` tool holds no surprises:
+
+    $ pkg-config --libs --static --cflags libite
+    -I/usr/local/include -L/usr/local/lib -lite @LTLIBINTL@
 
 
 Helper Macros

@@ -10,6 +10,8 @@ libite_la_CPPFLAGS  = -D_GNU_SOURCE
 libite_la_CFLAGS    = -W -Wall -Wextra
 libite_la_LDFLAGS   = $(AM_LDFLAGS) -version-info 2:1:0
 
+pkgconfigdir        = $(libdir)/pkgconfig
+pkgconfig_DATA      = libite.pc
 doc_DATA            = README.md LICENSE
 EXTRA_DIST          = README.md LICENSE ChangeLog.md
 
