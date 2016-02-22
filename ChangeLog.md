@@ -7,6 +7,9 @@ All notable changes to the project are documented in this file.
 [v1.4.4][UNRELEASED] - 2016-02-XX
 ---------------------------------
 
+### Changes
+- Add `ibite.pc.in` for `pkg-config` support.
+
 ### Fixes
 - Fix issue #3: `tempfile()` fails with bad `O_TMPFILE` on some embedded
   targets, in particular PowerPC.  On systems with older GLIBC but with
