@@ -4,8 +4,8 @@ Change Log
 All notable changes to the project are documented in this file.
 
 
-[v1.4.4][UNRELEASED] - 2016-02-XX
----------------------------------
+[v1.4.4][] - 2016-02-23
+-----------------------
 
 ### Changes
 - Add `ibite.pc.in` for `pkg-config` support.
@@ -125,7 +125,7 @@ All notable changes to the project are documented in this file.
 Initial extraction of frog DNA from [Finit][].  See [README][] for API details.
 
 
-[UNRELEASED]: https://github.com/troglobit/libite/compare/v1.4.3...HEAD
+[UNRELEASED]: https://github.com/troglobit/libite/compare/v1.4.4...HEAD
 [v1.4.4]: https://github.com/troglobit/libite/compare/v1.4.3...v1.4.4
 [v1.4.3]: https://github.com/troglobit/libite/compare/v1.4.2...v1.4.3
 [v1.4.2]: https://github.com/troglobit/libite/compare/v1.4.1...v1.4.2
