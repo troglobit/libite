@@ -38,7 +38,7 @@ applications:
 The output from the `pkg-config` tool holds no surprises:
 
     $ pkg-config --libs --static --cflags libite
-    -I/usr/local/include -L/usr/local/lib -lite @LTLIBINTL@
+    -I/usr/local/include -L/usr/local/lib -lite
 
 
 Helper Macros
