@@ -1,6 +1,7 @@
 ACLOCAL_AMFLAGS     = -I m4
 
 lib_LTLIBRARIES     = libite.la
+pkgincludedir       = $(includedir)/lite
 pkginclude_HEADERS  = lite.h queue.h conio.h tree.h
 libite_la_SOURCES   = chomp.c copyfile.c dir.c fexist.c fisdir.c fmode.c fsendfile.c	\
 			ifconfig.c lfile.c makepath.c pidfile.c pidfilefn.c progress.c	\

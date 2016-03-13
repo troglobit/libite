@@ -27,15 +27,15 @@ Using -lite
 
 Libite is by default installed as a library and a set of include files.
 To prevent clashing with include files of the same name -lite employs a
-include file namespace `lite/`, which is recommended to use in your
-applications:
+include file namespace `lite/`, which is strongly recommended to use in
+your applications:
 
     #include <lite/lite.h>
     #include <lite/conio.h>
     #include <lite/queue.h>
     #include <lite/tree.h>
 
-The output from the `pkg-config` tool holds no surprises:
+The output from the `pkg-config` tool holds no surprises in this regard:
 
     $ pkg-config --libs --static --cflags libite
     -I/usr/local/include -L/usr/local/lib -lite
