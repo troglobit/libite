@@ -1,3 +1,4 @@
+/*	Updated by troglobit for libite/finit/uftpd projects 2016/03/19 */
 /*	$OpenBSD: pidfile.c,v 1.11 2015/06/03 02:24:36 millert Exp $	*/
 /*	$NetBSD: pidfile.c,v 1.4 2001/02/19 22:43:42 cgd Exp $	*/
 
@@ -30,6 +31,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <sys/stat.h>		/* utimensat() */
 #include <sys/types.h>
 #include <errno.h>
 #include <paths.h>
@@ -50,16 +52,26 @@ int
 pidfile(const char *basename)
 {
 	int save_errno;
+	int atexit_already;
 	pid_t pid;
 	FILE *f;
 
 	if (basename == NULL)
 		basename = __progname;
 
+	pid = getpid();
+	atexit_already = 0;
+
 	if (pidfile_path != NULL) {
+		if (0) { //pid == pidfile_pid) {
+			printf("Updating mtime ...\n");
+			utimensat(0, pidfile_path, NULL, 0);
+			return 0;
+		}
 		free(pidfile_path);
 		pidfile_path = NULL;
 		__pidfile_name = NULL;
+		atexit_already = 1;
 	}
 
 	/* _PATH_VARRUN includes trailing / */
@@ -74,7 +86,6 @@ pidfile(const char *basename)
 		return (-1);
 	}
 
-	pid = getpid();
 	if (fprintf(f, "%ld\n", (long)pid) <= 0 || fflush(f) != 0) {
 		save_errno = errno;
 		(void) fclose(f);
@@ -90,7 +101,7 @@ pidfile(const char *basename)
 	 * LITE extension, no need to set up another atexit() handler
 	 * if user only called us to update the mtime of the PID file
 	 */
-	if (pidfile_pid == pid)
+	if (atexit_already)
 		return (0);
 
 	pidfile_pid = pid;
