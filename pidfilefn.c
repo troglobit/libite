@@ -122,28 +122,110 @@ int pidfile_signal(const char *pidfile, int signal)
 /********************************* UNIT TESTS ************************************/
 #ifdef UNITTEST
 #include <paths.h>
+#include <stdarg.h>
+#include <time.h>
 #include "lite.h"
 
 extern char *__progname;
 static char PIDFILE[42];
+static int verbose = 0;
+static struct stat before, after;
+
+static int test(int result, const char *fmt, ...)
+{
+	char buf[80];
+	size_t len;
+	va_list ap;
+	const char success[] = " \e[1m[ OK ]\e[0m\n";
+	const char failure[] = " \e[7m[FAIL]\e[0m\n";
+	const char dots[] = " .....................................................................";
+
+	va_start(ap, fmt);
+	len = vsnprintf(buf, sizeof(buf), fmt, ap);
+	va_end(ap);
+
+	write(STDERR_FILENO, buf, len);
+	write(STDERR_FILENO, dots, 60 - len); /* pad with dots. */
+
+	if (!result)
+		write(STDERR_FILENO, success, strlen(success));
+	else
+		write(STDERR_FILENO, failure, strlen(failure));
+
+	return result;
+}
+
+static inline int timespec_newer(const struct timespec *a, const struct timespec *b)
+{
+	if (a->tv_sec != b->tv_sec)
+		return a->tv_sec > b->tv_sec;
+
+	return a->tv_nsec > b->tv_nsec;
+}
+
+char *timespec2str(struct timespec *ts, char *buf, size_t len)
+{
+	size_t ret, pos;
+	struct tm t;
+
+	memset(buf, 0, len);
+
+	tzset();
+	if (localtime_r(&(ts->tv_sec), &t) == NULL)
+		return buf;
+
+	ret = strftime(buf, len, "%F %T", &t);
+	if (ret == 0)
+		return buf;
+	len -= ret - 1;
+
+	pos  = strlen(buf);
+	len -= pos;
+	snprintf(&buf[pos], len, ".%09ld", ts->tv_nsec);
+
+	return buf;
+}
 
 static void sigterm_handler(int UNUSED(signo))
 {
-	printf("Exiting ...\n");
+	if (verbose)
+		printf("Exiting ...\n");
 }
 
 static void sigalrm_handler(int UNUSED(signo))
 {
-	printf("Testing pidfile() ...\n");
 	pidfile(NULL);
-
 	if (!fexist(PIDFILE))
-		err(1, "pidfile() failed creating %s", PIDFILE);
+		err(1, "failed creating %s", PIDFILE);
+	stat(PIDFILE, &before);
 }
 
-int main(void)
+static int mtime()
 {
-	char cmd[80];
+	int ret;
+	char buf[80];
+
+	/* Must sleep a while here otherwise we execute too fast => no mtime change :-( */
+	usleep(10000);
+
+	if (verbose)
+		printf("Calling pidfile() again to update mtime ...\n");
+	pidfile(NULL);
+	stat(PIDFILE, &after);
+
+	ret = timespec_newer(&after.st_mtim, &before.st_mtim);
+	if (verbose) {
+		printf("Before: %s\n", timespec2str(&before.st_mtim, buf, sizeof(buf)));
+		printf("After : %s\n", timespec2str(&after.st_mtim, buf, sizeof(buf)));
+	}
+
+	return !ret;
+}
+
+int main(int argc, char *argv[])
+{
+	if (argc > 1 && !strcmp(argv[1], "-v"))
+		verbose = 1;
 
 	snprintf(PIDFILE, sizeof(PIDFILE), "%s%s.pid", _PATH_VARRUN, __progname);
 
@@ -151,36 +233,19 @@ int main(void)
 	signal(SIGALRM, sigalrm_handler);
 	alarm(1);
 
-	printf("Testing pidfile_poll() ...\n");
-	if (!pidfile_poll(PIDFILE))
-		printf("Timed out!\n");
-	else
-		printf("We got signal!\n");
+	return     test(pidfile_poll(PIDFILE) != getpid(), "Testing pidfile_poll()")
+		|| test(strcmp(__pidfile_name, PIDFILE),   "Testing __pidfile_name vs guessed PID filename")
+		|| test(mtime(),                           "Testing mtime update of followup pidfile() call")
+		|| test(pidfile_signal(PIDFILE, SIGTERM),  "Testing signalling ourselves")
+		;
 
-	printf("Reading pid file, should be %d ...\n", getpid());
-        printf("=> %d\n", pidfile_read(PIDFILE));
-
-	printf("\nComparing __pidfile_name with our guessed PID filename ...\n");
-	printf("strcmp(\"%s\",\n       \"%s\") => %s\n\n", __pidfile_name, PIDFILE,
-	       !strcmp(__pidfile_name, PIDFILE) ? "OK" : "FAIL");
-
-	/* Occular verification that calling pidfile() again updates mtime */
-	snprintf(cmd, sizeof(cmd), "ls -l --full-time %s", PIDFILE);
-	system(cmd);
-	printf("Before ^^ pidfile() vv after ...\n");
-	pidfile(NULL);
-	system(cmd);
-	
-        printf("Signalling ourselves ...\n");
-
-	return pidfile_signal(PIDFILE, SIGTERM);
+	return 0;
 }
-#endif  /* UTEST_PIDFN */
+#endif /* UNITTEST */
 
 /**
  * Local Variables:
  *  compile-command: "make V=1 -f pidfilefn.mk"
- *  version-control: t
  *  indent-tabs-mode: t
  *  c-file-style: "linux"
  * End:
