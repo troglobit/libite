@@ -8,7 +8,7 @@ AR         ?= $(CROSS)ar
 STRIP      ?= $(CROSS)strip
 INSTALL    := install --backup=off
 STRIPINST  := $(INSTALL) -s --strip-program=$(CROSS)strip -m 0755
-
+CFLAGS     += -g -O0
 CPPFLAGS   += -D_GNU_SOURCE
 ARFLAGS     = crus
 
