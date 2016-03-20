@@ -4,8 +4,8 @@ Change Log
 All notable changes to the project are documented in this file.
 
 
-[v1.5.0][UNRELEASED] - 2016-03-XX
----------------------------------
+[v1.5.0][] - 2016-03-20
+-----------------------
 
 This release changes the header file namespace.  Apologies for any
 problems this may cause!
@@ -14,6 +14,8 @@ problems this may cause!
 
 - Change namespace for header files: `libite/` to `lite/`, e.g. using
   `pkg-config` your C program must now `#include <lite/lite.h>`
+- Update `pidfile()` to use `utimensat()` to update atime+mtime instead
+  of opening and writing PID again.  Less overhead and nanonsecond res.
 
 
 [v1.4.4][] - 2016-02-23
@@ -137,7 +139,7 @@ problems this may cause!
 Initial extraction of frog DNA from [Finit][].  See [README][] for API details.
 
 
-[UNRELEASED]: https://github.com/troglobit/libite/compare/v1.4.4...HEAD
+[UNRELEASED]: https://github.com/troglobit/libite/compare/v1.5.0...HEAD
 [v1.5.0]: https://github.com/troglobit/libite/compare/v1.4.4...v1.5.0
 [v1.4.4]: https://github.com/troglobit/libite/compare/v1.4.3...v1.4.4
 [v1.4.3]: https://github.com/troglobit/libite/compare/v1.4.2...v1.4.3
