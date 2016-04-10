@@ -63,8 +63,7 @@ pidfile(const char *basename)
 	atexit_already = 0;
 
 	if (pidfile_path != NULL) {
-		if (0) { //pid == pidfile_pid) {
-			printf("Updating mtime ...\n");
+		if (pid == pidfile_pid) {
 			utimensat(0, pidfile_path, NULL, 0);
 			return 0;
 		}
