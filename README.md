@@ -88,15 +88,15 @@ Helper Macros
 
 - `erase(path)`
 
-  Erase file/directory with `remove()`.  Errors on stderr
+  Erase file/directory with `remove()`.  Errors on `stderr`
 
 - `makedir(path)`
 
-  Create directory, like `mkdir()`.  Errors on stderr
+  Create directory, like `mkdir()`.  Errors on `stderr`
 
 - `makefifo(path)`
 
-  Create a FIFO, like `mkfifo()`.  Errors on stderr
+  Create a FIFO, like `mkfifo()`.  Errors on `stderr`
 
 - `min(a,b)`/`max(a,b)`
 
@@ -104,7 +104,7 @@ Helper Macros
 
 - `touch(path)`
 
-  Create a file, or update mtime.  Errors on stderr
+  Create a file, or update mtime.  Errors on `stderr`
 
 - `S_ISEXEC(mode_t m)`
 
