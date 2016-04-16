@@ -311,8 +311,8 @@ weight utility library.  Libite (LITE) employs the de facto standard GNU
 configure and build system:
 
     ./configure
-    make all
-    make install
+    make -j5
+    make install-strip
 
 
 TODO
