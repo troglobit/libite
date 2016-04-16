@@ -2,6 +2,22 @@
 ===========================
 [![Travis Status][]][Travis]
 
+
+Table of Contents
+-----------------
+
+* [Introduction](#introduction)
+* [Using -lite](#using--lite)
+* [Helper Macros](#helper-macros)
+* [Generic Functions](#generic-functions)
+* [OpenBSD Functions](#openbsd-functions)
+* [Build & Install](#origin--references)
+* [TODO](#todo)
+
+
+Introduction
+------------
+
 Libite is a lightweight library of *frog DNA*.  It can be used to fill
 the gaps in any dinosaur project.  It holds useful functions and macros
 developed by both [Finit][1] and the [OpenBSD][2] project.  Most notably
