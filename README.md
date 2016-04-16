@@ -26,7 +26,7 @@ useful *BSD [sys/queue.h][4] and [sys/tree.h][7] API's.
 
 Libite is the frog DNA missing in GNU libc.  However, -lite does not aim
 to become another [GLIB][5]!  One noticeable gap in GLIBC is the missing
-`_SAFE` macros in tje BSD `sys/queue.h` API &mdash; highly recommended
+`_SAFE` macros in the BSD `sys/queue.h` API &mdash; highly recommended
 when traversing lists to delete/free nodes.
 
 The code is open sourced under a mix of the [MIT/X11 license][MIT], the
@@ -164,11 +164,11 @@ Generic Functions
 
 - `fexist(file)`
 
-  Check for the existance of a file, returns True(1) or False(0).
+  Check for the existence of a file, returns True(1) or False(0).
 
 - `fisdir(path)`
 
-  Check for the existance of a directory, returns True(1) or False(0).
+  Check for the existence of a directory, returns True(1) or False(0).
 
 - `fmode(file)`
 
@@ -183,7 +183,7 @@ Generic Functions
 - `ifconfig(ifname, addr, mask, up)`
 
   Basic ifconfig like operations on an interface.  Only supports IPv4
-  adresses.  Note that mask is not CIDR notation.
+  addresses.  Note that mask is not CIDR notation.
 
 - `lfopen(file, sep)`, `lfclose(lf)`
 
@@ -192,7 +192,7 @@ Generic Functions
 
 - `lftok(lf)`
 
-  Read tokens, delimeted by `sep`, from file opened with `lfopen()`.
+  Read tokens, delimited by `sep`, from file opened with `lfopen()`.
 
 - `lfgetkey(lf, key)`
 
@@ -235,7 +235,7 @@ Generic Functions
   existence of this file, so make sure to have your signal handlers
   properly setup before calling this function.
 
-  The pidfile is removed when the program exits, using an `atexit()`
+  The PID file is removed when the program exits, using an `atexit()`
   handler.  However, depending on how the program terminates the file
   may still exist even though the program is no longer running.  This
   is only a problem for clients.
