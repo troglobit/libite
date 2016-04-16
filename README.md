@@ -40,6 +40,19 @@ The output from the `pkg-config` tool holds no surprises in this regard:
     $ pkg-config --libs --static --cflags libite
     -I/usr/local/include -L/usr/local/lib -lite
 
+The prefix path `/usr/local/` shown here is only the default.  Use the
+`configure` script to select a different prefix when installing libite.
+
+For GNU autotools based projects, use the following in `configure.ac`:
+
+    # Check for required libraries
+    PKG_CHECK_MODULES([lite], [libite >= 1.5.0])
+
+and in your `Makefile.am`:
+
+    proggy_CFLAGS = $(lite_CFLAGS)
+    proggy_LDADD  = $(lite_LIBS)
+
 
 Helper Macros
 -------------
