@@ -42,9 +42,9 @@ Using -lite
 -----------
 
 Libite is by default installed as a library and a set of include files.
-To prevent clashing with include files of the same name -lite employs a
-include file namespace `lite/`, which is strongly recommended to use in
-your applications:
+To prevent clashing with include files of the same name `-lite` employs
+an include file namespace `lite/`, which is strongly recommended to use
+in your applications:
 
     #include <lite/lite.h>
     #include <lite/conio.h>
@@ -120,7 +120,7 @@ Helper Macros
 
 - `ISOTHER(word,bit)`
 
-  Is any other bits, except bit, in (integer) word set?
+  Are any other bits, except bit, in (integer) word set?
 
 - `SETBIT(word,bit)`
 
