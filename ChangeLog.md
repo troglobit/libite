@@ -4,6 +4,23 @@ Change Log
 All notable changes to the project are documented in this file.
 
 
+[v1.5.1][] - 2016-04-17
+-----------------------
+
+Minor fix release.
+
+### Changes
+- Update README.md, add help when libite is used in autotools projects.
+  Spell checking and minor cleanup.
+
+### Fixes
+- Activate use of `utimensat()` when `pidfile()` is called multiple
+  times.  This reduces the overhead of calling open+write+close to
+  simply updating the mtime of the PID file.
+- Westermo fixes for `fcopyfile()`: nothing copied on embedded PPC
+  system when using `tmpfile()` as source.
+
+
 [v1.5.0][] - 2016-03-20
 -----------------------
 
@@ -11,7 +28,6 @@ This release changes the header file namespace.  Apologies for any
 problems this may cause!
 
 ### Changes
-
 - Change namespace for header files: `libite/` to `lite/`, e.g. using
   `pkg-config` your C program must now `#include <lite/lite.h>`
 - Update `pidfile()` to use `utimensat()` to update atime+mtime instead
@@ -139,7 +155,8 @@ problems this may cause!
 Initial extraction of frog DNA from [Finit][].  See [README][] for API details.
 
 
-[UNRELEASED]: https://github.com/troglobit/libite/compare/v1.5.0...HEAD
+[UNRELEASED]: https://github.com/troglobit/libite/compare/v1.5.1...HEAD
+[v1.5.1]: https://github.com/troglobit/libite/compare/v1.5.0...v1.5.1
 [v1.5.0]: https://github.com/troglobit/libite/compare/v1.4.4...v1.5.0
 [v1.4.4]: https://github.com/troglobit/libite/compare/v1.4.3...v1.4.4
 [v1.4.3]: https://github.com/troglobit/libite/compare/v1.4.2...v1.4.3
