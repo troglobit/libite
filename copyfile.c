@@ -237,27 +237,23 @@ int movefile(char *src, char *dst)
  */
 int fcopyfile(FILE *src, FILE *dst)
 {
-	int ret;
-	char *buffer;
+	char *buf;
 
 	if (!src || !dst) {
 		errno = EINVAL;
 		return -1;
 	}
 
-	buffer = malloc(BUFSIZ);
-	if (!buffer)
+	buf = malloc(BUFSIZ);
+	if (!buf)
 		return -1;
 
-	ret = do_copy(fileno(src), fileno(dst), BUFSIZ, buffer, BUFSIZ);
-	if (ret > 0)
-		ret = 0;
-	else if (errno)
-		ret = -1;
+	while (fgets(buf, BUFSIZ, src))
+		fputs(buf, dst);
+	
+	free(buf);
 
-	free(buffer);
-
-	return ret;
+	return 0;
 }
 
 #ifdef UNITTEST
@@ -267,7 +263,7 @@ int main(void)
 {
 	int i = 0;
 	char *files[] = {
-		"/etc/passwd", "/tmp/tok", "/tmp/tok",
+		"/etc/passwd", "/tmp/mypwd", "/tmp/mypwd",
 		"/etc/passwd", "/tmp/", "/tmp/passwd",
 		"/etc/passwd", "/tmp", "/tmp/passwd",
 		NULL
