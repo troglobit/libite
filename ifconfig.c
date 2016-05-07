@@ -85,7 +85,6 @@ int ifconfig(char *ifname, char *addr, char *mask, int up)
 
 /**
  * Local Variables:
- *  version-control: t
  *  indent-tabs-mode: t
  *  c-file-style: "linux"
  * End:

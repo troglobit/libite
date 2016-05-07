@@ -144,7 +144,6 @@ int main(void)
 /**
  * Local Variables:
  *  compile-command: "make V=1 -f tree.mk"
- *  version-control: t
  *  indent-tabs-mode: t
  *  c-file-style: "linux"
  * End:

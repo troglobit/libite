@@ -208,7 +208,6 @@ static inline int string_case_compare (const char *a, const char *b)
 
 /**
  * Local Variables:
- *  version-control: t
  *  indent-tabs-mode: t
  *  c-file-style: "linux"
  * End:
