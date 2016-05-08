@@ -68,6 +68,8 @@ int     pidfile_signal(const char *pidfile, int signal);
 pid_t   pidfile_read  (const char *pidfile);
 pid_t   pidfile_poll  (const char *pidfile);
 
+void   *reallocarray(void *optr, size_t nmemb, size_t size);
+
 #ifndef strlcpy
 size_t  strlcpy    (char *dst, const char *src, size_t siz);
 #endif

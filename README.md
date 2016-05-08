@@ -296,6 +296,10 @@ The following are popular OpenBSD functions and highly useful macros.
   file `__pidfile_name`, similar to `__progname`.  See previous section
   for details.
 
+- `reallocarray(ptr, nmemb, size)`
+
+  http://man.openbsd.org/OpenBSD-current/man3/reallocarray.3
+
 - `strlcpy(dst, src, len)`
 
   http://www.openbsd.org/cgi-bin/man.cgi/OpenBSD-current/man3/strlcpy.3
