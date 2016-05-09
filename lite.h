@@ -39,7 +39,7 @@ typedef struct lfile lfile_t;
 char   *chomp      (char *str);
 
 int     fexist     (char *file);
-int     fisdir     (char *file);
+int     fisdir     (const char *file);
 mode_t  fmode      (char *file);
 
 FILE   *tempfile   (void);

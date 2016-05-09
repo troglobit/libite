@@ -32,7 +32,7 @@
  * Returns:
  * %TRUE(1) if the file exists and is a directory, otherwise %FALSE(0).
  */
-int fisdir(char *file)
+int fisdir(const char *file)
 {
 	struct stat sb;
 
