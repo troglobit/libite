@@ -34,9 +34,19 @@
 #include <sys/param.h> /* MAX(), isset(), setbit(), TRUE, FALSE, et consortes. :-) */
 #include <unistd.h>
 
+/*
+ * fparseln() specific operation flags.
+ */
+#define FPARSELN_UNESCESC	0x01
+#define FPARSELN_UNESCCONT	0x02
+#define FPARSELN_UNESCCOMM	0x04
+#define FPARSELN_UNESCREST	0x08
+#define FPARSELN_UNESCALL	0x0f
+
 typedef struct lfile lfile_t;
 
 char   *chomp      (char *str);
+char   *fparseln   (FILE *, size_t *, size_t *, const char[3], int);
 
 int     fexist     (char *file);
 int     fisdir     (const char *file);

@@ -3,10 +3,10 @@ ACLOCAL_AMFLAGS     = -I m4
 lib_LTLIBRARIES     = libite.la
 pkgincludedir       = $(includedir)/lite
 pkginclude_HEADERS  = lite.h queue.h conio.h tree.h
-libite_la_SOURCES   = chomp.c copyfile.c dir.c fexist.c fisdir.c fmode.c fsendfile.c	\
-		      ifconfig.c lfile.c makepath.c pidfile.c pidfilefn.c progress.c	\
-		      reallocarray.c rsync.c strlcpy.c strlcat.c strtonum.c tempfile.c	\
-		      tree.c
+libite_la_SOURCES   = chomp.c copyfile.c dir.c fexist.c fisdir.c fmode.c fparseln.c	\
+		      fsendfile.c ifconfig.c lfile.c makepath.c pidfile.c pidfilefn.c	\
+		      progress.c reallocarray.c rsync.c strlcpy.c strlcat.c strtonum.c	\
+		      tempfile.c tree.c
 
 libite_la_CPPFLAGS  = -D_GNU_SOURCE
 libite_la_CFLAGS    = -W -Wall -Wextra

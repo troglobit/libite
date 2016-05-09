@@ -282,10 +282,15 @@ Generic Functions
   set.  The `path` argument should be a directory.
 
 
-OpenBSD Functions
------------------
+OpenBSD/NetBSD/FreeBSD Functions
+--------------------------------
 
-The following are popular OpenBSD functions and highly useful macros.
+The following are popular functions and highly useful macros from the
+*BSD world of UNIX that are sadly missing on Linux.
+
+- `fparseln(fp, *len, *lineno, delim, flags)`
+
+  http://man.openbsd.org/OpenBSD-current/man3/fparseln.3
 
 - `pidfile(basename)`
 
