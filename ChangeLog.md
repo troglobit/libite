@@ -3,6 +3,15 @@ Change Log
 
 All notable changes to the project are documented in this file.
 
+[v1.6.0][] - 2016-05-13
+-----------------------
+
+### Changes
+
+- Add support for NetBSD `fparaseln()` for the benefit of [Mg][]
+- Add support for OpenBSD `reallocarray()` for the benefit of [Mg][]
+- Constify `fisdir()` argument
+
 
 [v1.5.1][] - 2016-04-17
 -----------------------
