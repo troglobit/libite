@@ -164,7 +164,8 @@ problems this may cause!
 Initial extraction of frog DNA from [Finit][].  See [README][] for API details.
 
 
-[UNRELEASED]: https://github.com/troglobit/libite/compare/v1.5.1...HEAD
+[UNRELEASED]: https://github.com/troglobit/libite/compare/v1.6.0...HEAD
+[v1.6.0]: https://github.com/troglobit/libite/compare/v1.5.1...v1.6.0
 [v1.5.1]: https://github.com/troglobit/libite/compare/v1.5.0...v1.5.1
 [v1.5.0]: https://github.com/troglobit/libite/compare/v1.4.4...v1.5.0
 [v1.4.4]: https://github.com/troglobit/libite/compare/v1.4.3...v1.4.4
@@ -178,6 +179,7 @@ Initial extraction of frog DNA from [Finit][].  See [README][] for API details.
 [v1.1.0]: https://github.com/troglobit/libite/compare/v1.0.0...v1.1.0
 [v1.0.0]: https://github.com/troglobit/libite/compare/TAIL...v1.0.0
 [Finit]:  https://github.com/troglobit/finit/
+[Mg]:     https://github.com/troglobit/mg
 [README]: https://github.com/troglobit/libite/blob/v1.0.0/README.md
 
 <!--
