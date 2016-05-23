@@ -25,12 +25,14 @@
 
 int mkpath(char *dir, mode_t mode)
 {
+	struct stat sb;
+
 	if (!dir) {
 		errno = EINVAL;
 		return 1;
 	}
 
-	if (strlen(dir) == 1 && dir[0] == '/')
+	if (!stat(dir, &sb))
 		return 0;
 
 	mkpath(dirname(strdupa(dir)), mode);
@@ -96,6 +98,7 @@ int main(void)
 		"/tmp/a/",
 		"/tmp/a/b",
 		"/tmp/a/c/",
+		"../../sometestdir/arpa/inet",
 		NULL
 	};
 
