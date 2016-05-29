@@ -17,16 +17,8 @@
 
 #include <paths.h>
 #include <fcntl.h>		/* O_TMPFILE requires -D_GNU_SOURCE */
-#include <linux/version.h>
-#include <stdlib.h>		/* mkstemp() */
 #include <stdio.h>		/* fdopen() */
 #include <sys/stat.h>		/* umask() */
-
-#ifndef  O_TMPFILE		/* Too old GLIBC or kernel */
-#warning O_TMPFILE missing on your system, tempfile() may not work!
-#define  __O_TMPFILE 020000000
-#define  O_TMPFILE (__O_TMPFILE | O_DIRECTORY) /* Define and let it fail at runtime */
-#endif
 
 /**
  * tempfile - A secure tmpfile() replacement
@@ -43,7 +35,7 @@
  */
 FILE *tempfile(void)
 {
-#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,11,0)
+#ifdef O_TMPFILE	  /* Only on Linux, with fairly recent (G)LIBC */
 	int fd;
 	mode_t oldmask;
 
@@ -55,8 +47,7 @@ FILE *tempfile(void)
 
 	return fdopen(fd, "rw");
 #else
-#warning Too old kernel, reverting to wrap unsafe tmpfile() ...
-	return tmpfile();
+	return tmpfile(); /* Fallback on older GLIBC/Linux and actual UNIX systems */
 #endif
 }
 
