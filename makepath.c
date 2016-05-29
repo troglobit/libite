@@ -35,9 +35,12 @@ int mkpath(char *dir, mode_t mode)
 	if (!stat(dir, &sb))
 		return 0;
 
-	mkpath(dirname(strdupa(dir)), mode);
+        char *buf = strdup(dir);
+	mkpath(dirname(buf), mode);
 
-	return mkdir(dir, mode);
+        int ret = mkdir(buf, mode);
+        free(buf);
+        return ret;
 }
 
 /**
