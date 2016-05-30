@@ -25,6 +25,7 @@
 #define LITE_STRING_H_
 
 #include <string.h>
+#include "strdupa.h"
 
 #ifndef strlcpy
 size_t  strlcpy    (char *dst, const char *src, size_t siz);
