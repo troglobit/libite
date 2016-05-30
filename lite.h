@@ -28,11 +28,11 @@
 #include <err.h>
 #include <stdio.h>
 #include <stdint.h>    /* uint8_t, uint16_t, uint32_t, INT32_MAX, etc. */
-#include <string.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/param.h> /* MAX(), isset(), setbit(), TRUE, FALSE, et consortes. :-) */
 #include <unistd.h>
+#include "strlite.h"
 
 /*
  * fparseln() specific operation flags.
@@ -79,16 +79,6 @@ pid_t   pidfile_read  (const char *pidfile);
 pid_t   pidfile_poll  (const char *pidfile);
 
 void   *reallocarray(void *optr, size_t nmemb, size_t size);
-
-#ifndef strlcpy
-size_t  strlcpy    (char *dst, const char *src, size_t siz);
-#endif
-#ifndef strlcat
-size_t  strlcat    (char *dst, const char *src, size_t siz);
-#endif
-#ifndef strtonum
-long long strtonum (const char *numstr, long long minval, long long maxval, const char **errstrp);
-#endif
 
 int tree(char *path, int show_perms);
 
@@ -153,63 +143,6 @@ static inline int fisslashdir(char *dir)
 
    return 0;
 }
-
-/* Convert string to natural number (0-2147483647), returns -1 on error. */
-static inline int atonum(const char *str)
-{
-	int val = -1;
-	const char *errstr;
-
-	if (str) {
-		val = strtonum(str, 0, INT32_MAX, &errstr);
-		if (errstr)
-			return -1;
-	}
-
-	return val;
-}
-
-/* Validate string, non NULL and not zero length */
-static inline int string_valid(const char *s)
-{
-   return s && strlen(s);
-}
-
-/* Relaxed comparison, e.g., sys_string_match("small", "smaller") => TRUE */
-static inline int string_match(const char *a, const char *b)
-{
-   size_t min = MIN(strlen(a), strlen(b));
-
-   return !strncasecmp(a, b, min);
-}
-
-/* Strict comparison, e.g., sys_string_match("small", "smaller") => FALSE */
-static inline int string_compare (const char *a, const char *b)
-{
-   return strlen(a) == strlen(b) && !strcmp(a, b);
-}
-
-/* Strict comparison, like sys_string_compare(), but case insensitive,
- * e.g., sys_string_match("small", "SmAlL") => TRUE
- */
-static inline int string_case_compare (const char *a, const char *b)
-{
-   return strlen (a) == strlen (b) && !strcasecmp (a, b);
-}
-
-#define min(a,b)				\
-	({					\
-		__typeof__ (a) _a = (a);	\
-		__typeof__ (b) _b = (b);	\
-		_a < _b ? _a : _b;		\
-	})
-
-#define max(a,b)				\
-	({					\
-		__typeof__ (a) _a = (a);	\
-		__typeof__ (b) _b = (b);	\
-		_a > _b ? _a : _b;		\
-	})
 
 /* Compat */
 #define copy_filep(src,dst)        fcopyfile(src,dst)
