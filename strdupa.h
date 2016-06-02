@@ -37,7 +37,6 @@
 #if !HAVE_STRDUPA
 #if defined(__GNUC__)
 #include <stddef.h>	/* size_t */
-
 #include <string.h>	/* memcpy(3) strlen(3) */
 
 #define strdupa(src) (__extension__ ({			\
@@ -47,6 +46,8 @@
 	(char *)memcpy(dst_, src, len_);		\
 }))
 
+#else  /* If not GCC, e.g. Clang */
+#error strdupa() may use an unsupported GNU C API, please forward any fix to maintainer, cheers!
 #endif /* __GNUC__ */
 #endif /* !HAVE_STRDUPA */
 
