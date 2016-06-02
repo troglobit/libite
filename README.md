@@ -331,13 +331,18 @@ The following are popular functions and highly useful macros from the
 Build & Install
 ---------------
 
-The library is built for and developed on GNU/Linux systems as a light
-weight utility library.  Libite (LITE) employs the de facto standard GNU
-configure and build system:
+This library was initially built for and developed on GNU/Linux systems
+as a light weight utility library, these days NetBSD should also work.
+Libite (LITE) employs the de facto standard GNU configure and build
+system:
 
     ./configure
     make -j5
     make install-strip
+
+**Note:** When checking code from GitHub, use <kbd>./autogen.sh</kbd> to
+generate a `configure` script.  It is a generated file and otherwise only
+included in released tarballs.
 
 
 TODO
