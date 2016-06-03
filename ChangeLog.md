@@ -3,6 +3,14 @@ Change Log
 
 All notable changes to the project are documented in this file.
 
+[v1.7.0][] - UNRELEASED
+-----------------------
+
+### Changes
+
+- Add support for GNU `strdupa()`, for [Inadyn][] on NetBSD.
+
+
 [v1.6.0][] - 2016-05-13
 -----------------------
 
@@ -179,6 +187,7 @@ Initial extraction of frog DNA from [Finit][].  See [README][] for API details.
 [v1.1.0]: https://github.com/troglobit/libite/compare/v1.0.0...v1.1.0
 [v1.0.0]: https://github.com/troglobit/libite/compare/TAIL...v1.0.0
 [Finit]:  https://github.com/troglobit/finit/
+[Inadyn]: https://github.com/troglobit/inadyn/
 [Mg]:     https://github.com/troglobit/mg
 [README]: https://github.com/troglobit/libite/blob/v1.0.0/README.md
 

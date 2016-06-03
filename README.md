@@ -282,6 +282,17 @@ Generic Functions
   set.  The `path` argument should be a directory.
 
 
+GNU Functions
+-------------
+
+The following are useful GNU functions, that do not exist on *BSD, and
+some other platforms.
+
+- `strdupa(str)`
+
+  http://man7.org/linux/man-pages/man3/strdup.3.html
+
+
 OpenBSD/NetBSD/FreeBSD Functions
 --------------------------------
 
