@@ -290,7 +290,11 @@ some other platforms.
 
 - `strdupa(str)`
 
-  http://man7.org/linux/man-pages/man3/strdup.3.html
+  http://man7.org/linux/man-pages/man3/strdupa.3.html
+
+- `strndupa(str)`
+
+  http://man7.org/linux/man-pages/man3/strndupa.3.html
 
 
 OpenBSD/NetBSD/FreeBSD Functions
