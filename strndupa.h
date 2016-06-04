@@ -49,6 +49,8 @@
 	(char *)memcpy(dst_, src, len_);		\
 }))
 
+#else  /* If not GCC, e.g. Clang */
++#error strndupa() may use an unsupported GNU C API, please forward any fix to maintainer, cheers!
 #endif /* __GNUC__ */
 #endif /* !HAVE_STRNDUPA */
 
