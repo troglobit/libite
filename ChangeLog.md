@@ -9,6 +9,11 @@ All notable changes to the project are documented in this file.
 ### Changes
 
 - Add support for GNU `strdupa()`, for [Inadyn][] on NetBSD.
+- Add support for GNU `strndupa()` and `strnlen()`
+
+### Fixes
+
+- Fix `mkpath()` to handle creating relative directories.
 
 
 [v1.6.0][] - 2016-05-13
