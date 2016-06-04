@@ -296,6 +296,10 @@ some other platforms.
 
   http://man7.org/linux/man-pages/man3/strndupa.3.html
 
+- `strnlen(str, lim)`
+
+  http://man7.org/linux/man-pages/man3/strnlen.3.html
+
 
 OpenBSD/NetBSD/FreeBSD Functions
 --------------------------------
