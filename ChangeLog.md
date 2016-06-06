@@ -4,10 +4,13 @@ Change Log
 All notable changes to the project are documented in this file.
 
 
-[v1.7.1][] - 2016-06-XX
+[v1.8.0][] - 2016-06-06
 -----------------------
 
 ### Changes
+- Change return type of `fsendfile()` from `size_t` to `ssize_t`
+- Change `dir()` semantics: do not assert and always return error
+  without calling `perror()` or similar.
 - The OpenBSD `pidfile()` function's prefix path `_PATH_VARRUN`
   can now be overridden by setting the hidden `__pidfile_path`
   variable.  E.g., to `_PATH_TMP`.  Make sure read the docs!
@@ -15,6 +18,7 @@ All notable changes to the project are documented in this file.
 
 ### Fixes
 - Fix bad path in new `strndupa()` header file.
+- Add missing progress bar API's to `lite.h`
 
 
 [v1.7.0][] - 2016-06-05
@@ -191,8 +195,8 @@ problems this may cause!
 Initial extraction of frog DNA from [Finit][].  See [README][] for API details.
 
 
-[UNRELEASED]: https://github.com/troglobit/libite/compare/v1.7.0...HEAD
-[v1.7.1]: https://github.com/troglobit/libite/compare/v1.7.0...v1.7.1
+[UNRELEASED]: https://github.com/troglobit/libite/compare/v1.8.0...HEAD
+[v1.8.0]: https://github.com/troglobit/libite/compare/v1.7.0...v1.8.0
 [v1.7.0]: https://github.com/troglobit/libite/compare/v1.6.0...v1.7.0
 [v1.6.0]: https://github.com/troglobit/libite/compare/v1.5.1...v1.6.0
 [v1.5.1]: https://github.com/troglobit/libite/compare/v1.5.0...v1.5.1
