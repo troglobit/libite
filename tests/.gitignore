@@ -1,5 +1,6 @@
 *.log
 *.trs
+fisdir
 fsendfile
 lfile
 makepath

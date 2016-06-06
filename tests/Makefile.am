@@ -2,6 +2,7 @@ EXTRA_DIST      = check.h
 CLEANFILES      = *~ *.trs *.log
 
 TESTS           =
+TESTS          += fisdir
 TESTS          += fsendfile
 TESTS          += lfile
 TESTS          += makepath
