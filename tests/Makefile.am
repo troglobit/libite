@@ -6,6 +6,7 @@ TESTS          += fsendfile
 TESTS          += lfile
 TESTS          += makepath
 TESTS          += pidfile
+TESTS          += rsync
 TESTS          += tempfile
 TESTS          += tree
 
