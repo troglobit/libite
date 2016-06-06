@@ -316,9 +316,13 @@ The following are popular functions and highly useful macros from the
   http://www.openbsd.org/cgi-bin/man.cgi/OpenBSD-current/man3/pidfile.3
 
   **Note:** this version of `pidfile()` has been extended to handle it
-  being called multiple times, and also to export the path to the PID
-  file `__pidfile_name`, similar to `__progname`.  See previous section
-  for details.
+  being called multiple times, i.e. to not create multiple `atexit()`
+  handlers, and also to export a few internal paths:
+
+	- `__pidfile_path`: prefix path, default `_PATH_VARRUN`.  Notice the
+	  trailing slash requirement if you want to override it!
+	- `__pidfile_name`: full path to PID file , similar to `__progname`.
+	  See previous section for details.
 
 - `reallocarray(ptr, nmemb, size)`
 
