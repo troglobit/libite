@@ -1,6 +1,8 @@
 #include <paths.h>
+#include <signal.h>
 #include <stdarg.h>
 #include <time.h>
+
 #include "check.h"
 
 extern char *__progname;
