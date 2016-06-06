@@ -23,16 +23,14 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  * ==========================================================================
  */
-#ifndef GNU_STRING_STRDUPA_H
-#define GNU_STRING_STRDUPA_H
-
+#ifndef LITE_STRDUPA_H
+#define LITE_STRDUPA_H
 
 #if !defined(HAVE_STRDUPA)
 #if defined(strdupa)
 #define HAVE_STRDUPA	1
 #endif
 #endif
-
 
 #if !HAVE_STRDUPA
 #if defined(__GNUC__)
@@ -51,5 +49,4 @@
 #endif /* __GNUC__ */
 #endif /* !HAVE_STRDUPA */
 
-
-#endif /* GNU_STRING_STRDUPA_H */
+#endif /* LITE_STRDUPA_H */
