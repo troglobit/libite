@@ -41,10 +41,11 @@
  * The number of bytes copied.  If an error is detected -1 is returned
  * and @errno will be set accordingly.
  */
-size_t fsendfile(FILE *src, FILE *dst, size_t len)
+ssize_t fsendfile(FILE *src, FILE *dst, size_t len)
 {
 	char *buf;
-	size_t blk = BUFSIZ, num = 0, tot = 0;
+	size_t tot = 0;
+	ssize_t blk = BUFSIZ, num = 0;
 
         if (!src) {
                 errno = EINVAL;
@@ -73,7 +74,7 @@ size_t fsendfile(FILE *src, FILE *dst, size_t len)
 
 	free(buf);
 
-	return (num == (size_t)-1) ? (size_t)-1 : tot;
+	return (num == -1) ? -1 : (ssize_t)tot;
 }
 
 #ifdef UNITTEST

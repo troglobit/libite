@@ -56,7 +56,7 @@ FILE   *tempfile   (void);
 ssize_t copyfile   (char *src, char *dst, int len, int sym);
 int     movefile   (char *src, char *dst);
 int     fcopyfile  (FILE *src, FILE *dst);
-size_t  fsendfile  (FILE *src, FILE *dst, size_t len);
+ssize_t fsendfile  (FILE *src, FILE *dst, size_t len);
 
 int     ifconfig   (char *ifname, char *addr, char *mask, int up);
 
