@@ -45,18 +45,8 @@ char *chomp(char *str)
 	return str;
 }
 
-#ifdef UNITTEST
-#include <stdio.h>
-int main(void)
-{
-	int i; char t[][16] = { "hej\ndej", "Slime\n\n\\n", "Tripple\n\n\n", "" };
-	for (i = 0; t[i][0]; i++) printf("[%02d]: '%s'\n", i, chomp(t[i])); return 0;
-}
-#endif
-
 /**
  * Local Variables:
- *  compile-command: "make V=1 -f chomp.mk"
  *  indent-tabs-mode: t
  *  c-file-style: "linux"
  * End:

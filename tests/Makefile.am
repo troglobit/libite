@@ -2,6 +2,7 @@ EXTRA_DIST      = check.h
 CLEANFILES      = *~ *.trs *.log
 
 TESTS           =
+TESTS          += chomp
 TESTS          += copyfile
 TESTS          += dir
 TESTS          += fexist
