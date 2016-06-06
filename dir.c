@@ -1,6 +1,6 @@
 /* Functions for operating on files in directories.
  *
- * Copyright (c) 2008-2014  Joachim Nilsson <troglobit@gmail.com>
+ * Copyright (c) 2008-2016  Joachim Nilsson <troglobit@gmail.com>
  * 
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -15,14 +15,14 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-#include <assert.h>
+#include <errno.h>
 #include <dirent.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 static const char *matcher_type = NULL;
 static int (*matcher_filter) (const char *file) = NULL;
+
 static int matcher(const struct dirent *entry)
 {
 	char *pos = strrchr(entry->d_name, '.');
@@ -72,7 +72,8 @@ static int matcher(const struct dirent *entry)
  * would be returned as "config0".
  *
  * Returns:
- * Number of files in @list, zero if no matching files of @type.
+ * Number of files in @list, zero if no matching files of @type, or
+ * non-zero on error with @errno set.
  */
 int dir(const char *dir, const char *type, int (*filter) (const char *file), char ***list, int strip)
 {
@@ -80,7 +81,10 @@ int dir(const char *dir, const char *type, int (*filter) (const char *file), cha
 	char **files;
 	struct dirent **namelist;
 
-	assert(list);
+	if (!list) {
+		errno = EINVAL;
+		return -1;
+	}
 
 	if (!dir)
 		/* Assuming current directory */
@@ -92,9 +96,10 @@ int dir(const char *dir, const char *type, int (*filter) (const char *file), cha
 	matcher_type = type;
 	matcher_filter = filter;
 	n = scandir(dir, &namelist, matcher, alphasort);
-	if (n < 0) {
-		perror("scandir");
-	} else if (n > 0) {
+	if (n < 0)
+		return -1;
+
+	if (n > 0) {
 		files = (char **)malloc(n * sizeof(char *));
 		for (i = 0; i < n; i++) {
 			if (files) {

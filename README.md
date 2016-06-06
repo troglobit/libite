@@ -155,7 +155,8 @@ Generic Functions
 
   Wrapper for `scandir()` with optional filter.  Returns a list of
   names: files and directories that must be freed after use.  See
-  the unit test at the bottom for an example.
+  the unit test for an example, or take a look at `glob(3)`, it's
+  probably what you want anyway.
 
 - `fcopyfile(src, dst)`
 
