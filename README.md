@@ -187,8 +187,8 @@ Generic Functions
 
 - `lfopen(file, sep)`, `lfclose(lf)`
 
-  API for parsing UNIX style configuration files like `/etc/protocols`
-  and `/etc/services`.
+  LITE file API for parsing UNIX style configuration files like
+  `/etc/protocols` and `/etc/services`.
 
 - `lftok(lf)`
 
