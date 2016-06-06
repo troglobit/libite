@@ -1,5 +1,6 @@
 *.log
 *.trs
+dir
 fexist
 fisdir
 fsendfile
