@@ -2,8 +2,8 @@ EXTRA_DIST      = check.h
 CLEANFILES      = *~
 
 TESTS           =
-TESTS          += pidfile_func
-TESTS          += makepath_func
+TESTS          += pidfile
+TESTS          += makepath
 
 check_PROGRAMS  = $(TESTS)
 
