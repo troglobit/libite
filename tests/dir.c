@@ -39,28 +39,29 @@ static int cfg_dir_filter(const char *file)
 	return ! !strcmp(file, STARTUP_CONFIG);
 }
 
+static int is_startup_config(const char *entry)
+{
+	static int once = 1;
+	static char file[80];
+
+	if (once) {
+		int len = readlink(STARTUP_CONFIG, file, sizeof(file));
+
+		if (len == -1)
+			return 0;
+
+		file[len] = 0;
+		once = 0;	/* Only once per call to dir() */
+	}
+	//printf ("Comparing link %s with entry %s\n", file, entry);
+	return !strcmp(file, entry);
+}
+
 int main(int argc, char *argv[])
 {
 	int i, num;
 	char *type = DIR_TYPE_CONFIG;
 	char **files;
-	int once = 1;
-
-	int is_startup_config(const char *entry) {
-		static char file[80];
-
-		if (once) {
-			int len = readlink(STARTUP_CONFIG, file, sizeof(file));
-
-			if (len == -1)
-				return 0;
-
-			file[len] = 0;
-			once = 0;	/* Only once per call to dir() */
-		}
-		//printf ("Comparing link %s with entry %s\n", file, entry);
-		return !strcmp(file, entry);
-	}
 
 	simulate_files(1);
 
