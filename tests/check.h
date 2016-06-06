@@ -2,6 +2,7 @@
 #define LITE_TESTS_CHECK_H_
 
 #include <stdarg.h>
+#include <stdlib.h>
 #include <string.h>
 #include <time.h>
 
