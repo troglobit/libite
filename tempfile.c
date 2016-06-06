@@ -1,6 +1,6 @@
 /* A secure tmpfile() replacement.
  *
- * Copyright (c) 2015  Joachim Nilsson <troglobit@gmail.com>
+ * Copyright (c) 2015-2016  Joachim Nilsson <troglobit@gmail.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -51,17 +51,8 @@ FILE *tempfile(void)
 #endif
 }
 
-#ifdef UNITTEST
-int main(void)
-{
-	FILE *fp = tempfile(); system("ls -lrt "
-	_PATH_TMP " | tail -10"); return fclose(fp);
-}
-#endif
-
 /**
  * Local Variables:
- *  compile-command: "make V=1 -f tempfile.mk"
  *  indent-tabs-mode: t
  *  c-file-style: "linux"
  * End:
