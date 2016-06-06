@@ -114,60 +114,8 @@ void progress_simple(int percent)
 	}
 }
 
-#ifdef UNITTEST
-#include <stdlib.h>		/* atexit() */
-#include <unistd.h>		/* usleep() */
-
-#define MAX_WIDTH    80
-#define msleep(msec) usleep(msec * 1000)
-
-static void bye(void)
-{
-	showcursor();
-}
-
-static void testit(int fn, int percent)
-{
-	if (fn)
-		progress(percent, MAX_WIDTH);
-	else
-		progress_simple(percent);
-}
-
-static void test(int fn)
-{
-	int i, percent, block = 0, num = 85;
-
-	while (block < num) {
-		percent = block * 100 / num;
-		for (i = 0; i < 10; i++) {
-			testit(fn, percent);
-			msleep(5);
-		}
-		block++;
-		msleep(10);
-	}
-	testit(fn, 100);
-}
-
-int main(void)
-{
-	atexit(bye);
-	hidecursor();
-
-	printf("\nAdvanced:\n");
-	test(1);
-	printf("\nSimple:\n");
-	test(0);
-	printf("\n");
-
-	return 0;
-}
-#endif	/* UNITTEST */
-
 /**
  * Local Variables:
- *  compile-command: "make V=1 -f progress.mk"
  *  indent-tabs-mode: t
  *  c-file-style: "linux"
  * End:

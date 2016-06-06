@@ -4,6 +4,7 @@ fsendfile
 lfile
 makepath
 pidfile
+progress
 rsync
 tempfile
 tree
