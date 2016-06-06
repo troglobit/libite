@@ -16,6 +16,7 @@ pkgconfigdir        = $(libdir)/pkgconfig
 pkgconfig_DATA      = libite.pc
 doc_DATA            = README.md LICENSE
 EXTRA_DIST          = README.md LICENSE ChangeLog.md
+SUBDIRS             = tests
 
 ## Generate MD5 checksum file
 MD5 = md5sum

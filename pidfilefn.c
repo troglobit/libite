@@ -21,7 +21,6 @@
 #include <signal.h>
 #include <unistd.h>
 
-extern char *__pidfile_name;
 extern char *chomp(char *str);
 
 /**
@@ -117,131 +116,6 @@ int pidfile_signal(const char *pidfile, int signal)
 
 	return 0;
 }
-
-
-/********************************* UNIT TESTS ************************************/
-#ifdef UNITTEST
-#include <paths.h>
-#include <stdarg.h>
-#include <time.h>
-#include "lite.h"
-
-extern char *__progname;
-static char PIDFILE[42];
-static int verbose = 0;
-static struct stat before, after;
-
-static int test(int result, const char *fmt, ...)
-{
-	char buf[80];
-	size_t len;
-	va_list ap;
-	const char success[] = " \e[1m[ OK ]\e[0m\n";
-	const char failure[] = " \e[7m[FAIL]\e[0m\n";
-	const char dots[] = " .....................................................................";
-
-	va_start(ap, fmt);
-	len = vsnprintf(buf, sizeof(buf), fmt, ap);
-	va_end(ap);
-
-	write(STDERR_FILENO, buf, len);
-	write(STDERR_FILENO, dots, 60 - len); /* pad with dots. */
-
-	if (!result)
-		write(STDERR_FILENO, success, strlen(success));
-	else
-		write(STDERR_FILENO, failure, strlen(failure));
-
-	return result;
-}
-
-static inline int timespec_newer(const struct timespec *a, const struct timespec *b)
-{
-	if (a->tv_sec != b->tv_sec)
-		return a->tv_sec > b->tv_sec;
-
-	return a->tv_nsec > b->tv_nsec;
-}
-
-char *timespec2str(struct timespec *ts, char *buf, size_t len)
-{
-	size_t ret, pos;
-	struct tm t;
-
-	memset(buf, 0, len);
-
-	tzset();
-	if (localtime_r(&(ts->tv_sec), &t) == NULL)
-		return buf;
-
-	ret = strftime(buf, len, "%F %T", &t);
-	if (ret == 0)
-		return buf;
-	len -= ret - 1;
-
-	pos  = strlen(buf);
-	len -= pos;
-	snprintf(&buf[pos], len, ".%09ld", ts->tv_nsec);
-
-	return buf;
-}
-
-static void sigterm_handler(int UNUSED(signo))
-{
-	if (verbose)
-		printf("Exiting ...\n");
-}
-
-static void sigalrm_handler(int UNUSED(signo))
-{
-	pidfile(NULL);
-	if (!fexist(PIDFILE))
-		err(1, "failed creating %s", PIDFILE);
-	stat(PIDFILE, &before);
-}
-
-static int mtime()
-{
-	int ret;
-	char buf[80];
-
-	/* Must sleep a while here otherwise we execute too fast => no mtime change :-( */
-	usleep(10000);
-
-	if (verbose)
-		printf("Calling pidfile() again to update mtime ...\n");
-	pidfile(NULL);
-	stat(PIDFILE, &after);
-
-	ret = timespec_newer(&after.st_mtim, &before.st_mtim);
-	if (verbose) {
-		printf("Before: %s\n", timespec2str(&before.st_mtim, buf, sizeof(buf)));
-		printf("After : %s\n", timespec2str(&after.st_mtim, buf, sizeof(buf)));
-	}
-
-	return !ret;
-}
-
-int main(int argc, char *argv[])
-{
-	if (argc > 1 && !strcmp(argv[1], "-v"))
-		verbose = 1;
-
-	snprintf(PIDFILE, sizeof(PIDFILE), "%s%s.pid", _PATH_VARRUN, __progname);
-
-	signal(SIGTERM, sigterm_handler);
-	signal(SIGALRM, sigalrm_handler);
-	alarm(1);
-
-	return     test(pidfile_poll(PIDFILE) != getpid(), "Testing pidfile_poll()")
-		|| test(strcmp(__pidfile_name, PIDFILE),   "Testing __pidfile_name vs guessed PID filename")
-		|| test(mtime(),                           "Testing mtime update of followup pidfile() call")
-		|| test(pidfile_signal(PIDFILE, SIGTERM),  "Testing signalling ourselves")
-		;
-
-	return 0;
-}
-#endif /* UNITTEST */
 
 /**
  * Local Variables:
