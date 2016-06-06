@@ -66,7 +66,7 @@ pidfile(const char *basename)
 	if (pidfile_path != NULL) {
 		if (pid == pidfile_pid) {
 			utimensat(0, pidfile_path, NULL, 0);
-			return 0;
+			return (0);
 		}
 		free(pidfile_path);
 		pidfile_path = NULL;
