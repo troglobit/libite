@@ -45,6 +45,7 @@ static pid_t pidfile_pid;
 
 static void pidfile_cleanup(void);
 
+const  char *__pidfile_path = _PATH_VARRUN; /* Note: includes trailing slash '/' */
 const  char *__pidfile_name = NULL;
 extern char *__progname;
 
@@ -73,8 +74,7 @@ pidfile(const char *basename)
 		atexit_already = 1;
 	}
 
-	/* _PATH_VARRUN includes trailing / */
-	if (asprintf(&pidfile_path, "%s%s.pid", _PATH_VARRUN, basename) == -1)
+	if (asprintf(&pidfile_path, "%s%s.pid", __pidfile_path, basename) == -1)
 		return (-1);
 
 	if ((f = fopen(pidfile_path, "w")) == NULL) {
