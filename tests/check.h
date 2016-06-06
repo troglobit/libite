@@ -1,6 +1,10 @@
 #ifndef LITE_TESTS_CHECK_H_
 #define LITE_TESTS_CHECK_H_
 
+#include <stdarg.h>
+#include <string.h>
+#include <time.h>
+
 #include "../lite.h"
 
 #define fail_unless(test)						\

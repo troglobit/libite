@@ -1,6 +1,6 @@
 /* mkpath() -- Create all components leading up to a given directory
  *
- * Copyright (c) 2013  Joachim Nilsson <troglobit@gmail.com>
+ * Copyright (c) 2013-2016  Joachim Nilsson <troglobit@gmail.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -17,12 +17,18 @@
 
 #include <errno.h>
 #include <libgen.h>
-#include <limits.h>
-#include <stdlib.h>
-#include <string.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include "lite.h"
 
+/**
+ * mkpath - Like makepath() but takes a mode_t argument
+ * @dir:  Directory to created, relative or absolute
+ * @mode: A &mode_t mode to create @dir with
+ *
+ * Returns:
+ * POSIX OK(0) on success, otherwise -1 with @errno set.
+ */
 int mkpath(char *dir, mode_t mode)
 {
 	struct stat sb;
@@ -55,71 +61,8 @@ int makepath(char *dir)
 	return mkpath(dir, 0777);
 }
 
-/********************************* UNIT TESTS ************************************/
-#ifdef UNITTEST
-#include "lite.h"
-
-int checkpath(char *dir)
-{
-	char tmp[256];
-	struct stat sb;
-
-	snprintf(tmp, sizeof(tmp), "ls -ld %s", dir);
-	if (system(tmp))
-		perror("system");
-
-	if (!stat(dir, &sb) && S_ISDIR(sb.st_mode))
-		return 0;
-
-	errno = ENOTDIR;
-	return 1;
-}
-
-int test_makepath(char *dir)
-{
-	int ret = makepath(dir);
-
-	if (!ret)
-		ret = checkpath(dir);
-	if (ret)
-		perror("Failed");
-
-	return ret;
-}
-
-int main(void)
-{
-	int i, ret = 0;
-	char *list[] = {
-		"/tmp/tok/",
-		"/tmp/tok2",
-		"/tmp/ab",
-		"/tmp/b",
-		"/tmp/a/",
-		"/tmp/a/b",
-		"/tmp/a/c/",
-		"../../sometestdir/arpa/inet",
-		NULL
-	};
-
-	for (i = 0; list[i]; i++)
-		rmdir(list[i]);
-
-	printf("Testing makepath() ...\n");
-	for (i = 0; list[i] && !ret; i++)
-		ret = test_makepath(list[i]);
-
-	printf("\nCleaning up ...\n");
-	for (i = 0; list[i]; i++)
-		rmdir(list[i]);
-
-	return ret;
-}
-#endif  /* UNITTEST */
-
 /**
  * Local Variables:
- *  compile-command: "make V=1 -f makepath.mk"
  *  indent-tabs-mode: t
  *  c-file-style: "linux"
  * End:

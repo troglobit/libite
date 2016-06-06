@@ -3,6 +3,7 @@ CLEANFILES      = *~
 
 TESTS           =
 TESTS          += pidfile_func
+TESTS          += makepath_func
 
 check_PROGRAMS  = $(TESTS)
 
