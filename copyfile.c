@@ -23,12 +23,8 @@
 
 #include <errno.h>
 #include <fcntl.h>
-#include <stdio.h>
 #include <stdlib.h>
-#include <sys/stat.h>
-
 #include "lite.h"
-
 
 /* Tests if dst is a directory, if so, reallocates dst and appends src filename returning 1 */
 static int adjust_target(char *src, char **dst)
@@ -256,65 +252,8 @@ int fcopyfile(FILE *src, FILE *dst)
 	return 0;
 }
 
-#ifdef UNITTEST
-#include <err.h>
-
-int main(void)
-{
-	int i = 0;
-	char *files[] = {
-		"/etc/passwd", "/tmp/mypwd", "/tmp/mypwd",
-		"/etc/passwd", "/tmp/", "/tmp/passwd",
-		"/etc/passwd", "/tmp", "/tmp/passwd",
-		NULL
-	};
-	FILE *src, *dst;
-
-	printf("=>Start testing fcopyfile()\n");
-	while (files[i]) {
-		printf("fcopyfile(%s, %s)\t", files[i], files[i + 1]);
-		src = fopen(files[i], "r");
-		dst = fopen(files[i + 1], "w");
-		if (fcopyfile(src, dst)) {
-			if (!fisdir(files[i + 1]))
-			    err(1, "Failed fcopyfile(%s, %s)", files[i], files[i + 1]);
-		}
-
-		if (src)
-			fclose(src);
-		if (dst)
-			fclose(dst);
-
-		if (fexist(files[i + 2]))
-			printf("OK => %s", files[i + 2]);
-		printf("\n");
-
-		erase(files[i + 2]);
-		i += 3;
-	}
-
-	printf("\n=>Start testing copyfile()\n");
-	i = 0;
-	while (files[i]) {
-		printf("copyfile(%s, %s)\t", files[i], files[i + 1]);
-		if (!copyfile(files[i], files[i + 1], 0, 0))
-			err(1, "Failed copyfile(%s, %s)", files[i], files[i + 1]);
-
-		if (fexist(files[i + 2]))
-			printf("OK => %s", files[i + 2]);
-		printf("\n");
-
-		erase(files[i + 2]);
-		i += 3;
-	}
-
-	return 0;
-}
-#endif /* UNITTEST */
-
 /**
  * Local Variables:
- *  compile-command: "make V=1 -f copyfile.mk"
  *  indent-tabs-mode: t
  *  c-file-style: "linux"
  * End:
