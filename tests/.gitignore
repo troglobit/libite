@@ -1,5 +1,6 @@
 *.log
 *.trs
+fsendfile
 lfile
 makepath
 pidfile
