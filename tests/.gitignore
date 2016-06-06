@@ -1,5 +1,7 @@
 *.log
 *.trs
+lfile
 makepath
 pidfile
+tempfile
 tree

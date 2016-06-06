@@ -1,6 +1,6 @@
 /* Parse UNIX /etc configuration files like /etc/protocols and /etc/services
  *
- * Copyright (c) 2015  Joachim Nilsson <troglobit@gmail.com>
+ * Copyright (c) 2015-2016  Joachim Nilsson <troglobit@gmail.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -187,47 +187,8 @@ int fgetint(char *file, char *sep, char *key)
 	return val;
 }
 
-#ifdef UNITTEST
-int main(void)
-{
-	int val;
-	lfile_t lf;
-
-	val = fgetint("/etc/protocols", " \n\t", "udp");
-	if (val == -1) {
-		perror("Failed locating 'udp' protocol");
-		return 1;
-	}
-	printf("udp has proto %d\n", val);
-
-	val = fgetint("/etc/services", " /\n\t", "ftp");
-	if (val == -1) {
-		perror("Failed locating 'ftp' service");
-		return 1;
-	}
-	printf("ftp is inet port %d\n", val);
-
-	val = fgetint("/etc/group", "x:\n", "utmp");
-	if (val == -1) {
-		perror("Failed locating group 'utmp'");
-		return 1;
-	}
-	printf("utmp is gid %d\n", val);
-
-	val = fgetint("/etc/passwd", "x:\n", "nobody");
-	if (val == -1) {
-		perror("Failed locating user 'nobody'");
-		return 1;
-	}
-	printf("nobody is uid %d\n", val);
-
-	return 0;
-}
-#endif
-
 /**
  * Local Variables:
- *  compile-command: "make V=1 -f lfile.mk"
  *  indent-tabs-mode: t
  *  c-file-style: "linux"
  * End:
