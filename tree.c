@@ -120,30 +120,8 @@ int tree(char *path, int show_perms)
 	return descend(path, show_perms, "");
 }
 
-#ifdef UNITTEST
-#include "lite.h"
-
-int main(void)
-{
-	int i, result = 0;
-	struct { char *path; int fail; } arr[] = {
-		{ "/etc/passwd", -1 },
-		{ "/dev",         0 },
-		{ "/sbin",        0 },
-	};
-
-	for (i = 0; i < NELEMS(arr); i++) {
-		if (tree(arr[i].path, 1) != arr[i].fail)
-			result++;
-	}
-
-	return result;
-}
-#endif
-
 /**
  * Local Variables:
- *  compile-command: "make V=1 -f tree.mk"
  *  indent-tabs-mode: t
  *  c-file-style: "linux"
  * End:

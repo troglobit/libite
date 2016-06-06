@@ -2,8 +2,9 @@ EXTRA_DIST      = check.h
 CLEANFILES      = *~ *.trs *.log
 
 TESTS           =
-TESTS          += pidfile
 TESTS          += makepath
+TESTS          += pidfile
+TESTS          += tree
 
 check_PROGRAMS  = $(TESTS)
 
