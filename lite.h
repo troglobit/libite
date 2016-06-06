@@ -80,7 +80,10 @@ pid_t   pidfile_poll  (const char *pidfile);
 
 void   *reallocarray(void *optr, size_t nmemb, size_t size);
 
-int tree(char *path, int show_perms);
+int     tree(char *path, int show_perms);
+
+void    progress       (int percent, int max_width);
+void    progress_simple(int percent);
 
 #ifndef touch
 # define touch(x) do { if (mknod((x), S_IFREG|0644, 0) && errno != EEXIST) warn("Failed creating %s", x); } while (0)
