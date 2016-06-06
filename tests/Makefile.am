@@ -1,5 +1,5 @@
 EXTRA_DIST      = check.h
-CLEANFILES      = *~
+CLEANFILES      = *~ *.trs *.log
 
 TESTS           =
 TESTS          += pidfile
