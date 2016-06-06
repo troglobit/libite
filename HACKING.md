@@ -6,6 +6,7 @@ Maintenance
 
 * Leverage GitHub issues for milestone planning
 * Reference issues from GitHub pull requests to alert issue subscribers
+* Encourage contributors to write unit tests
 * Bump library ABI version just before release!
 
 
@@ -53,9 +54,9 @@ It must be updated according to the [GNU Libtool recommendations][1]:
    release of your software.  More frequent updates are unnecessary, and
    only guarantee that the current interface number gets larger faster.
 3. If the library *source code has changed at all* since the last update,
-   then increment revision (`c:r:a` becomes `c:r+1:a`).
-4. If any *interfaces have been added, removed, or changed* since the
-   last update, increment current, and set revision to 0.
+   then increment revision (`c:r:a` --> `c:r+1:a`)
+4. If any *interfaces have been added, removed, or changed* since last
+   update, increment current, and zero revision (`c:r:a` --> `c+1:0:0`)
 5. If any *interfaces have been added* since the last public release,
    then increment age.
 6. If any *interfaces have been removed or changed* since the last
