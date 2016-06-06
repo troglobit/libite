@@ -15,15 +15,14 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-#ifndef LITE_STRNLEN_H
-#define LITE_STRNLEN_H
+#ifndef LITE_STRNLEN_H_
+#define LITE_STRNLEN_H_
 
 #if !defined(HAVE_STRNLEN)
 #if defined(strnlen)
 #define HAVE_STRNLEN	1
 #endif
 #endif
-
 
 #if !HAVE_STRNLEN
 #include <stddef.h>	/* size_t */
@@ -41,4 +40,4 @@ static inline size_t xstrnlen(const char *str, size_t lim)
 }
 #endif
 
-#endif /* LITE_STRNLEN_H */
+#endif /* LITE_STRNLEN_H_ */

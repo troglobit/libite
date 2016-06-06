@@ -23,9 +23,8 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  * ==========================================================================
  */
-#ifndef GNU_STRING_STRNDUPA_H
-#define GNU_STRING_STRNDUPA_H
-
+#ifndef LITE_STRNDUPA_H_
+#define LITE_STRNDUPA_H_
 
 #if !defined(HAVE_STRNDUPA)
 #if defined(strndupa)
@@ -33,14 +32,11 @@
 #endif
 #endif
 
-
 #if !HAVE_STRNDUPA
 #if defined(__GNUC__)
 #include <stddef.h>	/* size_t */
-
 #include <string.h>	/* memcpy(3) */
-
-#include <gnu/string/strnlen.h>
+#include "strnlen.h"
 
 #define strndupa(src, lim) (__extension__ ({		\
 	size_t len_	= strnlen(src, lim);		\
@@ -53,6 +49,5 @@
 +#error strndupa() may use an unsupported GNU C API, please forward any fix to maintainer, cheers!
 #endif /* __GNUC__ */
 #endif /* !HAVE_STRNDUPA */
-
 
 #endif /* GNU_STRING_STRNDUPA_H */
