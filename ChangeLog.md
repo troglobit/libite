@@ -3,6 +3,20 @@ Change Log
 
 All notable changes to the project are documented in this file.
 
+
+[v1.7.1][] - 2016-06-XX
+-----------------------
+
+### Changes
+- The OpenBSD `pidfile()` function's prefix path `_PATH_VARRUN`
+  can now be overridden by setting the hidden `__pidfile_path`
+  variable.  E.g., to `_PATH_TMP`.  Make sure read the docs!
+- Add new unit test framework `make check`.
+
+### Fixes
+- Fix bad path in new `strndupa()` header file.
+
+
 [v1.7.0][] - 2016-06-05
 -----------------------
 
@@ -178,6 +192,7 @@ Initial extraction of frog DNA from [Finit][].  See [README][] for API details.
 
 
 [UNRELEASED]: https://github.com/troglobit/libite/compare/v1.7.0...HEAD
+[v1.7.1]: https://github.com/troglobit/libite/compare/v1.7.0...v1.7.1
 [v1.7.0]: https://github.com/troglobit/libite/compare/v1.6.0...v1.7.0
 [v1.6.0]: https://github.com/troglobit/libite/compare/v1.5.1...v1.6.0
 [v1.5.1]: https://github.com/troglobit/libite/compare/v1.5.0...v1.5.1
