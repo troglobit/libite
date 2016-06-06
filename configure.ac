@@ -1,4 +1,4 @@
-AC_INIT(libite, 1.7.0, https://github.com/troglobit/libite/issues)
+AC_INIT(libite, 1.7.1-rc1, https://github.com/troglobit/libite/issues)
 AM_INIT_AUTOMAKE([1.11 foreign no-dist-gzip dist-xz])
 AM_SILENT_RULES([yes])
 
