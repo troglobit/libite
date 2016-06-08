@@ -32,6 +32,7 @@
  */
 
 #include <sys/stat.h>		/* utimensat() */
+#include <sys/time.h>		/* utimensat() on *BSD */
 #include <sys/types.h>
 #include <errno.h>
 #include <paths.h>
