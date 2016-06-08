@@ -3,6 +3,14 @@ Change Log
 
 All notable changes to the project are documented in this file.
 
+[v1.8.1][UNRELEASED] - 2016-MM-DD
+---------------------------------
+
+### Fixes
+
+- `fparseln()`, portability fix for NetBSD
+- `pidfile()`, portability fix for NetBSD and OpenBSD
+
 
 [v1.8.0][] - 2016-06-06
 -----------------------
