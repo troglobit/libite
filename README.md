@@ -362,7 +362,8 @@ system:
 
     ./configure
     make -j5
-    make install-strip
+    sudo make install-strip
+    sudo ldconfig
 
 **Note:** When checking code from GitHub, use <kbd>./autogen.sh</kbd> to
 generate a `configure` script.  It is a generated file and otherwise only
