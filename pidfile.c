@@ -1,4 +1,4 @@
-/*	Updated by troglobit for libite/finit/uftpd projects 2016/03/19 */
+/*	Updated by troglobit for libite/finit/uftpd projects 2016/07/04 */
 /*	$OpenBSD: pidfile.c,v 1.11 2015/06/03 02:24:36 millert Exp $	*/
 /*	$NetBSD: pidfile.c,v 1.4 2001/02/19 22:43:42 cgd Exp $	*/
 
