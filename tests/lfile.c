@@ -1,6 +1,36 @@
 #include <stdio.h>
 #include "check.h"
 
+#define FSTAB "/etc/fstab"
+
+static int fstab(void)
+{
+	int field = 1;
+	char *token, *dev;
+	lfile_t *lf;
+
+	lf = lfopen(FSTAB, " \t\n");
+	if (!lf) {
+		perror("Failed opening " FSTAB);
+		return 1;
+	}
+
+	while ((token = lftok(lf))) {
+		if (field == 1)
+			dev = token;
+		if (field == 6) {
+			field = 0;
+			printf("Found %s passno %d\n", dev, atoi(token));
+		}
+
+		field++;
+	}
+
+	lfclose(lf);
+
+	return 0;
+}
+
 int main(void)
 {
 	int val;
@@ -33,5 +63,5 @@ int main(void)
 	}
 	printf("nobody is uid %d\n", val);
 
-	return 0;
+	return fstab();
 }
