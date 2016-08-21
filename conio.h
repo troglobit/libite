@@ -49,24 +49,24 @@
 #define WHITE        0x17
 
 /* Esc[2JEsc[1;1H             - Clear screen and move cursor to 1,1 (upper left) pos. */
-#define clrscr()              fputs ("\e[2J\e[1;1H", stdout)
+#define clrscr()              fputs ("\033[2J\033[1;1H", stdout)
 /* Esc[K                      - Erases from the current cursor position to the end of the current line. */
-#define clreol()              fputs ("\e[K", stdout)
+#define clreol()              fputs ("\033[K", stdout)
 /* Esc[2K                     - Erases the entire current line. */
-#define delline()             fputs ("\e[2K", stdout)
+#define delline()             fputs ("\033[2K", stdout)
 /* Esc[Line;ColumnH           - Moves the cursor to the specified position (coordinates) */
-#define gotoxy(x,y)           printf("\e[%d;%dH", y, x)
+#define gotoxy(x,y)           printf("\033[%d;%dH", y, x)
 /* Esc[?25l (lower case L)    - Hide Cursor */
-#define hidecursor()          fputs ("\e[?25l", stdout)
+#define hidecursor()          fputs ("\033[?25l", stdout)
 /* Esc[?25h (lower case H)    - Show Cursor */
-#define showcursor()          fputs ("\e[?25h", stdout)
+#define showcursor()          fputs ("\033[?25h", stdout)
 
 /* Esc[Value;...;Valuem       - Set Graphics Mode */
 #define __set_gm(attr,color,val)					\
 	if (!color)							\
-		printf("\e[%dm", attr);					\
+		printf("\033[%dm", attr);					\
 	else								\
-		printf("\e[%d;%dm", color & 0x10 ? 1 : 0, (color & 0xF) + val)
+		printf("\033[%d;%dm", color & 0x10 ? 1 : 0, (color & 0xF) + val)
 #define textattr(attr)        __set_gm(attr, 0, 0)
 #define textcolor(color)      __set_gm(RESETATTR, color, 30)
 #define textbackground(color) __set_gm(RESETATTR, color, 40)

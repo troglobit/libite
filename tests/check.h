@@ -25,8 +25,8 @@ static inline int test(int result, const char *fmt, ...)
 	char buf[80];
 	size_t len;
 	va_list ap;
-	const char success[] = " \e[1m[ OK ]\e[0m\n";
-	const char failure[] = " \e[7m[FAIL]\e[0m\n";
+	const char success[] = " \033[1m[ OK ]\033[0m\n";
+	const char failure[] = " \033[7m[FAIL]\033[0m\n";
 	const char dots[] = " .....................................................................";
 
 	va_start(ap, fmt);
