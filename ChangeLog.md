@@ -3,6 +3,19 @@ Change Log
 
 All notable changes to the project are documented in this file.
 
+[v1.8.2][] - 2016-09-05
+-----------------------
+
+### Changes
+- Updated build instructions in README.
+- Converted touch(), makedir(), makefifo(), and erase() from macros to
+  inline functions.  Also removed implicit logging to stderr on error.
+
+### Fixes
+- Fix small memory leak in pidfile() ... at exit.
+- Fixes for building on musl libc
+
+
 [v1.8.1][] - 2016-06-25
 -----------------------
 
