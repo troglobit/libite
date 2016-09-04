@@ -25,7 +25,7 @@
 #ifndef LITE_H_
 #define LITE_H_
 
-#include <err.h>
+#include <errno.h>
 #include <stdio.h>
 #include <stdint.h>    /* uint8_t, uint16_t, uint32_t, INT32_MAX, etc. */
 #include <sys/stat.h>
@@ -71,7 +71,7 @@ int     mkpath     (char *dir, mode_t mode);
 int     makepath   (char *dir);
 
 int     dir        (const char *dir, const char *type, int (*filter) (const char *file), char ***list, int strip);
-int     rsync      (char *src, char *dst, int delete, int (*filter) (const char *file));
+int     rsync      (char *src, char *dst, int delete,  int (*filter) (const char *file));
 
 int     pidfile       (const char *basename);
 int     pidfile_signal(const char *pidfile, int signal);
@@ -86,17 +86,38 @@ void    progress       (int percent, int max_width);
 void    progress_simple(int percent);
 
 #ifndef touch
-# define touch(x) do { if (mknod((x), S_IFREG|0644, 0) && errno != EEXIST) warn("Failed creating %s", x); } while (0)
+static inline int touch(const char *path)
+{
+	if (mknod((path), S_IFREG|0644, 0) && errno != EEXIST)
+		return -1;
+	return 0;
+}
 #endif
 #ifndef makedir
-# define makedir(x, p) do { if (mkdir(x, p) && errno != EEXIST) warn("Failed creating directory %s", x); } while (0)
+static inline int makedir(const char *path, mode_t mode)
+{
+	if (mkdir(path, mode) && errno != EEXIST)
+		return -1;
+	return 0;
+}
 #endif
 #ifndef makefifo
-# define makefifo(x, p) do { if (mkfifo(x, p) && errno != EEXIST) warn("Failed creating FIFO %s", x); } while (0)
+static inline int makefifo(const char *path, mode_t mode)
+{
+	if (mkfifo(path, mode) && errno != EEXIST)
+		return -1;
+	return 0;
+}
 #endif
 #ifndef erase
-# define erase(x) do { if (remove(x) && errno != ENOENT) warn("Failed removing %s", x); } while (0)
+static inline int erase(const char *path)
+{
+	if (remove(path) && errno != ENOENT)
+		return -1;
+	return 0;
+}
 #endif
+
 #ifndef chardev
 # define chardev(x,m,maj,min) mknod((x), S_IFCHR|(m), makedev((maj),(min)))
 #endif
