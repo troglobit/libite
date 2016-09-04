@@ -1,3 +1,4 @@
+#include <err.h>
 #include "check.h"
 
 int main(void)

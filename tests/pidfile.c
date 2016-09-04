@@ -1,3 +1,4 @@
+#include <err.h>
 #include <paths.h>
 #include <signal.h>
 #include <stdarg.h>
