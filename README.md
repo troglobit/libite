@@ -70,6 +70,14 @@ and in your `Makefile.am`:
     proggy_LDADD  = $(lite_LIBS)
 
 
+Important Note
+--------------
+
+When using functions like `mkpath()`, `makepath()`, and `makefifo()`,
+make sure your `umask()` is correct so you do not accidentally create
+files and directories accessible to other users than intended.
+
+
 Helper Macros
 -------------
 
