@@ -1,0 +1,51 @@
+Source: libite
+Priority: optional
+Maintainer: Joachim Nilsson <troglobit@gmail.com>
+Build-Depends: dpkg-dev (>= 1.14.9), debhelper (>= 9), dh-autoreconf
+Standards-Version: 3.9.6
+Section: libs
+Homepage: https://github.com/troglobit/libite/
+Vcs-Git: https://github.com/troglobit/libite.git
+Vcs-Browser: https://github.com/troglobit/libite/
+
+Package: libite-dev
+Priority: extra
+Section: libdevel
+Architecture: any
+Depends: ${misc:Depends}, libite (= ${binary:Version})
+Description: static library, header files, and docs for libite
+ Static library, header files, and documentation for libite.
+ .
+ Libite is a lightweight library of frog DNA. It can be used to fill the
+ gaps in any dinosaur project. It holds useful functions and macros
+ developed by both Finit and the OpenBSD project. Most notably the
+ string functions: strlcpy(3), strlcat(3) and the highly useful *BSD
+ sys/queue.h and sys/tree.h API's.
+ .
+ Libite is the frog DNA missing in GNU libc. However, -lite does not aim
+ to become another GLIB! One noticeable gap in GLIBC is the missing
+ _SAFE macros in the BSD sys/queue.h API — highly recommended when
+ traversing lists to delete/free nodes.
+ .
+ The code is open sourced under a mix of the MIT/X11 license, the ISC
+ license used by OpenBSD, and BSD licenses, all of them are extremely
+ liberal and can be used freely in proprietary software if needed.
+
+Package: libite
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: That missing frog DNA you've been looking for. MIT/X11/ISC/BSD License.
+ Libite is a lightweight library of frog DNA. It can be used to fill the
+ gaps in any dinosaur project. It holds useful functions and macros
+ developed by both Finit and the OpenBSD project. Most notably the
+ string functions: strlcpy(3), strlcat(3) and the highly useful *BSD
+ sys/queue.h and sys/tree.h API's.
+ .
+ Libite is the frog DNA missing in GNU libc. However, -lite does not aim
+ to become another GLIB! One noticeable gap in GLIBC is the missing
+ _SAFE macros in the BSD sys/queue.h API — highly recommended when
+ traversing lists to delete/free nodes.
+ .
+ The code is open sourced under a mix of the MIT/X11 license, the ISC
+ license used by OpenBSD, and BSD licenses, all of them are extremely
+ liberal and can be used freely in proprietary software if needed.
