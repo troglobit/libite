@@ -1,4 +1,6 @@
 #include <errno.h>
+#include <errno.h>
+#include <libgen.h>
 #include <stdlib.h>
 #include "check.h"
 
@@ -34,27 +36,32 @@ int main(void)
 {
 	int i, ret = 0;
 	char *list[] = {
-		"/tmp/tok/",
-		"/tmp/tok2",
-		"/tmp/ab",
-		"/tmp/b",
-		"/tmp/a/",
-		"/tmp/a/b",
-		"/tmp/a/c/",
-		"../../sometestdir/arpa/inet",
+		"/tmp/libite-test/tok/",
+		"/tmp/libite-test/tok2",
+		"/tmp/libite-test/ab",
+		"/tmp/libite-test/b",
+		"/tmp/libite-test/a/",
+		"/tmp/libite-test/a/b",
+		"/tmp/libite-test/a/c/",
 		NULL
 	};
 
-	for (i = 0; list[i]; i++)
-		rmdir(list[i]);
-
 	printf("Testing makepath() ...\n");
+	mkdir("/tmp/libite-test", 0755);
+
 	for (i = 0; list[i] && !ret; i++)
 		ret |= test_makepath(list[i]);
 
 	printf("\nCleaning up ...\n");
-	for (i = 0; list[i]; i++)
-		rmdir(list[i]);
+	system("rm -rf /tmp/libite-test");
 
 	return ret;
 }
+
+/**
+ * Local Variables:
+ *  indent-tabs-mode: t
+ *  c-file-style:     "linux"
+ *  compile-command:  "make makepath && ./makepath"
+ * End:
+ */
