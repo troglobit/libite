@@ -65,7 +65,7 @@ pidfile(const char *basename)
 	atexit_already = 0;
 
 	if (pidfile_path != NULL) {
-		if (pid == pidfile_pid) {
+		if (!access(pidfile_path, R_OK) && pid == pidfile_pid) {
 			utimensat(0, pidfile_path, NULL, 0);
 			return (0);
 		}
@@ -96,6 +96,7 @@ pidfile(const char *basename)
 		return (-1);
 	}
 	(void) fclose(f);
+	__pidfile_name = pidfile_path;
 
 	/*
 	 * LITE extension, no need to set up another atexit() handler
@@ -114,7 +115,6 @@ pidfile(const char *basename)
 		errno = save_errno;
 		return (-1);
 	}
-	__pidfile_name = pidfile_path;
 
 	return (0);
 }
