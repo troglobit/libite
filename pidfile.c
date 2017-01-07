@@ -42,7 +42,7 @@
 
 #ifndef pidfile
 static char *pidfile_path = NULL;
-static pid_t pidfile_pid;
+static pid_t pidfile_pid  = 0;
 
 static void pidfile_cleanup(void);
 
