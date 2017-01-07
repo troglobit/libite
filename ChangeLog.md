@@ -8,11 +8,12 @@ All notable changes to the project are documented in this file.
 
 ### Changes
 - Updated build instructions in README.
-- Converted touch(), makedir(), makefifo(), and erase() from macros to
-  inline functions.  Also removed implicit logging to stderr on error.
+- Converted `touch()`, `makedir()`, `makefifo()`, and `erase()` from
+  macros to inline functions.  Also removed implicit logging to stderr
+  on error.
 
 ### Fixes
-- Fix small memory leak in pidfile() ... at exit.
+- Fix small memory leak in `pidfile()` ... at exit.
 - Fixes for building on musl libc
 
 
