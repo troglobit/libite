@@ -75,8 +75,13 @@ pidfile(const char *basename)
 		atexit_already = 1;
 	}
 
-	if (asprintf(&pidfile_path, "%s%s.pid", __pidfile_path, basename) == -1)
-		return (-1);
+	if (basename[0] != '/') {
+		if (asprintf(&pidfile_path, "%s%s.pid", __pidfile_path, basename) == -1)
+			return (-1);
+	} else {
+		if (asprintf(&pidfile_path, "%s", basename) == -1)
+			return (-1);
+	}
 
 	if ((f = fopen(pidfile_path, "w")) == NULL) {
 		save_errno = errno;
