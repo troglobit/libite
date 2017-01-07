@@ -18,6 +18,7 @@ static void sigterm_handler(int UNUSED(signo))
 {
 	if (verbose)
 		printf("Exiting ...\n");
+	remove(PIDFILE);
 }
 
 static void sigalrm_handler(int UNUSED(signo))
