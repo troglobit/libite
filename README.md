@@ -231,11 +231,13 @@ Generic Functions
   with the `dst` name.  On successful operation the source is removed
   and the function returns POSIX OK (0).
 
-- `pidfile(basename)`
+- `pidfile(name)`
 
-  Create a daemon PID file in `_PATH_VARRUN` using either `basename` or,
-  if `basename` is `NULL`, `__progname`.  The resulting file name is
-  available to the user as a read-only pointer:
+  Create a daemon PID file using either the `name` as a full path, if
+  `name` starts with `/`, or in `_PATH_VARRUN` using `name` as the
+  basename of the application.  If `name` is `NULL`, then `__progname`
+  is used as the basename.  The resulting file name is available to the
+  user as a read-only pointer:
 
         extern char *__pidfile_name;
 
@@ -246,14 +248,14 @@ Generic Functions
 
   The PID file is removed when the program exits, using an `atexit()`
   handler.  However, depending on how the program terminates the file
-  may still exist even though the program is no longer running.  This
-  is only a problem for clients.
+  may still exist even though the program is no longer running.
 
   Calling this function multiple times updates the mtime of the file.
   Only one `atexit()` handler is created, regardless of the amount of
-  times the function is called.
+  times the function is called.  If the file is removed, subsequent
+  calls to this function will recreate the file.
   
-  See below for link to OpenBSD man page.
+  See below for a link to OpenBSD man page.
 
 - `pidfile_read(pidfile)`
 
@@ -324,9 +326,9 @@ The following are popular functions and highly useful macros from the
 
   http://www.openbsd.org/cgi-bin/man.cgi/OpenBSD-current/man3/pidfile.3
 
-  **Note:** this version of `pidfile()` has been extended to handle it
-  being called multiple times, i.e. to not create multiple `atexit()`
-  handlers, and also to export a few internal paths:
+  **Note:** the version of `pidfile()` in -lite has been extended to
+  handle it being called multiple times, i.e. to not create multiple
+  `atexit()` handlers, and also to export a few internal paths:
 
 	- `__pidfile_path`: prefix path, default `_PATH_VARRUN`.  Notice the
 	  trailing slash requirement if you want to override it!
