@@ -4,11 +4,11 @@ Change Log
 All notable changes to the project are documented in this file.
 
 
-[v1.8.3][UNRELEASED] - 2017-01-XX
----------------------------------
+[v1.8.3][] - 2017-01-08
+-----------------------
 
 ### Changes
-- Support absolute path to `pidfile()`.  Needed by, e.g. Inadyn
+- Support absolute path in `pidfile()`.  Needed by, e.g. Inadyn
 - Add initial `debian/` packaging
 - Update README with note on remembering to set `umask()`
 
@@ -231,7 +231,7 @@ problems this may cause!
 Initial extraction of frog DNA from [Finit][].  See [README][] for API details.
 
 
-[UNRELEASED]: https://github.com/troglobit/libite/compare/v1.8.2...HEAD
+[UNRELEASED]: https://github.com/troglobit/libite/compare/v1.8.3...HEAD
 [v1.8.3]: https://github.com/troglobit/libite/compare/v1.8.2...v1.8.3
 [v1.8.2]: https://github.com/troglobit/libite/compare/v1.8.1...v1.8.2
 [v1.8.1]: https://github.com/troglobit/libite/compare/v1.8.0...v1.8.1
