@@ -169,9 +169,9 @@ static inline int fisslashdir(char *dir)
 }
 
 /* Compat */
-#define copy_filep(src,dst)        fcopyfile(src,dst)
-#define pidfile_read_pid(file)     pifile_read(file)
-#define signal_pidfile(file,signo) pidfile_signal(file,signo)
+#define copy_filep(src, dst)        fcopyfile(src, dst)
+#define pidfile_read_pid(file)      pifile_read(file)
+#define signal_pidfile(file, signo) pidfile_signal(file, signo)
 
 #endif /* LITE_H_ */
 
