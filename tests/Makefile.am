@@ -11,6 +11,7 @@ TESTS          += fsendfile
 TESTS          += lfile
 TESTS          += makepath
 TESTS          += pidfile
+TESTS          += touch
 TESTS          += progress
 TESTS          += rsync
 TESTS          += tempfile
