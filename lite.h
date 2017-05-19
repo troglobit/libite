@@ -86,10 +86,15 @@ void    progress       (int percent, int max_width);
 void    progress_simple(int percent);
 
 #ifndef touch
+#include <sys/stat.h>		/* utimensat() */
+#include <sys/time.h>		/* utimensat() on *BSD */
 static inline int touch(const char *path)
 {
-	if (mknod((path), S_IFREG|0644, 0) && errno != EEXIST)
+	if (mknod((path), S_IFREG|0644, 0)) {
+		if (errno == EEXIST)
+			return utimensat(0, path, NULL, 0);
 		return -1;
+	}
 	return 0;
 }
 #endif
