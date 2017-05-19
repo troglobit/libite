@@ -6,8 +6,6 @@
 
 #include "check.h"
 
-#define PRINT(args...) if (verbose) printf(args)
-
 extern char *__pidfile_name;
 extern char *__pidfile_path;
 

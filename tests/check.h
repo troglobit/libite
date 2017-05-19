@@ -8,6 +8,8 @@
 
 #include "../lite.h"
 
+#define PRINT(args...) if (verbose) printf(args)
+
 #define fail_unless(test)						\
   do {									\
     if (!(test)) {							\
