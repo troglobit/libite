@@ -45,7 +45,7 @@ FILE *tempfile(void)
 	if (-1 == fd)
 		return NULL;
 
-	return fdopen(fd, "rw");
+	return fdopen(fd, "w+");
 #else
 	return tmpfile(); /* Fallback on older GLIBC/Linux and actual UNIX systems */
 #endif
