@@ -6,7 +6,7 @@
 static int fstab(void)
 {
 	int field = 1;
-	char *token, *dev;
+	char *token;
 	lfile_t *lf;
 
 	lf = lfopen(FSTAB, " \t\n");
@@ -15,12 +15,19 @@ static int fstab(void)
 		return 1;
 	}
 
+	printheader(NULL, "FILE SYSTEM                               MOUNT     OPTIONS            D P", 0);
 	while ((token = lftok(lf))) {
 		if (field == 1)
-			dev = token;
+			printf("%-41s ", token);
+		if (field == 2)
+			printf("%-9s ", token);
+		if (field == 4)
+			printf("%-17s  ", token);
+		if (field == 5)
+			printf("%d ", atoi(token));
 		if (field == 6) {
 			field = 0;
-			printf("Found %s passno %d\n", dev, atoi(token));
+			printf("%d\n", atoi(token));
 		}
 
 		field++;

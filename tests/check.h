@@ -6,6 +6,7 @@
 #include <string.h>
 #include <time.h>
 
+#include "../conio.h"
 #include "../lite.h"
 
 #define PRINT(args...) if (verbose) printf(args)
