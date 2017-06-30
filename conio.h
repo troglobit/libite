@@ -48,6 +48,10 @@
 #define LIGHTCYAN    0x16
 #define WHITE        0x17
 
+#ifndef SCREEN_WIDTH
+#define SCREEN_WIDTH 80		/* Override as #define SCREEN_WIDTH tty_width() */
+#endif
+
 /* Esc[2JEsc[1;1H             - Clear screen and move cursor to 1,1 (upper left) pos. */
 #define clrscr()              fputs ("\033[2J\033[1;1H", stdout)
 /* Esc[K                      - Erases from the current cursor position to the end of the current line. */
@@ -64,12 +68,16 @@
 /* Esc[Value;...;Valuem       - Set Graphics Mode */
 #define __set_gm(attr,color,val)					\
 	if (!color)							\
-		printf("\033[%dm", attr);					\
+		printf("\033[%dm", attr);				\
 	else								\
 		printf("\033[%d;%dm", color & 0x10 ? 1 : 0, (color & 0xF) + val)
 #define textattr(attr)        __set_gm(attr, 0, 0)
 #define textcolor(color)      __set_gm(RESETATTR, color, 30)
 #define textbackground(color) __set_gm(RESETATTR, color, 40)
+
+#define printheader(fp, line, nl)					\
+	fprintf(fp ?: stdout, "%s\033[7m%s%*s\033[0m\n", nl ? "\n" : "",\
+		line, SCREEN_WIDTH - (int)strlen(line), "")
 
 #endif /* CONIO_H_ */
 
