@@ -156,11 +156,6 @@ static inline int erase(const char *path)
 #define NELEMS(array) (sizeof(array) / sizeof(array[0]))
 #endif
 
-/* Mark a function variable as unused, useful for generic callbacks */
-#ifndef UNUSED
-#define UNUSED(x) UNUSED_ ## x __attribute__ ((unused))
-#endif
-
 /* Does directory end with a slash? */
 static inline int fisslashdir(char *dir)
 {

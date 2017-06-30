@@ -15,13 +15,13 @@ static char PIDFILE[42];
 static int verbose = 0;
 static struct stat before, after;
 
-static void sigterm_handler(int UNUSED(signo))
+static void sigterm_handler(int signo)
 {
 	PRINT("Exiting ...\n");
 	remove(PIDFILE);
 }
 
-static void sigalrm_handler(int UNUSED(signo))
+static void sigalrm_handler(int signo)
 {
 	PRINT("Calling pidfile(%s)\n", pidfile_arg ?: "NULL");
 	if (pidfile(pidfile_arg))

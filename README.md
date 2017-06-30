@@ -143,10 +143,6 @@ Helper Macros
   Returns the number of elements in an array.  From the great book, The
   Practice of Programming, by Kernighan and Pike.
 
-- `UNUSED(var)`
-
-  Shorter and more readable version of `var __attribute__ ((unused))`
-
 
 Generic Functions
 -----------------
