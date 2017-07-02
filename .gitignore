@@ -22,3 +22,4 @@ aclocal.m4
 ar-lib
 autom4te.cache
 libite*
+test-driver

@@ -12,4 +12,5 @@ pidfile
 progress
 rsync
 tempfile
+touch
 tree
