@@ -14,3 +14,4 @@ rsync
 tempfile
 touch
 tree
+which

@@ -288,6 +288,11 @@ Generic Functions
   optional listing of file and directory permissions if `show_perms` is
   set.  The `path` argument should be a directory.
 
+- `which(cmd)`
+
+  C implementation of UNIX which(1).  Returns a malloc'ed string with the
+  full path to `cmd` on success, otherwise `NULL`.
+
 
 GNU Functions
 -------------

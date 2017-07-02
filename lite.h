@@ -85,6 +85,8 @@ int     tree(char *path, int show_perms);
 void    progress       (int percent, int max_width);
 void    progress_simple(int percent);
 
+char   *which      (const char *cmd);
+
 #ifndef touch
 #include <sys/stat.h>		/* utimensat() */
 #include <sys/time.h>		/* utimensat() on *BSD */

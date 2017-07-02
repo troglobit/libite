@@ -16,6 +16,7 @@ TESTS          += progress
 TESTS          += rsync
 TESTS          += tempfile
 TESTS          += tree
+TESTS          += which
 
 check_PROGRAMS  = $(TESTS)
 
