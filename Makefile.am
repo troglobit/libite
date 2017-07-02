@@ -10,7 +10,7 @@ libite_la_SOURCES   = chomp.c copyfile.c dir.c fexist.c fisdir.c fmode.c fparsel
 
 libite_la_CPPFLAGS  = -D_GNU_SOURCE
 libite_la_CFLAGS    = -W -Wall -Wextra
-libite_la_LDFLAGS   = $(AM_LDFLAGS) -version-info 3:1:0
+libite_la_LDFLAGS   = $(AM_LDFLAGS) -version-info 4:0:0
 
 pkgconfigdir        = $(libdir)/pkgconfig
 pkgconfig_DATA      = libite.pc
