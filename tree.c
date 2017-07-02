@@ -59,56 +59,54 @@ static void get_perms(struct stat *st, char *buf, size_t len)
 
 static int descend(char *path, int show_perms, char *pfx)
 {
-	int result = 0;
+	int i, n, result = 0;
 	struct stat st;
+	struct dirent **namelist = NULL;
 
 	if (-1 == lstat(path, &st))
 		return 1;
 
-	if ((st.st_mode & S_IFMT) == S_IFDIR) {
-		int i, n;
-		struct dirent **namelist = NULL;
+	if ((st.st_mode & S_IFMT) != S_IFDIR) {
+		errno = ENOTDIR;
+		return -1;
+	}
 
-		n = scandir(path, &namelist, filter, alphasort);
-		if (n) {
-			for (i = 0; i < n; i++) {
-				char t = ' ', p[14] = "", s[256] = "";
-				char buf[256];
-				char dir[80];
+	n = scandir(path, &namelist, filter, alphasort);
+	if (n) {
+		for (i = 0; i < n; i++) {
+			char t = ' ', p[14] = "", s[256] = "";
+			char buf[256];
+			char dir[80];
 
-				if (i + 1 == n) {
-					printf("%s `- ", pfx);
-					snprintf(dir, sizeof(dir), "%s     ", pfx);
-				} else {
-					printf("%s|-- ", pfx);
-					snprintf(dir, sizeof(dir), "%s|    ", pfx);
-				}
-
-				snprintf(buf, sizeof(buf), "%s/%s", path, namelist[i]->d_name);
-				if (!lstat(buf, &st)) {
-					if (show_perms)
-						get_perms(&st, p, sizeof(p));
-					if ((st.st_mode & S_IFMT) == S_IFDIR)
-						t = '/';
-					if (S_ISLNK(st.st_mode)) {
-						snprintf(s, sizeof(s), "-> ");
-						if (-1 == readlink(buf, &s[3], sizeof(s) - 3))
-							s[0] = 0;
-					}
-				}
-
-				printf("%s%s%c%s\n", p, namelist[i]->d_name, t, s);
-				if (t == '/')
-					result += descend(buf, show_perms, dir);
-
-				free(namelist[i]);
+			if (i + 1 == n) {
+				printf("%s `- ", pfx);
+				snprintf(dir, sizeof(dir), "%s     ", pfx);
+			} else {
+				printf("%s|-- ", pfx);
+				snprintf(dir, sizeof(dir), "%s|    ", pfx);
 			}
 
-			free(namelist);
+			snprintf(buf, sizeof(buf), "%s/%s", path, namelist[i]->d_name);
+			if (!lstat(buf, &st)) {
+				if (show_perms)
+					get_perms(&st, p, sizeof(p));
+				if ((st.st_mode & S_IFMT) == S_IFDIR)
+					t = '/';
+				if (S_ISLNK(st.st_mode)) {
+					snprintf(s, sizeof(s), "-> ");
+					if (-1 == readlink(buf, &s[3], sizeof(s) - 3))
+						s[0] = 0;
+				}
+			}
+
+			printf("%s%s%c%s\n", p, namelist[i]->d_name, t, s);
+			if (t == '/')
+				result += descend(buf, show_perms, dir);
+
+			free(namelist[i]);
 		}
-	} else {
-		errno = ENOTDIR;
-		result = -1;
+
+		free(namelist);
 	}
 
 	return result;
