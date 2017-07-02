@@ -4,6 +4,19 @@ Change Log
 All notable changes to the project are documented in this file.
 
 
+[v1.9.0][] - 2017-07-02
+-----------------------
+
+### Changes
+- Add `which()`, a C implementation of UNIX which(1)
+- Add `printheader()`, prints a top-like table heading for client tools
+- Remove `UNUSED()` macro, recommended to disable GCC warning instead
+
+### Fixes
+- Fix issue #6: `touch()` does not update mtime if file exists
+- Fix non-writable `tempfile()`, now with proper unit test
+
+
 [v1.8.3][] - 2017-01-08
 -----------------------
 
@@ -231,7 +244,8 @@ problems this may cause!
 Initial extraction of frog DNA from [Finit][].  See [README][] for API details.
 
 
-[UNRELEASED]: https://github.com/troglobit/libite/compare/v1.8.3...HEAD
+[UNRELEASED]: https://github.com/troglobit/libite/compare/v1.9.0...HEAD
+[v1.9.0]: https://github.com/troglobit/libite/compare/v1.8.3...v1.9.0
 [v1.8.3]: https://github.com/troglobit/libite/compare/v1.8.2...v1.8.3
 [v1.8.2]: https://github.com/troglobit/libite/compare/v1.8.1...v1.8.2
 [v1.8.1]: https://github.com/troglobit/libite/compare/v1.8.0...v1.8.1
