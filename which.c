@@ -14,11 +14,29 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
+
+#include <ctype.h>
 #include <errno.h>
 #include <stdio.h>		/* snprintf() */
 #include <stdlib.h>		/* realloc(), free() */
 #include <string.h>		/* strtok_r() */
 #include <unistd.h>		/* access() */
+
+/* Strip any arguments in "/path/to/bin --some args", modifies input string */
+static char *strip_args(char *path)
+{
+	size_t i = 0;
+
+	if (!path)
+		return NULL;
+
+	/* Find first whitespace (space/tab/etc.) */
+	while (path[i] && !isspace(path[i]))
+		i++;
+	path[i] = 0;
+
+	return path;
+}
 
 /*
  * Like which(1), returns a malloc'ed path to cmd on success, or NULL
@@ -34,7 +52,10 @@ char *which(const char *cmd)
 	}
 
 	if (cmd[0] == '/') {
-		path = strdup(cmd);
+		path = strip_args(strdup(cmd));
+		if (!path)
+			return NULL;
+
 		if (!access(path, X_OK))
 			return path;
 
@@ -66,7 +87,8 @@ char *which(const char *cmd)
 		}
 
 		snprintf(path, pathlen, "%s/%s", tok, cmd);
-		if (!access(path, X_OK)) {
+		path = strip_args(path);
+		if (!path || !access(path, X_OK)) {
 			free(env);
 			return path;
 		}

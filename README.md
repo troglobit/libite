@@ -295,6 +295,9 @@ Generic Functions
   
   `whichp()` is a predicate function, returns `TRUE` or `FALSE`.
 
+  **Note:** `which("/bin/ps aux")` will return `/bin/ps`, or `TRUE`,
+  provided of course `/bin/ps` exists.
+
 
 GNU Functions
 -------------
