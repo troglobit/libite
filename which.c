@@ -81,6 +81,22 @@ char *which(const char *cmd)
 	return NULL;
 }
 
+/*
+ * Like which(), above, but only answers TRUE(1)/FALSE(0)
+ */
+int whichp(const char *cmd)
+{
+	char *path;
+
+	path = which(cmd);
+	if (path) {
+		free(path);
+		return 1;
+	}
+
+	return 0;
+}
+
 /**
  * Local Variables:
  *  indent-tabs-mode: t
