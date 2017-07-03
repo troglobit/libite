@@ -15,6 +15,8 @@ int main(void)
 		{ "free",        1 },
 		{ "modinfo",     1 },
 		{ "useradd",     1 },
+		{ "/bin/which",  1 },
+		{ "/bin/ps aux", 1 },
 		{ "/etc/passwd", 0 },
 		{ NULL, 0 }
 	};
