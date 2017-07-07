@@ -84,6 +84,57 @@ static inline void printheader(FILE *fp, const char *line, int nl)
 		line, SCREEN_WIDTH - (int)strlen(line), "");
 }
 
+/* Requries: #inlude <termios.h> and #include <poll.h> */
+static inline void initscr(int *row, int *col)
+{
+#if defined(TCSANOW) && defined(POLLIN)
+	struct termios tc, saved;
+	struct pollfd fd = { STDIN_FILENO, POLLIN, 0 };
+#endif
+
+	if (!row || !col)
+		return;
+
+#if defined(TCSANOW) && defined(POLLIN)
+	/* Disable echo to terminal while probing */
+	tcgetattr(STDERR_FILENO, &tc);
+	saved = tc;
+	tc.c_cflag |= (CLOCAL | CREAD);
+	tc.c_lflag &= ~(ICANON | ECHO | ECHOE | ISIG);
+	tcsetattr(STDERR_FILENO, TCSANOW, &tc);
+
+	/*
+	 * Save cursor pos+attr
+	 * Diable top+bottom margins
+	 * Set cursor at the far bottom,right pos
+	 * Query term for resulting pos
+	 */
+	fprintf(stderr, "\e7" "\e[r" "\e[999;999H" "\e[6n");
+
+	/*
+	 * Wait here for terminal to echo back \e[row,lineR ...
+	 */
+	if (poll(&fd, 1, 300) <= 0 || scanf("\e[%d;%dR", row, col) != 2) {
+		*row = 24;
+		*col = 80;
+	}
+
+	/*
+	 * Restore above saved cursor pos+attr
+	 */
+	fprintf(stderr, "\e8");
+
+	/* Restore terminal */
+	tcsetattr(STDERR_FILENO, TCSANOW, &saved);
+
+	return;
+#endif
+fallback:
+
+	*row = 24;
+	*col = 80;
+}
+
 #endif /* CONIO_H_ */
 
 /**
