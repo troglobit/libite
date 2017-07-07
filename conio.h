@@ -75,9 +75,13 @@
 #define textcolor(color)      __set_gm(RESETATTR, color, 30)
 #define textbackground(color) __set_gm(RESETATTR, color, 40)
 
-#define printheader(fp, line, nl)					\
-	fprintf(fp ?: stderr, "%s\033[7m%s%*s\033[0m\n", nl ? "\n" : "",\
-		line, SCREEN_WIDTH - (int)strlen(line), "")
+static inline void printheader(FILE *fp, const char *line, int nl)
+{
+	fprintf(fp ?: stderr,
+		"%s\033[7m%s%*s\033[0m\n",
+		nl ? "\n" : "",
+		line, SCREEN_WIDTH - (int)strlen(line), "");
+}
 
 #endif /* CONIO_H_ */
 
