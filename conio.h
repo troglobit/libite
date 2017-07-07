@@ -53,31 +53,32 @@
 #endif
 
 /* Esc[2JEsc[1;1H             - Clear screen and move cursor to 1,1 (upper left) pos. */
-#define clrscr()              fputs ("\033[2J\033[1;1H", stderr)
+#define clrscr()              fputs ("\033[2J\033[1;1H", stdout)
 /* Esc[K                      - Erases from the current cursor position to the end of the current line. */
-#define clreol()              fputs ("\033[K", stderr)
+#define clreol()              fputs ("\033[K", stdout)
 /* Esc[2K                     - Erases the entire current line. */
-#define delline()             fputs ("\033[2K", stderr)
+#define delline()             fputs ("\033[2K", stdout)
 /* Esc[Line;ColumnH           - Moves the cursor to the specified position (coordinates) */
-#define gotoxy(x,y)           fprintf(stderr, "\033[%d;%dH", y, x)
+#define gotoxy(x,y)           fprintf(stdout, "\033[%d;%dH", y, x)
 /* Esc[?25l (lower case L)    - Hide Cursor */
-#define hidecursor()          fputs ("\033[?25l", stderr)
+#define hidecursor()          fputs ("\033[?25l", stdout)
 /* Esc[?25h (lower case H)    - Show Cursor */
-#define showcursor()          fputs ("\033[?25h", stderr)
+#define showcursor()          fputs ("\033[?25h", stdout)
 
 /* Esc[Value;...;Valuem       - Set Graphics Mode (attr, color, val) */
 #define __set_gm(a,c,v)							\
 	if (!c)								\
-		fprintf(stderr, "\033[%dm", a);				\
+		fprintf(stdout, "\033[%dm", a);				\
 	else								\
-		fprintf(stderr, "\033[%d;%dm", c & 0x10 ? 1 : 0, (c & 0xF) + v)
+		fprintf(stdout, "\033[%d;%dm", c & 0x10 ? 1 : 0, (c & 0xF) + v)
 #define textattr(attr)        __set_gm(attr, 0, 0)
 #define textcolor(color)      __set_gm(RESETATTR, color, 30)
 #define textbackground(color) __set_gm(RESETATTR, color, 40)
 
+/* Print table heading @line to @fp, with optional leading newline */
 static inline void printheader(FILE *fp, const char *line, int nl)
 {
-	fprintf(fp ?: stderr,
+	fprintf(fp ?: stdout,
 		"%s\033[7m%s%*s\033[0m\n",
 		nl ? "\n" : "",
 		line, SCREEN_WIDTH - (int)strlen(line), "");
