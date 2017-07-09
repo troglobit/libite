@@ -49,7 +49,7 @@
 #define WHITE        0x17
 
 #ifndef SCREEN_WIDTH
-#define SCREEN_WIDTH 80		/* Override as #define SCREEN_WIDTH tty_width() */
+#define SCREEN_WIDTH 80		/* Override using, e.g. #define SCREEN_WIDTH tty_width() */
 #endif
 
 /* Esc[2JEsc[1;1H             - Clear screen and move cursor to 1,1 (upper left) pos. */
@@ -87,15 +87,13 @@ static inline void printheader(FILE *fp, const char *line, int nl)
 /* Requries: #inlude <termios.h> and #include <poll.h> */
 static inline void initscr(int *row, int *col)
 {
-#if defined(TCSANOW) && defined(POLLIN)
-	struct termios tc, saved;
-	struct pollfd fd = { STDIN_FILENO, POLLIN, 0 };
-#endif
-
 	if (!row || !col)
 		return;
 
 #if defined(TCSANOW) && defined(POLLIN)
+	struct termios tc, saved;
+	struct pollfd fd = { STDIN_FILENO, POLLIN, 0 };
+
 	/* Disable echo to terminal while probing */
 	tcgetattr(STDERR_FILENO, &tc);
 	saved = tc;
@@ -128,11 +126,10 @@ static inline void initscr(int *row, int *col)
 	tcsetattr(STDERR_FILENO, TCSANOW, &saved);
 
 	return;
-#endif
-fallback:
-
+#else
 	*row = 24;
 	*col = 80;
+#endif
 }
 
 #endif /* CONIO_H_ */
