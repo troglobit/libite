@@ -4,6 +4,14 @@ Change Log
 All notable changes to the project are documented in this file.
 
 
+[v1.9.2][] - 2017-07-09
+-----------------------
+
+### Changes
+- Add `initscr()` function to query screen size
+- Convert `printheader()` to a static inline function
+
+
 [v1.9.1][] - 2017-07-03
 -----------------------
 
