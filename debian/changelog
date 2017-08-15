@@ -1,3 +1,9 @@
+libite (1.9.2-1) unstable; urgency=low
+
+  * New upstream reelase, v1.9.2, see upstream ChangeLog for details.
+
+ -- Joachim Nilsson <troglobit@gmail.com>  Tue, 15 Aug 2017 08:15:14 +0200
+
 libite (1.9.1-1) unstable; urgency=low
 
   * New upstream reelase, v1.9.1.
