@@ -7,7 +7,7 @@ int main(void)
 	struct { char *path; int fail; } arr[] = {
 		{ "/etc/passwd", -1 },
 		{ "/dev",         0 },
-		{ "/sbin",        0 },
+		{ "/usr/sbin",    0 },
 	};
 
 	for (i = 0; i < NELEMS(arr); i++) {
