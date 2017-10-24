@@ -54,17 +54,17 @@
 #endif
 
 /* Esc[2JEsc[1;1H             - Clear screen and move cursor to 1,1 (upper left) pos. */
-#define clrscr()              fputs ("\033[2J\033[1;1H", stdout)
+#define clrscr()              fputs("\033[2J\033[1;1H", stdout)
 /* Esc[K                      - Erases from the current cursor position to the end of the current line. */
-#define clreol()              fputs ("\033[K", stdout)
+#define clreol()              fputs("\033[K", stdout)
 /* Esc[2K                     - Erases the entire current line. */
-#define delline()             fputs ("\033[2K", stdout)
+#define delline()             fputs("\033[2K", stdout)
 /* Esc[Line;ColumnH           - Moves the cursor to the specified position (coordinates) */
 #define gotoxy(x,y)           fprintf(stdout, "\033[%d;%dH", y, x)
 /* Esc[?25l (lower case L)    - Hide Cursor */
-#define hidecursor()          fputs ("\033[?25l", stdout)
+#define hidecursor()          fputs("\033[?25l", stdout)
 /* Esc[?25h (lower case H)    - Show Cursor */
-#define showcursor()          fputs ("\033[?25h", stdout)
+#define showcursor()          fputs("\033[?25h", stdout)
 
 /* Esc[Value;...;Valuem       - Set Graphics Mode (attr, color, val) */
 #define __set_gm(a,c,v)							\
