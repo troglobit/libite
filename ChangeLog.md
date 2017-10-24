@@ -4,6 +4,21 @@ Change Log
 All notable changes to the project are documented in this file.
 
 
+[v1.9.3][] - 2017-10-24
+-----------------------
+
+### Changes
+- `initscr()`, use stdout, not stderr, like the rest of the
+  `conio.h` macros.  Also, stderr may be redirected by user
+- `tree()`, update unit test, use standard directries
+
+### Fixes
+- `initscr()`, verify that both stdin and stdout are real TTYs
+  before messing up output or blocking on input for the user
+- `tree()`, increase internal buffer slightly, output may be
+  truncated otherwise.  Found by GCC 7.2
+
+
 [v1.9.2][] - 2017-07-09
 -----------------------
 
