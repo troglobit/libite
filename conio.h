@@ -19,6 +19,7 @@
 #define CONIO_H_
 
 #include <stdio.h>
+#include <unistd.h>
 
 /* Attributes */
 #define RESETATTR    0
@@ -93,6 +94,12 @@ static inline void initscr(int *row, int *col)
 #if defined(TCSANOW) && defined(POLLIN)
 	struct termios tc, saved;
 	struct pollfd fd = { STDIN_FILENO, POLLIN, 0 };
+
+	if (!isatty(STDIN_FILENO) || !isatty(STDOUT_FILENO)) {
+		*row = 24;
+		*col = 80;
+		return;
+	}
 
 	/* Disable echo to terminal while probing */
 	tcgetattr(STDERR_FILENO, &tc);
