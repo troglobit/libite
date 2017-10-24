@@ -103,11 +103,11 @@ static inline void initscr(int *row, int *col)
 	}
 
 	/* Disable echo to terminal while probing */
-	tcgetattr(STDERR_FILENO, &tc);
+	tcgetattr(STDOUT_FILENO, &tc);
 	saved = tc;
 	tc.c_cflag |= (CLOCAL | CREAD);
 	tc.c_lflag &= ~(ICANON | ECHO | ECHOE | ISIG);
-	tcsetattr(STDERR_FILENO, TCSANOW, &tc);
+	tcsetattr(STDOUT_FILENO, TCSANOW, &tc);
 
 	/*
 	 * Save cursor pos+attr
@@ -115,7 +115,8 @@ static inline void initscr(int *row, int *col)
 	 * Set cursor at the far bottom,right pos
 	 * Query term for resulting pos
 	 */
-	fprintf(stderr, "\e7" "\e[r" "\e[999;999H" "\e[6n");
+	fprintf(stdout, "\e7" "\e[r" "\e[999;999H" "\e[6n");
+	fflush(stdout);
 
 	/*
 	 * Wait here for terminal to echo back \e[row,lineR ...
@@ -128,10 +129,11 @@ static inline void initscr(int *row, int *col)
 	/*
 	 * Restore above saved cursor pos+attr
 	 */
-	fprintf(stderr, "\e8");
+	fprintf(stdout, "\e8");
+	fflush(stdout);
 
 	/* Restore terminal */
-	tcsetattr(STDERR_FILENO, TCSANOW, &saved);
+	tcsetattr(STDOUT_FILENO, TCSANOW, &saved);
 
 	return;
 #else
