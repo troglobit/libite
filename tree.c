@@ -75,7 +75,7 @@ static int descend(char *path, int show_perms, char *pfx)
 	if (n) {
 		for (i = 0; i < n; i++) {
 			char t = ' ', p[14] = "", s[256] = "";
-			char buf[256];
+			char buf[512];
 			char dir[80];
 
 			if (i + 1 == n) {
