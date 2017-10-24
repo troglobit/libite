@@ -19,6 +19,7 @@
 #define CONIO_H_
 
 #include <stdio.h>
+#include <termios.h>
 #include <unistd.h>
 
 /* Attributes */
