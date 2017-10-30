@@ -35,7 +35,7 @@ int mkpath(char *dir, mode_t mode)
 
 	if (!dir) {
 		errno = EINVAL;
-		return 1;
+		return -1;
 	}
 
 	if (!stat(dir, &sb))
