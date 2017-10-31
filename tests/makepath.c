@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include "check.h"
 
-int checkpath(char *dir)
+int checkpath(const char *dir)
 {
 	char tmp[256];
 	struct stat sb;
@@ -20,7 +20,7 @@ int checkpath(char *dir)
 	return 1;
 }
 
-int test_makepath(char *dir)
+int test_makepath(const char *dir)
 {
 	int ret = makepath(dir);
 
