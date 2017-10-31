@@ -50,6 +50,11 @@ int mkpath(const char *dir, mode_t mode)
  * makepath - Create all components of the specified directory.
  * @dir: Directory to create.
  *
+ * Comment:
+ * It is recommended to use mkpath() over this function since it has
+ * the @mode argument while this function instead default ot 0777,
+ * which in most cases is insecure.
+ *
  * Returns:
  * POSIX OK (0) on success, otherwise -1 and errno set appropriately.
  * This function returns EINVAL on bad argument, or ENOMEM when it
