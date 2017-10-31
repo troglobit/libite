@@ -67,8 +67,8 @@ char   *lfgetkey   (lfile_t *lf, char *key);
 int     lfgetint   (lfile_t *lf, char *key);
 int     fgetint    (char *file, char *sep, char *key);
 
-int     mkpath     (char *dir, mode_t mode);
-int     makepath   (char *dir);
+int     mkpath     (const char *dir, mode_t mode);
+int     makepath   (const char *dir);
 
 int     dir        (const char *dir, const char *type, int (*filter) (const char *file), char ***list, int strip);
 int     rsync      (char *src, char *dst, int delete,  int (*filter) (const char *file));

@@ -29,7 +29,7 @@
  * Returns:
  * POSIX OK(0) on success, otherwise -1 with @errno set.
  */
-int mkpath(char *dir, mode_t mode)
+int mkpath(const char *dir, mode_t mode)
 {
 	struct stat sb;
 
@@ -56,7 +56,7 @@ int mkpath(char *dir, mode_t mode)
  * fails allocating temporary memory.  For other error codes see the
  * mkdir() syscall description.
  */
-int makepath(char *dir)
+int makepath(const char *dir)
 {
 	return mkpath(dir, 0777);
 }
