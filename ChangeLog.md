@@ -4,6 +4,17 @@ Change Log
 All notable changes to the project are documented in this file.
 
 
+[v1.9.4][] - 2017-11-xx
+-----------------------
+
+### Changes
+- Update docs, recommend `mkpath()` over `makepath()`
+
+### Fixes
+- Fix #7, inconsistent return value in `mkpath()` and `makepath()`
+- Fix #8, constify `mkpath()` and `makepath()`
+
+
 [v1.9.3][] - 2017-10-24
 -----------------------
 
