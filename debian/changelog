@@ -1,3 +1,9 @@
+libite (1.9.4-1) unstable; urgency=low
+
+  * New upstream release, v1.9.4, fixes to makepath() and mkpath()
+
+ -- Joachim Nilsson <troglobit@gmail.com>  Sun, 19 Nov 2017 22:42:51 +0100
+
 libite (1.9.3-1) unstable; urgency=low
 
   * New upstream release, v1.9.3, fixes to conio.h, initscr() and tree().
