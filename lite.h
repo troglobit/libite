@@ -43,6 +43,13 @@
 #define FPARSELN_UNESCREST	0x08
 #define FPARSELN_UNESCALL	0x0f
 
+/*
+ * copyfile() and rsync() option flags
+ */
+#define LITE_FOPT_RSYNC_DELETE  0x01
+#define LITE_FOPT_COPYFILE_SYM  0x01
+#define LITE_FOPT_KEEP_MTIME    0x02
+
 typedef struct lfile lfile_t;
 
 char   *chomp      (char *str);
@@ -53,7 +60,7 @@ int     fisdir     (const char *file);
 mode_t  fmode      (char *file);
 
 FILE   *tempfile   (void);
-ssize_t copyfile   (char *src, char *dst, int len, int sym);
+ssize_t copyfile   (char *src, char *dst, int len, int opt);
 int     movefile   (char *src, char *dst);
 int     fcopyfile  (FILE *src, FILE *dst);
 ssize_t fsendfile  (FILE *src, FILE *dst, size_t len);

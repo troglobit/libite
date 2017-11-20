@@ -80,26 +80,46 @@ static ssize_t do_copy(int in, int out, size_t num, char *buffer, size_t len)
 	return size;
 }
 
+static void set_mtime(int in, int out)
+{
+	struct stat st;
+	struct timespec tv[2];
+
+	fstat(in, &st);
+	tv[0] = st.st_atim;
+	tv[1] = st.st_mtim;
+	futimens(out, tv);
+}
+
 /**
  * copyfile - Copy a file to another.
  * @src: Full path name to source file.
  * @dst: Full path name to target file.
  * @len: Number of bytes to copy, zero (0) for entire file.
- * @sym: Should symlinks be recreated (1) or followed (0)
+ * @opt: An option mask of %LITE_FOPT_COPYFILE_SYM, %LITE_FOPT_KEEP_MTIME
  *
  * This is a C implementation of the command line cp(1) utility.  It is one
  * of the classic missing links in the UNIX C library.  This version is from
  * the finit project, http://helllabs.org/finit/, which is a reimplementation
  * of fastinit for the Asus EeePC.
  *
+ * The @opt field replaces the @sym argument in previous releases and
+ * works as follows.  To maintain backwards compatibility with @sym
+ * the %LITE_FOPT_COPYFILE_SYM maintains a value of 1:
+ *
+ * %LITE_FOPT_COPYFILE_SYM: Recreate symlink or follow to copy target
+ * %LITE_FOPT_KEEP_MTIME:   Preserve modification time
+ *
  * Returns:
  * The number of bytes copied, zero may be error (check errno!), but it
  * may also indicate that @src was empty.  If @src is a directory @errno
  * will be set to %EISDIR since copyfile() is not recursive.
  */
-ssize_t copyfile(char *src, char *dst, int len, int sym)
+ssize_t copyfile(char *src, char *dst, int len, int opt)
 {
 	char *buffer;
+	int sym = (opt & LITE_FOPT_COPYFILE_SYM) != 0;
+	int keep_mtim = (opt & LITE_FOPT_KEEP_MTIME) != 0;
 	int in, out, isdir = 0, saved_errno = 0;
 	size_t num;
 	ssize_t size = 0;
@@ -165,6 +185,8 @@ ssize_t copyfile(char *src, char *dst, int len, int sym)
 	size = do_copy(in, out, num, buffer, BUFSIZ);
 	if (!size && errno)
 		saved_errno = errno;
+	else if (keep_mtim)
+		set_mtime(in, out);
 
 	close(out);
 	close(in);
