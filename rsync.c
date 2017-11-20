@@ -16,6 +16,7 @@
  */
 
 #include <errno.h>
+#include <fcntl.h>	/* AT_* macros */
 #include <stdlib.h>	/* NULL, free() */
 #include <string.h>	/* strlen() */
 #include <strings.h>	/* rindex() */
@@ -26,16 +27,17 @@
 
 #include "lite.h"
 
-static int copy(char *src, char *dst);
-static int mdir(char *buf, size_t buf_len, char *dir, char *name, mode_t mode);
+static int copy(char *src, char *dst, int opt);
+static int mdir(char *buf, size_t buf_len, char *dir, char *name, struct stat *st);
 static int prune(char *dst, char **new_files, int new_num);
+static int set_mtime(char *fn, struct stat *st);
 
 
 /**
  * rsync - Synchronize contents and optionally remove non-existing backups
  * @src: Source directory
  * @dst: Destination directory
- * @delete: Prune files from @dst that no longer exist in @src.
+ * @opt: An option mask of %LITE_FOPT_RSYNC_DELETE, %LITE_FOPT_KEEP_MTIME
  * @filter: Optional filtering function for source directory.
  *
  * This is a miniature implementation of the famous rsync for local use only.
@@ -44,19 +46,29 @@ static int prune(char *dst, char **new_files, int new_num);
  * files removed from src since last backup are pruned from the destination
  * (backup) directory.
  *
- * The filter callback, @filter, if provided, is used to determine what files to
- * include from the source directory when backing up.  If a file is to be skipped
- * the callback should simply return zero.
+ * The @opt parameter to rsync() is an option mask for the most common
+ * rsync(1) options.  Previously this argument was called @delete and
+ * to maintain backwards compatibility the value 1 is reserved:
+ *
+ * %LITE_FOPT_RSYNC_DELETE: Prune files from @dst that no longer exist in @src.
+ * %LITE_FOPT_KEEP_MTIME:   Preserve modification time
+ *
+ * The filter callback, @filter, if provided, is used to determine what
+ * files to include from the source directory when backing up.  If a
+ * file is to be skipped the callback should simply return zero.
  *
  * Returns:
  * POSIX OK(0), or non-zero with @errno set on error.
  */
-int rsync(char *src, char *dst, int delete, int (*filter) (const char *file))
+int rsync(char *src, char *dst, int opt, int (*filter)(const char *file))
 {
 	char source[256];
 	char dest[256];
-	int i = 0, num = 0, result = 0;
+	int delete = (opt & LITE_FOPT_RSYNC_DELETE) != 0;
+	int keep_mtim = (opt & LITE_FOPT_KEEP_MTIME);
+	int i = 0, num = 0, result = 0, do_mtim = 0;
 	char **files;		/* Array of file names. */
+	struct stat st;
 
 	if (!fisdir(dst))
 		makedir(dst, 0755);
@@ -65,7 +77,7 @@ int rsync(char *src, char *dst, int delete, int (*filter) (const char *file))
 		if (!fexist(src))
 			return 1;
 
-		if (copy(src, dst))
+		if (copy(src, dst, keep_mtim))
 			result++;
 
 		return errno;
@@ -80,9 +92,13 @@ int rsync(char *src, char *dst, int delete, int (*filter) (const char *file))
 		else
 			ptr++;
 
-		if (mdir(dest, sizeof(dest), dst, ptr, fmode(src)))
+		if (stat(src, &st))
+			return 1;
+
+		if (mdir(dest, sizeof(dest), dst, ptr, &st))
 			return 1;
 		dst = dest;
+		do_mtim = keep_mtim;
 	}
 
 	num = dir(src, "", filter, &files, 0);
@@ -91,20 +107,30 @@ int rsync(char *src, char *dst, int delete, int (*filter) (const char *file))
 		snprintf(source, sizeof(source), "%s%s%s", src, fisslashdir(src) ? "" : "/", files[i]);
 		if (fisdir(source)) {
 			char dst2[256];
+			struct stat st;
 
 			strcat(source, "/");
-			if (mdir (dst2, sizeof(dst2), dst, files[i], fmode(source))) {
+			if (stat(source, &st))
+				return 1;
+
+			if (mdir(dst2, sizeof(dst2), dst, files[i], &st)) {
 				result++;
 				continue;
 			}
 
-			rsync(source, dst2, delete, filter);
+			rsync(source, dst2, opt, filter);
+			if (keep_mtim)
+				set_mtime(dst2, &st);
+
 			continue;	/* Next file/dir in @src to copy... */
 		}
 
-		if (copy(source, dst))
+		if (copy(source, dst, keep_mtim))
 			result++;
 	}
+
+	if (do_mtim)
+		set_mtime(dest, &st);
 
 	/* We ignore any errors from the pruning, that phase albeit useful is only
 	 * cosmetic. --Jocke 2011-03-24 */
@@ -120,11 +146,9 @@ int rsync(char *src, char *dst, int delete, int (*filter) (const char *file))
 	return result;
 }
 
-static int copy(char *src, char *dst)
+static int copy(char *src, char *dst, int opt)
 {
-	errno = 0;
-
-	copyfile(src, dst, 0, 1);
+	copyfile(src, dst, 0, opt | LITE_FOPT_COPYFILE_SYM);
 	if (errno) {
 		if (errno != EEXIST)
 			return 1;
@@ -136,10 +160,10 @@ static int copy(char *src, char *dst)
 }
 
 /* Creates dir/name @mode ... skipping / if dir already ends so. */
-static int mdir(char *buf, size_t buf_len, char *dir, char *name, mode_t mode)
+static int mdir(char *buf, size_t buf_len, char *dir, char *name, struct stat *st)
 {
-	snprintf(buf, buf_len, "%s%s%s/", dir, fisslashdir(dir) ? "" : "/", name);
-	if (mkdir(buf, mode)) {
+	snprintf(buf, buf_len, "%s%s%s", dir, fisslashdir(dir) ? "" : "/", name);
+	if (mkdir(buf, st->st_mode)) {
 		if (EEXIST != errno)
 			return 1;
 
@@ -191,6 +215,16 @@ static int prune(char *dst, char **new_files, int new_num)
 	}
 
 	return result;
+}
+
+static int set_mtime(char *fn, struct stat *st)
+{
+	struct timespec tv[2];
+
+	tv[0] = st->st_atim;
+	tv[1] = st->st_mtim;
+
+	return utimensat(AT_FDCWD, fn, tv, AT_SYMLINK_NOFOLLOW);
 }
 
 /**

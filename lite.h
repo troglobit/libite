@@ -78,7 +78,7 @@ int     mkpath     (const char *dir, mode_t mode);
 int     makepath   (const char *dir);
 
 int     dir        (const char *dir, const char *type, int (*filter) (const char *file), char ***list, int strip);
-int     rsync      (char *src, char *dst, int delete,  int (*filter) (const char *file));
+int     rsync      (char *src, char *dst, int opt,  int (*filter) (const char *file));
 
 int     pidfile       (const char *basename);
 int     pidfile_signal(const char *pidfile, int signal);
