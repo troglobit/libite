@@ -6,6 +6,10 @@
 *.a
 .deps
 .libs
+ID
+GPATH
+GRTAGS
+GTAGS
 tmp/
 compile
 config.*
