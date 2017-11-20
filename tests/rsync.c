@@ -72,7 +72,8 @@ int run_test(void)
 #endif
 
 	setup_test();
-	result += rsync(BASE "src", DST, 0, NULL);
+	sleep(1);
+	result += rsync(BASE "src", DST, LITE_FOPT_KEEP_MTIME, NULL);
 	check_tree("Only partial rsync of src <-- No slash!", BASE);
 #if 0
 	cleanup_test();
