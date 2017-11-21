@@ -4,10 +4,11 @@ Change Log
 All notable changes to the project are documented in this file.
 
 
-[v1.9.4][] - 2017-11-xx
+[v2.0.0][] - 2017-11-xx
 -----------------------
 
 ### Changes
+- Add support for keeping mtime in `copy()` and `rsync()`
 - Update docs, recommend `mkpath()` over `makepath()`
 
 ### Fixes
