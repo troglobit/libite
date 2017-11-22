@@ -19,8 +19,6 @@
 #define CONIO_H_
 
 #include <stdio.h>
-#include <termios.h>
-#include <unistd.h>
 
 /* Attributes */
 #define RESETATTR    0
@@ -84,62 +82,6 @@ static inline void printheader(FILE *fp, const char *line, int nl)
 		"%s\033[7m%s%*s\033[0m\n",
 		nl ? "\n" : "",
 		line, SCREEN_WIDTH - (int)strlen(line), "");
-}
-
-/* Requries: #inlude <termios.h> and #include <poll.h> */
-static inline void initscr(int *row, int *col)
-{
-	if (!row || !col)
-		return;
-
-#if defined(TCSANOW) && defined(POLLIN)
-	struct termios tc, saved;
-	struct pollfd fd = { STDIN_FILENO, POLLIN, 0 };
-
-	if (!isatty(STDIN_FILENO) || !isatty(STDOUT_FILENO)) {
-		*row = 24;
-		*col = 80;
-		return;
-	}
-
-	/* Disable echo to terminal while probing */
-	tcgetattr(STDOUT_FILENO, &tc);
-	saved = tc;
-	tc.c_cflag |= (CLOCAL | CREAD);
-	tc.c_lflag &= ~(ICANON | ECHO | ECHOE | ISIG);
-	tcsetattr(STDOUT_FILENO, TCSANOW, &tc);
-
-	/*
-	 * Save cursor pos+attr
-	 * Diable top+bottom margins
-	 * Set cursor at the far bottom,right pos
-	 * Query term for resulting pos
-	 */
-	fprintf(stdout, "\e7" "\e[r" "\e[999;999H" "\e[6n");
-	fflush(stdout);
-
-	/*
-	 * Wait here for terminal to echo back \e[row,lineR ...
-	 */
-	if (poll(&fd, 1, 300) <= 0 || scanf("\e[%d;%dR", row, col) != 2) {
-		*row = 24;
-		*col = 80;
-	}
-
-	/*
-	 * Restore above saved cursor pos+attr
-	 */
-	fprintf(stdout, "\e8");
-	fflush(stdout);
-
-	/* Restore terminal */
-	tcsetattr(STDOUT_FILENO, TCSANOW, &saved);
-
-	return;
-#else
-	*row = 24;
-	*col = 80;
-#endif
 }
 
 #endif /* CONIO_H_ */

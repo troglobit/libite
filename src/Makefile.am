@@ -6,7 +6,7 @@ libite_la_LDFLAGS   = $(AM_LDFLAGS) -version-info 4:1:0
 libite_la_SOURCES   = chomp.c copyfile.c dir.c fexist.c fisdir.c fmode.c fparseln.c		\
 		      fsendfile.c ifconfig.c lfile.c makepath.c pidfile.c pidfilefn.c		\
 		      progress.c reallocarray.c rsync.c strlcpy.c strlcat.c strtonum.c		\
-		      tempfile.c tree.c which.c
+		      tempfile.c tree.c which.c conio.c
 
 ## Distribute these header files in the <lite/...> name space
 pkgincludedir       = $(includedir)/lite
