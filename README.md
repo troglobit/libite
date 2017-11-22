@@ -153,9 +153,18 @@ Generic Functions
 
   Perl like chomp function, chop off last char if newline.
 
-- `copyfile(src, dst, len, symlink)`
+- `copyfile(src, dst, len, opt)`
 
-  Like the shell `cp(1)` and `dd(1),` can also create symlinks.
+  Like the shell `cp(1)` and `dd(1),`, can also copy symlinks and
+  preserve the mtime of the source file.  The opt argument can be
+  a mask of:
+  
+  - `LITE_FOPT_COPYFILE_SYM (0x01)`
+  - `LITE_FOPT_KEEP_MTIME   (0x02)`
+  
+  In releases prior to v2.0 the opt argument was called `symlink`.
+  The APIs are 100% compatible if the value `1` was used to enable
+  the symlink option.
 
 - `dir(dir, ext, filter, list, strip)`
 
@@ -266,10 +275,19 @@ Generic Functions
   Called multiple times with the same percentage value cause spinner to
   spin.
 
-- `rsync(src, dst, delete, *filter())`
+- `rsync(src, dst, opt, *filter())`
 
-  Very simple `rsync()` to copy files files and directories
-  recursively.
+  Very simple `rsync()` to copy files and directories recursively.  It
+  supports pruning files from the destination tree that do not exist in
+  the source tree and preserving the mtime of the source files.  The opt
+  argument can be a mask of:
+  
+  - `LITE_FOPT_RSYNC_DELETE (0x01)`
+  - `LITE_FOPT_KEEP_MTIME   (0x02)`
+  
+  In releases prior to v2.0 the argument controlling pruning was called
+  `delete`, it is now called `opt`.  The APIs are 100% compatible if the
+  value `1` was used.
 
 - `tempfile()`
 
