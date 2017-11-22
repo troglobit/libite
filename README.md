@@ -15,6 +15,8 @@ Table of Contents
 * [TODO](#todo)
 
 
+> **NOTE:** Incompatible changes in v2.0 compared to v1.x!
+
 Introduction
 ------------
 
