@@ -1,6 +1,12 @@
-libite (1.9.4-1) unstable; urgency=low
+libite (2.0.0-1) unstable; urgency=low
 
-  * New upstream release, v1.9.4, fixes to makepath() and mkpath()
+  * New upstream release, v2.0.0, fixes to:
+    - makepath(), mkpath()
+  * Changes to
+    - rsync(), API changes
+    - copyfile(), API changes
+    - tree(), removed from library
+    - fmode(), removed from library
 
  -- Joachim Nilsson <troglobit@gmail.com>  Sun, 19 Nov 2017 22:42:51 +0100
 

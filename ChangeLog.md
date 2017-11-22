@@ -4,12 +4,17 @@ Change Log
 All notable changes to the project are documented in this file.
 
 
-[v2.0.0][] - 2017-11-xx
+[v2.0.0][] - 2017-11-22
 -----------------------
 
 ### Changes
+- Remove `tree()`, moved to toolbox.git instead
+- Remove `fmode()`, please use `stat()` instead, it's safer
 - Add support for keeping mtime in `copy()` and `rsync()`
+- Move source files to an `src/` sub-directory
+- Move `initscr()` from `conio.h` to `conio.c`
 - Update docs, recommend `mkpath()` over `makepath()`
+- Bump ABI version, major changes to library
 
 ### Fixes
 - Fix #7, inconsistent return value in `mkpath()` and `makepath()`
@@ -287,7 +292,9 @@ problems this may cause!
 Initial extraction of frog DNA from [Finit][].  See [README][] for API details.
 
 
-[UNRELEASED]: https://github.com/troglobit/libite/compare/v1.9.2...HEAD
+[UNRELEASED]: https://github.com/troglobit/libite/compare/v2.0.0...HEAD
+[v2.0.0]: https://github.com/troglobit/libite/compare/v1.9.3...v2.0.0
+[v1.9.3]: https://github.com/troglobit/libite/compare/v1.9.2...v1.9.3
 [v1.9.2]: https://github.com/troglobit/libite/compare/v1.9.1...v1.9.2
 [v1.9.1]: https://github.com/troglobit/libite/compare/v1.9.0...v1.9.1
 [v1.9.0]: https://github.com/troglobit/libite/compare/v1.8.3...v1.9.0
