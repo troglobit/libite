@@ -53,9 +53,9 @@ static void check_tree(char *heading, char *dir)
 	if (verbose) {
 		if (heading)
 			puts(heading);
-
-		tree(dir, 1);
 	}
+
+	// XXX: Fixme, add code to list tree, nftw() possibly
 }
 
 int run_test(void)

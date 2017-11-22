@@ -15,7 +15,6 @@ libite_la_SOURCES     = chomp.c		copyfile.c			\
 			strlcpy.c 	strlcat.c 	strtonum.c	\
 			strdupa.h	strndupa.h	strnlen.h	\
 			tempfile.c	which.c				\
-			tree.c						\
 			lite.h		strlite.h			\
 			queue.h		tree.h
 
