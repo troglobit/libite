@@ -2,7 +2,6 @@
 #include <unistd.h>		/* usleep() */
 
 #include "check.h"
-#include "../conio.h"
 
 #define MAX_WIDTH    80
 #define msleep(msec) usleep(msec * 1000)
