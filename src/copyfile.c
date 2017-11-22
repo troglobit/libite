@@ -175,7 +175,7 @@ ssize_t copyfile(char *src, char *dst, int len, int opt)
 		goto exit;
 	}
 
-	out = open(dst, O_WRONLY | O_CREAT | O_TRUNC, fmode(src));
+	out = open(dst, O_WRONLY | O_CREAT | O_TRUNC, st.st_mode);
 	if (out < 0) {
 		close(in);
 		saved_errno = errno;
