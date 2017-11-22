@@ -75,6 +75,8 @@
 #define textcolor(color)      __set_gm(RESETATTR, color, 30)
 #define textbackground(color) __set_gm(RESETATTR, color, 40)
 
+void initscr(int *row, int *col);
+
 /* Print table heading @line to @fp, with optional leading newline */
 static inline void printheader(FILE *fp, const char *line, int nl)
 {
