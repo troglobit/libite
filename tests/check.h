@@ -6,8 +6,8 @@
 #include <string.h>
 #include <time.h>
 
-#include "../conio.h"
-#include "../lite.h"
+#include "../src/conio.h"
+#include "../src/lite.h"
 
 #define PRINT(args...) if (verbose) printf(args)
 
