@@ -57,7 +57,6 @@ char   *fparseln   (FILE *, size_t *, size_t *, const char[3], int);
 
 int     fexist     (char *file);
 int     fisdir     (const char *file);
-mode_t  fmode      (char *file);
 
 FILE   *tempfile   (void);
 ssize_t copyfile   (char *src, char *dst, int len, int opt);

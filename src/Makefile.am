@@ -7,7 +7,6 @@ libite_la_SOURCES     = chomp.c		copyfile.c			\
 			conio.c		conio.h				\
 			dir.c						\
 			fexist.c	fisdir.c			\
-			fmode.c						\
 			fparseln.c	fsendfile.c			\
 			ifconfig.c	lfile.c				\
 			makepath.c	progress.c			\

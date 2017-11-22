@@ -175,10 +175,6 @@ Generic Functions
 
   Check for the existence of a directory, returns True(1) or False(0).
 
-- `fmode(file)`
-
-  Returns the `mode_t` bits of a file or directory.
-
 - `fsendfile(src, dst, len)`
 
   Copy data between file streams, very similar to `fcopyfile()`, but
