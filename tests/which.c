@@ -21,6 +21,7 @@ int main(void)
 		{ NULL, 0 }
 	};
 
+	setenv("PATH", "/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin:/usr/local/sbin", 1);
 	for (i = 0; test[i].cmd; i++) {
 		char *path;
 
