@@ -99,7 +99,7 @@ static inline int touch(const char *path)
 {
 	if (mknod((path), S_IFREG|0644, 0)) {
 		if (errno == EEXIST)
-			return utimensat(0, path, NULL, 0);
+			return utimensat(AT_FDCWD, path, NULL, 0);
 		return -1;
 	}
 	return 0;
