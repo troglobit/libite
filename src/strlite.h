@@ -29,6 +29,23 @@
 #include "strndupa.h"
 #include "strnlen.h"
 
+#ifndef min
+#define min(a,b)				\
+	({					\
+		__typeof__ (a) _a = (a);	\
+		__typeof__ (b) _b = (b);	\
+		_a < _b ? _a : _b;		\
+	})
+#endif
+#ifndef max
+#define max(a,b)				\
+	({					\
+		__typeof__ (a) _a = (a);	\
+		__typeof__ (b) _b = (b);	\
+		_a > _b ? _a : _b;		\
+	})
+#endif
+
 #ifndef strlcpy
 size_t  strlcpy    (char *dst, const char *src, size_t siz);
 #endif
@@ -81,20 +98,5 @@ static inline int string_case_compare(const char *a, const char *b)
 {
    return strlen (a) == strlen (b) && !strcasecmp (a, b);
 }
-
-#define min(a,b)				\
-	({					\
-		__typeof__ (a) _a = (a);	\
-		__typeof__ (b) _b = (b);	\
-		_a < _b ? _a : _b;		\
-	})
-
-#define max(a,b)				\
-	({					\
-		__typeof__ (a) _a = (a);	\
-		__typeof__ (b) _b = (b);	\
-		_a > _b ? _a : _b;		\
-	})
-
 
 #endif /* LITE_STRING_H_ */
