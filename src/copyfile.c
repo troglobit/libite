@@ -27,7 +27,7 @@
 #include "lite.h"
 
 /* Tests if dst is a directory, if so, reallocates dst and appends src filename returning 1 */
-static int adjust_target(char *src, char **dst)
+static int adjust_target(const char *src, char **dst)
 {
 	int isdir = 0;
 
@@ -36,7 +36,7 @@ static int adjust_target(char *src, char **dst)
 		char *tmp, *ptr = strrchr(src, '/');
 
 		if (!ptr)
-			ptr = src;
+			ptr = (char *)src;
 		else
 			ptr++;
 
@@ -115,9 +115,9 @@ static void set_mtime(int in, int out)
  * may also indicate that @src was empty.  If @src is a directory @errno
  * will be set to %EISDIR since copyfile() is not recursive.
  */
-ssize_t copyfile(char *src, char *dst, int len, int opt)
+ssize_t copyfile(const char *src, const char *dst, int len, int opt)
 {
-	char *buffer;
+	char *buffer, *dest = (char *)dst;
 	int sym = (opt & LITE_FOPT_COPYFILE_SYM) != 0;
 	int keep_mtim = (opt & LITE_FOPT_KEEP_MTIME) != 0;
 	int in, out, isdir = 0, saved_errno = 0;
@@ -137,7 +137,7 @@ ssize_t copyfile(char *src, char *dst, int len, int opt)
 	}
 
 	/* Check if target is a directory, then append src filename. */
-	isdir = adjust_target(src, &dst);
+	isdir = adjust_target(src, &dest);
 
 	/* Check if the source file is a symlink ... */
 	if (stat(src, &st)) {
@@ -154,7 +154,7 @@ ssize_t copyfile(char *src, char *dst, int len, int opt)
 				size = -1;
 			} else {
 				buffer[size] = 0;
-				size = !symlink(buffer, dst);
+				size = !symlink(buffer, dest);
 			}
 		}
 
@@ -175,7 +175,7 @@ ssize_t copyfile(char *src, char *dst, int len, int opt)
 		goto exit;
 	}
 
-	out = open(dst, O_WRONLY | O_CREAT | O_TRUNC, st.st_mode);
+	out = open(dest, O_WRONLY | O_CREAT | O_TRUNC, st.st_mode);
 	if (out < 0) {
 		close(in);
 		saved_errno = errno;
@@ -194,7 +194,7 @@ ssize_t copyfile(char *src, char *dst, int len, int opt)
 exit:
 	free(buffer);
 	if (isdir)
-		free(dst);
+		free(dest);
 	errno = saved_errno;
 
 	return size;
@@ -216,17 +216,18 @@ exit:
  * Returns:
  * POSIX OK(0), or non-zero with errno set.
  */
-int movefile(char *src, char *dst)
+int movefile(const char *src, const char *dst)
 {
+	char *dest = (char *)dst;
 	int isdir, result = 0;
 
 	/* Check if target is a directory, then append the src base filename. */
-	isdir = adjust_target(src, &dst);
+	isdir = adjust_target(src, &dest);
 
-	if (rename(src, dst)) {
+	if (rename(src, dest)) {
 		if (errno == EXDEV) {
 			errno = 0;
-			copyfile(src, dst, 0, 1);
+			copyfile(src, dest, 0, 1);
 			if (errno)
 				result = 1;
 			else
@@ -237,7 +238,7 @@ int movefile(char *src, char *dst)
 	}
 
 	if (isdir)
-		free(dst);
+		free(dest);
 
 	return result;
 }

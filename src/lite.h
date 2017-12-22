@@ -60,8 +60,8 @@ int     fexist     (const char *file);
 int     fisdir     (const char *file);
 
 FILE   *tempfile   (void);
-ssize_t copyfile   (char *src, char *dst, int len, int opt);
-int     movefile   (char *src, char *dst);
+ssize_t copyfile   (const char *src, const char *dst, int len, int opt);
+int     movefile   (const char *src, const char *dst);
 int     fcopyfile  (FILE *src, FILE *dst);
 ssize_t fsendfile  (FILE *src, FILE *dst, size_t len);
 
