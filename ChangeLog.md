@@ -4,6 +4,30 @@ Change Log
 All notable changes to the project are documented in this file.
 
 
+[v2.0.1][] - 2017-12-22
+-----------------------
+
+### Changes
+- Add missing `initscr()` declaration, regression in [v2.0.0][]
+- Add `#ifdef` guards around `min()` and `max()` macros
+- Add `const` to `char *` args in multiple API:s:
+  - `fexist()`
+  - `fgetint()`
+  - `fisslashdir()`
+  - `copyfile()`
+  - `movefile()`
+  - `ifconfig()`
+  - `lfopen()`
+  - `lfgetkey()`
+  - `lfgetint()`
+
+### Fixes
+- Fix #9, uncommon location of `which` command in unit test
+- Fix #10, supply unit test with a default `$PATH`
+- Fix #11, `touch()` command cannot handle relative paths when updating
+  the mtime of an existing file
+
+
 [v2.0.0][] - 2017-11-22
 -----------------------
 
@@ -292,7 +316,8 @@ problems this may cause!
 Initial extraction of frog DNA from [Finit][].  See [README][] for API details.
 
 
-[UNRELEASED]: https://github.com/troglobit/libite/compare/v2.0.0...HEAD
+[UNRELEASED]: https://github.com/troglobit/libite/compare/v2.0.1...HEAD
+[v2.0.1]: https://github.com/troglobit/libite/compare/v2.0.0...v2.0.1
 [v2.0.0]: https://github.com/troglobit/libite/compare/v1.9.3...v2.0.0
 [v1.9.3]: https://github.com/troglobit/libite/compare/v1.9.2...v1.9.3
 [v1.9.2]: https://github.com/troglobit/libite/compare/v1.9.1...v1.9.2
