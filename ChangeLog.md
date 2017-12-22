@@ -320,9 +320,3 @@ Initial extraction of frog DNA from [Finit][].  See [README][] for API details.
 [Inadyn]: https://github.com/troglobit/inadyn/
 [Mg]:     https://github.com/troglobit/mg
 [README]: https://github.com/troglobit/libite/blob/v1.0.0/README.md
-
-<!--
-  -- Local Variables:
-  -- mode: markdown
-  -- End:
-  -->

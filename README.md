@@ -408,9 +408,3 @@ included in released tarballs.
 [BSD]: https://en.wikipedia.org/wiki/BSD_licenses
 [Travis]: https://travis-ci.org/troglobit/libite
 [Travis Status]: https://travis-ci.org/troglobit/libite.png?branch=master
-
-<!--
-  -- Local Variables:
-  -- mode: markdown
-  -- End:
-  -->
