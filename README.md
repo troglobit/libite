@@ -396,12 +396,6 @@ generate a `configure` script.  It is a generated file and otherwise only
 included in released tarballs.
 
 
-TODO
-----
-
-- Improve documentation, possibly use kdoc or gdoc2 to generate docs from API.
-- Continuously, update OpenBSD functions/macros.
-
 [1]: https://github.com/troglobit/finit
 [2]: http://www.openbsd.org/
 [3]: http://www.openbsd.org/cgi-bin/man.cgi?query=strlcpy
