@@ -92,23 +92,20 @@ char *lftok(lfile_t *lf)
 	}
 
 	token = strtok_r(NULL, lf->sep, &lf->save);
-	if (!token) {
-		while (fgets(lf->buf, sizeof(lf->buf), lf->fp)) {
-			if (lf->buf[0] == '#')
-				continue;
+	if (token)
+		return token;
 
-			token = strtok_r(lf->buf, lf->sep, &lf->save);
-			if (!token)
-				continue;
-			
+	while (fgets(lf->buf, sizeof(lf->buf), lf->fp)) {
+		if (lf->buf[0] == '#')
+			continue;
+
+		token = strtok_r(lf->buf, lf->sep, &lf->save);
+		if (token)
 			return token;
-		}
-
-		errno = ENOENT;
-		return NULL;
 	}
 
-	return token;
+	errno = ENOENT;
+	return NULL;
 }
 
 /**
