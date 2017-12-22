@@ -24,7 +24,8 @@
 typedef struct lfile {
 	FILE *fp;
 	char buf[256];
-	char *sep, *save;
+	char *save;
+	const char *sep;
 } lfile_t;
 
 /**
@@ -35,7 +36,7 @@ typedef struct lfile {
  * Returns:
  * Pointer to a &lftile_t parser context, or %NULL on error.
  */
-lfile_t *lfopen(char *file, char *sep)
+lfile_t *lfopen(const char *file, const char *sep)
 {
 	lfile_t *lf;
 
@@ -122,7 +123,7 @@ char *lftok(lfile_t *lf)
  * Returns:
  * The value to @key, or %NULL if not found.
  */
-char *lfgetkey(lfile_t *lf, char *key)
+char *lfgetkey(lfile_t *lf, const char *key)
 {
 	char *token;
 
@@ -148,7 +149,7 @@ char *lfgetkey(lfile_t *lf, char *key)
  * Returns:
  * The positive integer value for @key, or -1 if not found.
  */
-int lfgetint(lfile_t *lf, char *key)
+int lfgetint(lfile_t *lf, const char *key)
 {
 	char *token = lfgetkey(lf, key);
 
@@ -170,7 +171,7 @@ int lfgetint(lfile_t *lf, char *key)
  * Returns:
  * The positive integer value for @key, or -1 if not found.
  */
-int fgetint(char *file, char *sep, char *key)
+int fgetint(const char *file, const char *sep, const char *key)
 {
 	int val = -1;
 	lfile_t *lf;

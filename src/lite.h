@@ -67,12 +67,12 @@ ssize_t fsendfile  (FILE *src, FILE *dst, size_t len);
 
 int     ifconfig   (char *ifname, char *addr, char *mask, int up);
 
-lfile_t*lfopen     (char *file, char *sep);
+lfile_t*lfopen     (const char *file, const char *sep);
 void    lfclose    (lfile_t *lf);
 char   *lftok      (lfile_t *lf);
-char   *lfgetkey   (lfile_t *lf, char *key);
-int     lfgetint   (lfile_t *lf, char *key);
-int     fgetint    (char *file, char *sep, char *key);
+char   *lfgetkey   (lfile_t *lf, const char *key);
+int     lfgetint   (lfile_t *lf, const char *key);
+int     fgetint    (const char *file, const char *sep, const char *key);
 
 int     mkpath     (const char *dir, mode_t mode);
 int     makepath   (const char *dir);
