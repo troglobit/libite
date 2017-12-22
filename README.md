@@ -20,24 +20,19 @@ Table of Contents
 Introduction
 ------------
 
-Libite is a lightweight library of *frog DNA*.  It can be used to fill
+Libite is a lightweight library of *frog DNA* that can be used to fill
 the gaps in any dinosaur project.  It holds useful functions and macros
 developed by both [Finit][1] and the [OpenBSD][2] project.  Most notably
 the string functions: [strlcpy(3)][3], [strlcat(3)][3] and the highly
 useful *BSD [sys/queue.h][4] and [sys/tree.h][7] API's.
 
-Libite is the frog DNA missing in GNU libc.  However, -lite does not aim
-to become another [GLIB][5]!  One noticeable gap in GLIBC is the missing
-`_SAFE` macros in the BSD `sys/queue.h` API &mdash; highly recommended
-when traversing lists to delete/free nodes.
+Libite holds many of the missing pieces in GNU libc, although -lite does
+not aim to become another [GLIB][5].  One noticeable gap in GLIBC is the
+`_SAFE` macros available in the BSD `sys/queue.h` API &mdash; highly
+recommended when traversing lists to delete/free nodes.
 
-The code is open sourced under a mix of the [MIT/X11 license][MIT], the
-[ISC license][ISC] used by OpenBSD, and [BSD licenses][BSD], all of them
-are extremely liberal and can be used freely in proprietary software if
-needed.
-
-For an introduction to why Libite happened, and how you can use it, see
-[this blog post][6].
+The code is open sourced under a mix of permissive Open Source licenses:
+[MIT/X11 license][MIT], [ISC license][ISC], and [BSD licenses][BSD].
 
 
 Using -lite
@@ -383,8 +378,6 @@ Build & Install
 
 This library was initially built for and developed on GNU/Linux systems
 as a light weight utility library, these days NetBSD should also work.
-Libite (LITE) employs the de facto standard GNU configure and build
-system:
 
     ./configure
     make -j5
@@ -401,7 +394,6 @@ included in released tarballs.
 [3]: http://www.openbsd.org/cgi-bin/man.cgi?query=strlcpy
 [4]: http://www.openbsd.org/cgi-bin/man.cgi/OpenBSD-current/man3/LIST_EMPTY.3
 [5]: https://developer.gnome.org/glib/
-[6]: http://troglobit.com/blog/2015/07/02/howto-using-lite-with-a-git-based-application/
 [7]: http://www.openbsd.org/cgi-bin/man.cgi/OpenBSD-current/man3/SPLAY_FOREACH.3
 [MIT]: https://en.wikipedia.org/wiki/MIT_License
 [ISC]: https://en.wikipedia.org/wiki/ISC_license
