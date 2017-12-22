@@ -65,7 +65,7 @@ int     movefile   (char *src, char *dst);
 int     fcopyfile  (FILE *src, FILE *dst);
 ssize_t fsendfile  (FILE *src, FILE *dst, size_t len);
 
-int     ifconfig   (char *ifname, char *addr, char *mask, int up);
+int     ifconfig   (const char *ifname, const char *addr, const char *mask, int up);
 
 lfile_t*lfopen     (const char *file, const char *sep);
 void    lfclose    (lfile_t *lf);

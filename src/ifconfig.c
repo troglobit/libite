@@ -43,7 +43,7 @@ extern size_t strlcpy(char *dst, const char *src, size_t siz);
  * Returns:
  * POSIX OK(0) on success, or non-zero on error.
  */
-int ifconfig(char *ifname, char *addr, char *mask, int up)
+int ifconfig(const char *ifname, const char *addr, const char *mask, int up)
 {
 	int sd, ret = -1;
 	struct ifreq ifr;
