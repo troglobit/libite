@@ -31,7 +31,7 @@
  * Returns:
  * %TRUE(1) if the file exists, otherwise %FALSE(0).
  */
-int fexist(char *file)
+int fexist(const char *file)
 {
 	if (!file) {
 		errno = EINVAL;

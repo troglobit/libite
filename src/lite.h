@@ -56,7 +56,7 @@ typedef struct lfile lfile_t;
 char   *chomp      (char *str);
 char   *fparseln   (FILE *, size_t *, size_t *, const char[3], int);
 
-int     fexist     (char *file);
+int     fexist     (const char *file);
 int     fisdir     (const char *file);
 
 FILE   *tempfile   (void);
@@ -165,7 +165,7 @@ static inline int erase(const char *path)
 #endif
 
 /* Does directory end with a slash? */
-static inline int fisslashdir(char *dir)
+static inline int fisslashdir(const char *dir)
 {
    if (!dir)
 	   return 0;
