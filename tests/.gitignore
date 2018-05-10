@@ -11,6 +11,7 @@ makepath
 pidfile
 progress
 rsync
+str
 tempfile
 touch
 tree
