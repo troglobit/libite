@@ -24,7 +24,10 @@
 #ifndef LITE_STRING_H_
 #define LITE_STRING_H_
 
+#include <stdint.h>    /* uint8_t, uint16_t, uint32_t, INT32_MAX, etc. */
 #include <string.h>
+#include <sys/param.h> /* MAX(), isset(), setbit(), TRUE, FALSE, et consortes. :-) */
+
 #include "strdupa.h"
 #include "strndupa.h"
 #include "strnlen.h"
