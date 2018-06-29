@@ -49,6 +49,9 @@
 	})
 #endif
 
+int     strnmatch  (const char *str, const char **list, size_t num);
+int     strmatch   (const char *str, const char **list);
+
 #ifndef strlcpy
 size_t  strlcpy    (char *dst, const char *src, size_t siz);
 #endif
