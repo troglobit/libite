@@ -51,8 +51,8 @@ ssize_t fsendfile(FILE *src, FILE *dst, size_t len)
                 errno = EINVAL;
                 return -1;
         }
-                
-	buf = (char *)malloc(BUFSIZ);
+
+	buf = malloc(BUFSIZ);
 	if (!buf)
 		return -1;
 
