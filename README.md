@@ -384,9 +384,9 @@ as a light weight utility library, these days NetBSD should also work.
     sudo make install-strip
     sudo ldconfig
 
-**Note:** When checking code from GitHub, use <kbd>./autogen.sh</kbd> to
-generate a `configure` script.  It is a generated file and otherwise only
-included in released tarballs.
+**Note:** When checking out code from GIT, use <kbd>./autogen.sh</kbd>
+to generate a `configure` script.  It is a generated file and otherwise
+only included in released tarballs.
 
 
 [1]: https://github.com/troglobit/finit
