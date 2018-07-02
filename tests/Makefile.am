@@ -11,11 +11,11 @@ TESTS          += fsendfile
 TESTS          += lfile
 TESTS          += makepath
 TESTS          += pidfile
-TESTS          += str
-TESTS          += touch
 TESTS          += progress
 TESTS          += rsync
+TESTS          += str
 TESTS          += strmatch
+TESTS          += touch
 TESTS          += tempfile
 TESTS          += which
 
