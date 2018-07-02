@@ -15,6 +15,7 @@ TESTS          += str
 TESTS          += touch
 TESTS          += progress
 TESTS          += rsync
+TESTS          += strmatch
 TESTS          += tempfile
 TESTS          += which
 

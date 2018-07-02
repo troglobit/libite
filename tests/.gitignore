@@ -12,6 +12,7 @@ pidfile
 progress
 rsync
 str
+strmatch
 tempfile
 touch
 tree
