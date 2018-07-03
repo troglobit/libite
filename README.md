@@ -284,6 +284,11 @@ Generic Functions
   `delete`, it is now called `opt`.  The APIs are 100% compatible if the
   value `1` was used.
 
+- `strmatch()`, `strnmatch()`
+
+  Find matching string in an array of strings.  Returns index in array
+  on match, or `-1` on error or not found.
+
 - `tempfile()`
 
   Secure replacement for `tmpfile()`.  Creates an invisible temporary
