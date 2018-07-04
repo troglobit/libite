@@ -3,6 +3,12 @@ Change Log
 
 All notable changes to the project are documented in this file.
 
+[v2.1.0][UNRELEASED]
+--------------------
+
+### Changes
+- Add support for `strmatch()` and `strnmatch()`
+
 
 [v2.0.2][] - 2018-05-10
 -----------------------
