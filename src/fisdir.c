@@ -25,17 +25,17 @@
 #include <unistd.h>
 
 /**
- * fexist - Check if a file exists and is a directory.
- * @file: File to look for, with full path.
+ * fisdir - Check if a path exists and is a directory.
+ * @path: Path to file or directory
  *
  * Returns:
- * %TRUE(1) if the file exists and is a directory, otherwise %FALSE(0).
+ * %TRUE(1) if @path exists and is a directory, otherwise %FALSE(0).
  */
-int fisdir(const char *file)
+int fisdir(const char *path)
 {
 	struct stat sb;
 
-	if (!stat(file, &sb) && S_ISDIR(sb.st_mode))
+	if (!stat(path, &sb) && S_ISDIR(sb.st_mode))
 		return 1;
 
 	return 0;
