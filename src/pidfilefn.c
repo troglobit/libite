@@ -111,10 +111,10 @@ int pidfile_signal(const char *pidfile, int signal)
 		return 1;
 
 	ret = kill(pid, signal);
-	if ((ret == -1) || (signal == SIGTERM) || (signal == SIGKILL))
-		(void)remove(pidfile);
+	if (!ret && signal == SIGKILL)
+		ret = remove(pidfile);
 
-	return 0;
+	return ret;
 }
 
 /**

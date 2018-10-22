@@ -9,6 +9,10 @@ All notable changes to the project are documented in this file.
 ### Changes
 - Add support for `strmatch()` and `strnmatch()`
 
+### Fixes
+- Fix `pidfile_signal()`: always return result of `kill()`, or the
+  result of `remove()` if we successfully sent `SIGKILL`
+
 
 [v2.0.2][] - 2018-05-10
 -----------------------
