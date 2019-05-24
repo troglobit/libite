@@ -22,6 +22,11 @@
  * THE SOFTWARE.
  */
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #ifndef LITE_H_
 #define LITE_H_
 
@@ -182,6 +187,10 @@ static inline int fisslashdir(const char *dir)
 #define signal_pidfile(file, signo) pidfile_signal(file, signo)
 
 #endif /* LITE_H_ */
+
+#ifdef __cplusplus
+}
+#endif
 
 /**
  * Local Variables:

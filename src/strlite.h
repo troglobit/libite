@@ -21,6 +21,11 @@
  * THE SOFTWARE.
  */
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #ifndef LITE_STRING_H_
 #define LITE_STRING_H_
 
@@ -106,3 +111,7 @@ static inline int string_case_compare(const char *a, const char *b)
 }
 
 #endif /* LITE_STRING_H_ */
+
+#ifdef __cplusplus
+}
+#endif

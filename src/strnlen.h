@@ -15,6 +15,11 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #ifndef LITE_STRNLEN_H_
 #define LITE_STRNLEN_H_
 
@@ -41,3 +46,7 @@ static inline size_t xstrnlen(const char *str, size_t lim)
 #endif
 
 #endif /* LITE_STRNLEN_H_ */
+
+#ifdef __cplusplus
+}
+#endif

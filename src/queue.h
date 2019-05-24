@@ -32,6 +32,11 @@
  *	@(#)queue.h	8.5 (Berkeley) 8/20/94
  */
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #ifndef	_SYS_QUEUE_H_
 #define	_SYS_QUEUE_H_
 
@@ -531,3 +536,7 @@ struct {								\
 } while (0)
 
 #endif	/* !_SYS_QUEUE_H_ */
+
+#ifdef __cplusplus
+}
+#endif

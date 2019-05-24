@@ -15,6 +15,11 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #ifndef CONIO_H_
 #define CONIO_H_
 
@@ -87,6 +92,10 @@ static inline void printheader(FILE *fp, const char *line, int nl)
 }
 
 #endif /* CONIO_H_ */
+
+#ifdef __cplusplus
+}
+#endif
 
 /**
  * Local Variables:

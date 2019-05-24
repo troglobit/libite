@@ -24,6 +24,11 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #ifndef	_SYS_TREE_H_
 #define	_SYS_TREE_H_
 
@@ -746,3 +751,7 @@ name##_RB_MINMAX(struct name *head, int val)				\
 	     (x) = (y))
 
 #endif	/* _SYS_TREE_H_ */
+
+#ifdef __cplusplus
+}
+#endif

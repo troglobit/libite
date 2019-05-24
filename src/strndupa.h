@@ -23,6 +23,12 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  * ==========================================================================
  */
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #ifndef LITE_STRNDUPA_H_
 #define LITE_STRNDUPA_H_
 
@@ -51,3 +57,7 @@
 #endif /* !HAVE_STRNDUPA */
 
 #endif /* GNU_STRING_STRNDUPA_H */
+
+#ifdef __cplusplus
+}
+#endif
