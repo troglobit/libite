@@ -14,7 +14,7 @@ libite_la_SOURCES     = chomp.c		copyfile.c			\
 			reallocarray.c	rsync.c				\
 			strlcpy.c 	strlcat.c 	strtonum.c	\
 			strdupa.h	strndupa.h	strnlen.h	\
-			strmatch.c					\
+			strmatch.c	yorn.c				\
 			tempfile.c	which.c				\
 			lite.h		strlite.h			\
 			queue.h		tree.h
@@ -22,4 +22,5 @@ libite_la_SOURCES     = chomp.c		copyfile.c			\
 
 ## Distribute these header files in the <lite/...> name space
 pkgincludedir       = $(includedir)/lite
-pkginclude_HEADERS  = lite.h queue.h conio.h tree.h strlite.h strdupa.h strndupa.h strnlen.h
+pkginclude_HEADERS  = lite.h queue.h conio.h tree.h strlite.h strdupa.h	\
+		      strndupa.h strnlen.h

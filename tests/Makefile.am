@@ -18,6 +18,7 @@ TESTS          += strmatch
 TESTS          += touch
 TESTS          += tempfile
 TESTS          += which
+TESTS          += yorn
 
 check_PROGRAMS  = $(TESTS)
 

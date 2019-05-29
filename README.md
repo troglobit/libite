@@ -308,6 +308,11 @@ Generic Functions
   **Note:** `which("/bin/ps aux")` will return `/bin/ps`, or `TRUE`,
   provided of course `/bin/ps` exists.
 
+- `yorn(fmt, ...)`
+
+  Pose a question to user, appended with `(y/N)?`, returns `TRUE` for
+  yes (both `y` and `Y` are handled) and `FALSE` for everything else.
+
 
 GNU Functions
 -------------

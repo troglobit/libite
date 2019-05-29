@@ -95,6 +95,8 @@ void   *reallocarray(void *optr, size_t nmemb, size_t size);
 void    progress       (int percent, int max_width);
 void    progress_simple(int percent);
 
+int     yorn       (const char *fmt, ...);
+
 char   *which      (const char *cmd);
 int     whichp     (const char *cmd);
 
