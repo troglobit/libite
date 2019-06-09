@@ -289,6 +289,15 @@ Generic Functions
   Find matching string in an array of strings.  Returns index in array
   on match, or `-1` on error or not found.
 
+- `telnet_open(), telnet_close(), telnet_expect()`
+
+  Poor mans telnet expect in C.  Opens connection to a Telnet service;
+  FTP, Telnet, similar, and run an expect-like script.
+
+- `telnet_session()`
+
+  Wrapper for the above three in one API.
+
 - `tempfile()`
 
   Secure replacement for `tmpfile()`.  Creates an invisible temporary

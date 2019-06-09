@@ -57,6 +57,7 @@ extern "C"
 #define LITE_FOPT_KEEP_MTIME    0x02
 
 typedef struct lfile lfile_t;
+typedef struct sdbuf sdbuf_t;
 
 char   *chomp      (char *str);
 char   *fparseln   (FILE *, size_t *, size_t *, const char[3], int);
@@ -94,6 +95,11 @@ void   *reallocarray(void *optr, size_t nmemb, size_t size);
 
 void    progress       (int percent, int max_width);
 void    progress_simple(int percent);
+
+sdbuf_t*telnet_open    (int addr, short port);
+int     telnet_close   (sdbuf_t *ctx);
+int     telnet_expect  (sdbuf_t *ctx, char *script[], FILE *output);
+int     telnet_session (int addr, short port, char *script[], FILE *output);
 
 int     yorn       (const char *fmt, ...);
 
