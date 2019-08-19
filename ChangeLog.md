@@ -8,10 +8,13 @@ All notable changes to the project are documented in this file.
 
 ### Changes
 - Add support for `strmatch()` and `strnmatch()`
+- Add support for `yorn()`, safe yes-or-no prompt
 
 ### Fixes
 - Fix `pidfile_signal()`: always return result of `kill()`, or the
   result of `remove()` if we successfully sent `SIGKILL`
+- Fix `strtonum()`: POSIX `strtoll()` returns `EINVAL`, check that
+- Fix #13, support C++ `extern "C" {}` for header files
 
 
 [v2.0.2][] - 2018-05-10
