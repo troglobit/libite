@@ -82,13 +82,26 @@ extern "C"
 
 void initscr(int *row, int *col);
 
-/* Print table heading @line to @fp, with optional leading newline */
+/* Print table heading @line to @fp, with optional leading newline
+ * Example:
+ * _________________ <-- Empty line with UNDERSCORE to frame first heading
+ * First heading     <-- In normal/RESETATTR
+ * SUBHEADING        <-- In REVERSE and with capital letters like 'top'
+ */
+static inline void printhdr(FILE *fp, const char *line, int nl, int attr)
+{
+	if (attr < 0 || attr > 8)
+		attr = REVERSE;
+
+	fprintf(fp ?: stdout,
+		"%s\033[%dm%s%*s\033[0m\n",
+		nl ? "\n" : "", attr, line,
+		SCREEN_WIDTH - (int)strlen(line), "");
+}
+
 static inline void printheader(FILE *fp, const char *line, int nl)
 {
-	fprintf(fp ?: stdout,
-		"%s\033[7m%s%*s\033[0m\n",
-		nl ? "\n" : "",
-		line, SCREEN_WIDTH - (int)strlen(line), "");
+	printhdr(fp, line, nl, REVERSE);
 }
 
 #endif /* CONIO_H_ */
