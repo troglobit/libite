@@ -9,6 +9,7 @@ All notable changes to the project are documented in this file.
 ### Changes
 - Add support for `strmatch()` and `strnmatch()`
 - Add support for `yorn()`, safe yes-or-no prompt
+- Add support for telnet expect/session APIs
 
 ### Fixes
 - Fix `pidfile_signal()`: always return result of `kill()`, or the
