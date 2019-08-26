@@ -34,18 +34,19 @@ Description: static library, header files, and docs for libite
 Package: libite5
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
-Description: That missing frog DNA you've been looking for. MIT/X11/ISC/BSD License.
- Libite is a lightweight library of frog DNA. It can be used to fill the
- gaps in any dinosaur project. It holds useful functions and macros
- developed by both Finit and the OpenBSD project. Most notably the
- string functions: strlcpy(3), strlcat(3) and the highly useful *BSD
- sys/queue.h and sys/tree.h API's.
+Description: That missing frog DNA you've been looking for.
+ Libite, or -lite, is a lightweight library of frog DNA.  It can be used
+ to fill the gaps in any dinosaur project.  It holds useful functions
+ and macros developed by both Finit and the OpenBSD project.  Most
+ notably the string functions: strlcpy(3), strlcat(3) and the highly
+ useful *BSD sys/queue.h and sys/tree.h API's.
  .
- Libite is the frog DNA missing in GNU libc. However, -lite does not aim
- to become another GLIB! One noticeable gap in GLIBC is the missing
+ Libite is the frog DNA missing in GNU libc.  However, -lite does not
+ aim to become another GLIB!  One noticeable gap in GLIBC is the missing
  _SAFE macros in the BSD sys/queue.h API — highly recommended when
  traversing lists to delete/free nodes.
  .
- The code is open sourced under a mix of the MIT/X11 license, the ISC
- license used by OpenBSD, and BSD licenses, all of them are extremely
- liberal and can be used freely in proprietary software if needed.
+ The code is open source software under a mix of the MIT/X11 license,
+ the ISC license used by OpenBSD, and BSD licenses, all of them are
+ extremely liberal and can be used freely in proprietary software if
+ needed.
