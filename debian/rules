@@ -7,3 +7,9 @@ export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 %:
 	dh $@ --with autoreconf
 
+override_dh_auto_install:
+	dh_auto_install
+	-rm -f debian/libite/usr/share/doc/libite/LICENSE
+
+override_dh_installchangelogs:
+	dh_installchangelogs ChangeLog.md
