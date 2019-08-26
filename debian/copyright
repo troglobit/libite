@@ -61,8 +61,12 @@ Copyright: 2009 William Ahern
 License: MIT
 
 Files: strlcat.c strlcpy.c
-Copyright: 998, 2015 Todd C. Miller <Todd.Miller@courtesan.com>
+Copyright: 1998, 2015 Todd C. Miller <Todd.Miller@courtesan.com>
 License: MIT
+
+Files: strmatch.c
+Copyright: 2009-2018 Joachim Nilsson <troglobit@gmail.com>
+License: ISC
 
 Files: strnlen.c
 Copyright: 2016 Joachim Nilsson <troglobit@gmail.com>
@@ -72,12 +76,20 @@ Files: strtonum.c
 Copyright: 2004 Ted Unangst and Todd Miller
 License: ISC
 
+Files: telnet.c
+Copyright: 2010, 2013, 2019 Joachim Nilsson <troglobit@gmail.com>
+License: ISC
+
 Files: tempfile.c
 Copyright: 2015-2016 Joachim Nilsson <troglobit@gmail.com>
 License: ISC
 
 Files: tree.c
 Copyright: 2015 Joachim Nilsson <troglobit@gmail.com>
+License: ISC
+
+Files: yorn.c
+Copyright: 2009 Joachim Nilsson <troglobit@gmail.com>
 License: ISC
 
 Files: tests/*.c
