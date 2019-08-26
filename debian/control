@@ -1,15 +1,15 @@
 Source: libite
 Priority: optional
 Maintainer: Joachim Nilsson <troglobit@gmail.com>
-Build-Depends: dpkg-dev (>= 1.14.9), debhelper (>= 9), dh-autoreconf
-Standards-Version: 3.9.6
+Build-Depends: dpkg-dev (>= 1.14.9), debhelper (>= 10)
+Standards-Version: 4.1.0
 Section: libs
 Homepage: https://github.com/troglobit/libite/
 Vcs-Git: https://github.com/troglobit/libite.git
 Vcs-Browser: https://github.com/troglobit/libite/
 
 Package: libite-dev
-Priority: extra
+Priority: optional
 Section: libdevel
 Architecture: any
 Depends: ${misc:Depends}, libite5 (= ${binary:Version})
