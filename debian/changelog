@@ -1,3 +1,10 @@
+libite (2.1.0) unstable; urgency=medium
+
+  * New functions; strmatch(), strnmatch(), yorn(), telnet expect APIs
+  * Fixes to pidfile_signal(), strtonum() and C++ linking
+
+ -- Joachim Nilsson <troglobit@gmail.com>  Mon, 26 Aug 2019 20:21:46 +0200
+
 libite (2.0.2) unstable; urgency=medium
 
   * Fix issues with using `strlite.h` standalone
