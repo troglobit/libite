@@ -12,7 +12,7 @@ Package: libite-dev
 Priority: extra
 Section: libdevel
 Architecture: any
-Depends: ${misc:Depends}, libite (= ${binary:Version})
+Depends: ${misc:Depends}, libite5 (= ${binary:Version})
 Description: static library, header files, and docs for libite
  Static library, header files, and documentation for libite.
  .
@@ -31,7 +31,7 @@ Description: static library, header files, and docs for libite
  license used by OpenBSD, and BSD licenses, all of them are extremely
  liberal and can be used freely in proprietary software if needed.
 
-Package: libite
+Package: libite5
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: That missing frog DNA you've been looking for. MIT/X11/ISC/BSD License.
