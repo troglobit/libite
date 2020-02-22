@@ -3,6 +3,13 @@ Change Log
 
 All notable changes to the project are documented in this file.
 
+[v2.1.2][] - 2020-02-22
+-----------------------
+
+### Fixes
+- Fix Debian package upgrade from libite -> libite5
+
+
 [v2.1.1][] - 2020-02-22
 -----------------------
 
@@ -350,7 +357,8 @@ problems this may cause!
 Initial extraction of frog DNA from [Finit][].  See [README][] for API details.
 
 
-[UNRELEASED]: https://github.com/troglobit/libite/compare/v2.1.1...HEAD
+[UNRELEASED]: https://github.com/troglobit/libite/compare/v2.1.2...HEAD
+[v2.1.2]: https://github.com/troglobit/libite/compare/v2.1.1...v2.1.2
 [v2.1.1]: https://github.com/troglobit/libite/compare/v2.1.0...v2.1.1
 [v2.1.0]: https://github.com/troglobit/libite/compare/v2.0.2...v2.1.0
 [v2.0.2]: https://github.com/troglobit/libite/compare/v2.0.1...v2.0.2

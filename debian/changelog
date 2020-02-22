@@ -1,3 +1,10 @@
+libite (2.1.2) stable; urgency=high
+
+  * Fix upgrade of base package, new library name to match SONAME
+    breaks upgrade from libite_2.0.x.deb to libite5_2.1.x.deb
+
+ -- Joachim Nilsson <troglobit@gmail.com>  Sat, 22 Feb 2020 15:04:27 +0100
+
 libite (2.1.1) stable; urgency=medium
 
   * Fix to chomp(), ensure stopping before beginning of string
