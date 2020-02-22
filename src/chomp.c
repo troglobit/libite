@@ -1,6 +1,6 @@
 /* Perl inspired chomp() implementation.
  *
- * Copyright (c) 2014-2015  Joachim Nilsson <troglobit@gmail.com>
+ * Copyright (c) 2014-2020  Joachim Nilsson <troglobit@gmail.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -23,7 +23,7 @@
  * @str: String to chomp
  *
  * This function is like Perl chomp, but it's set to chop of all
- * trailing newlines.
+ * trailing newlines.  Useful in combination with fgets().
  *
  * Returns:
  * If @str is a valid pointer this function returns @str, otherwise
