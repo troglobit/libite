@@ -32,6 +32,9 @@ Description: static library, header files, and docs for libite
  liberal and can be used freely in proprietary software if needed.
 
 Package: libite5
+Replaces: libite
+Conflicts: libite
+Provides: libite
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: That missing frog DNA you've been looking for
