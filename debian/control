@@ -1,8 +1,8 @@
 Source: libite
 Priority: optional
 Maintainer: Joachim Nilsson <troglobit@gmail.com>
-Build-Depends: dpkg-dev (>= 1.14.9), debhelper (>= 10)
-Standards-Version: 4.1.0
+Build-Depends: debhelper (>= 10)
+Standards-Version: 4.3.0
 Section: libs
 Homepage: https://github.com/troglobit/libite/
 Vcs-Git: https://github.com/troglobit/libite.git
@@ -16,14 +16,14 @@ Depends: ${misc:Depends}, libite5 (= ${binary:Version})
 Description: static library, header files, and docs for libite
  Static library, header files, and documentation for libite.
  .
- Libite is a lightweight library of frog DNA. It can be used to fill the
- gaps in any dinosaur project. It holds useful functions and macros
- developed by both Finit and the OpenBSD project. Most notably the
+ Libite is a lightweight library of frog DNA.  It can be used to fill
+ the gaps in any dinosaur project.  It holds useful functions and macros
+ developed by both Finit and the OpenBSD project.  Most notably the
  string functions: strlcpy(3), strlcat(3) and the highly useful *BSD
  sys/queue.h and sys/tree.h API's.
  .
- Libite is the frog DNA missing in GNU libc. However, -lite does not aim
- to become another GLIB! One noticeable gap in GLIBC is the missing
+ Libite is the frog DNA missing in GNU libc.  However, -lite does not
+ aim to become another GLIB!  One noticeable gap in GLIBC is the missing
  _SAFE macros in the BSD sys/queue.h API — highly recommended when
  traversing lists to delete/free nodes.
  .
