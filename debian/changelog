@@ -1,3 +1,11 @@
+libite (2.1.1) stable; urgency=medium
+
+  * Fix to chomp(), ensure stopping before beginning of string
+  * Added example of printhdr()
+  * Update copyright years
+
+ -- Joachim Nilsson <troglobit@gmail.com>  Sat, 22 Feb 2020 12:32:54 +0100
+
 libite (2.1.0) unstable; urgency=medium
 
   * New functions; strmatch(), strnmatch(), yorn(), telnet expect APIs
