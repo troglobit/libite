@@ -8,6 +8,7 @@ All notable changes to the project are documented in this file.
 
 ### Changes
 - Add test/example for `printhdr()`
+- Update copyright years
 
 ### Fixes
 - chomp: Check for beginning of string while removing \n's

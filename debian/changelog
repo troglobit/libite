@@ -3,8 +3,10 @@ libite (2.1.1) stable; urgency=medium
   * Fix to chomp(), ensure stopping before beginning of string
   * Added example of printhdr()
   * Update copyright years
+  * Add missing libite5.symbols file, found by lintian
+  * Fix package short description, found by linitian
 
- -- Joachim Nilsson <troglobit@gmail.com>  Sat, 22 Feb 2020 12:32:54 +0100
+ -- Joachim Nilsson <troglobit@gmail.com>  Sat, 22 Feb 2020 13:52:24 +0100
 
 libite (2.1.0) unstable; urgency=medium
 
