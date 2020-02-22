@@ -9,6 +9,7 @@ fsendfile
 lfile
 makepath
 pidfile
+printhdr
 progress
 rsync
 str
