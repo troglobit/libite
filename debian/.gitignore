@@ -1,6 +1,9 @@
+*.log
+*.substvars
+.debhelper/*
 tmp/*
-libuev/*
-libuev*
+libite5/*
+libite-dev/*
 autoreconf*
 debhelper*
 files

@@ -1,16 +1,8 @@
 *~
-*.d
-*.o
-*.so
-*.so.*
-*.a
-.deps
-.libs
 ID
 GPATH
 GRTAGS
 GTAGS
-tmp/
 compile
 config.*
 configure
@@ -25,5 +17,5 @@ Makefile.in
 aclocal.m4
 ar-lib
 autom4te.cache
-libite*
 test-driver
+libite.pc

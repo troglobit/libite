@@ -1,0 +1,3 @@
+*.la
+.libs/*
+libite_la*
