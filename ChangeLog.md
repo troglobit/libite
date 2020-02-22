@@ -3,6 +3,16 @@ Change Log
 
 All notable changes to the project are documented in this file.
 
+[v2.1.1][] - 2020-02-22
+-----------------------
+
+### Changes
+- Add test/example for `printhdr()`
+
+### Fixes
+- chomp: Check for beginning of string while removing \n's
+
+
 [v2.1.0][] - 2019-08-26
 -----------------------
 
@@ -339,7 +349,8 @@ problems this may cause!
 Initial extraction of frog DNA from [Finit][].  See [README][] for API details.
 
 
-[UNRELEASED]: https://github.com/troglobit/libite/compare/v2.1.0...HEAD
+[UNRELEASED]: https://github.com/troglobit/libite/compare/v2.1.1...HEAD
+[v2.1.1]: https://github.com/troglobit/libite/compare/v2.1.0...v2.1.1
 [v2.1.0]: https://github.com/troglobit/libite/compare/v2.0.2...v2.1.0
 [v2.0.2]: https://github.com/troglobit/libite/compare/v2.0.1...v2.0.2
 [v2.0.1]: https://github.com/troglobit/libite/compare/v2.0.0...v2.0.1
