@@ -5,7 +5,7 @@ libite_la_CFLAGS      = -W -Wall -Wextra
 libite_la_LDFLAGS     = $(AM_LDFLAGS) -version-info 5:1:0
 libite_la_SOURCES     = chomp.c		copyfile.c			\
 			conio.c		conio.h				\
-			dir.c						\
+			dir.c		fopenf.c			\
 			fexist.c	fisdir.c			\
 			fparseln.c	fsendfile.c			\
 			ifconfig.c	lfile.c				\

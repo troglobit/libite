@@ -7,6 +7,7 @@ TESTS          += copyfile
 TESTS          += dir
 TESTS          += fexist
 TESTS          += fisdir
+TESTS          += fopenf
 TESTS          += fsendfile
 TESTS          += lfile
 TESTS          += makepath

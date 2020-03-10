@@ -1,11 +1,13 @@
 *.o
 *.log
 *.trs
+.deps/
 chomp
 copyfile
 dir
 fexist
 fisdir
+fopenf
 fsendfile
 lfile
 makepath

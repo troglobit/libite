@@ -181,6 +181,15 @@ Generic Functions
 
   Check for the existence of a directory, returns True(1) or False(0).
 
+- `fopenf(mode, fmt, ...)`
+
+  Like `fopen()`, but takes a formatted string as argument.  This
+  greatly simplifies operations that usually consist of composing a
+  filename from parts into a dynamic buffer before actually opening
+  the file.
+  
+  > **Notice:** the swapped order of `pathname` and `mode`!
+
 - `fsendfile(src, dst, len)`
 
   Copy data between file streams, very similar to `fcopyfile()`, but
