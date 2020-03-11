@@ -81,6 +81,7 @@ char   *lfgetkey   (lfile_t *lf, const char *key);
 int     lfgetint   (lfile_t *lf, const char *key);
 int     fgetint    (const char *file, const char *sep, const char *key);
 
+int     fmkpath    (mode_t mode, const char *fmt, ...);
 int     mkpath     (const char *dir, mode_t mode);
 int     makepath   (const char *dir);
 

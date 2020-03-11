@@ -17,6 +17,8 @@
 
 #include <errno.h>
 #include <libgen.h>
+#include <stdarg.h>
+#include <stdlib.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include "lite.h"
@@ -44,6 +46,38 @@ int mkpath(const char *dir, mode_t mode)
 	mkpath(dirname(strdupa(dir)), mode);
 
 	return mkdir(dir, mode);
+}
+
+/**
+ * fmkpath - Formatted version of mkpath()
+ * @mode: A &mode_t mode to create directories with
+ * @fmt:  Formatted string to be composed into a pathname
+ *
+ * Note:
+ * Notice the swapped arguments, compared to mkpath()!
+ *
+ * Returns:
+ * POSIX OK(0) on success, otherwise -1 with @errno set.
+ */
+int fmkpath(mode_t mode, const char *fmt, ...)
+{
+	va_list ap;
+	char *path;
+	int len;
+
+	va_start(ap, fmt);
+	len = vsnprintf(NULL, 0, fmt, ap);
+	va_end(ap);
+
+	path = alloca(len + 1);
+	if (!path)
+		return -1;
+
+	va_start(ap, fmt);
+	len = vsnprintf(path, len + 1, fmt, ap);
+	va_end(ap);
+
+	return mkpath(path, mode);
 }
 
 /**

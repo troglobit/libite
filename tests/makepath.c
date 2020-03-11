@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include "check.h"
 
+#define BASEDIR "/tmp/libite-test"
+
 int checkpath(const char *dir)
 {
 	char tmp[256];
@@ -32,28 +34,48 @@ int test_makepath(const char *dir)
 	return ret;
 }
 
+int test_fmkpath(const char *subdir)
+{
+	int ret;
+
+	ret = fmkpath(0755, "%s/%s", BASEDIR, subdir);
+	if (!ret) {
+		char tmp[256];
+
+		snprintf(tmp, sizeof(tmp), "%s/%s", BASEDIR, subdir);
+		ret = checkpath(tmp);
+	} else
+		perror("Failed");
+
+	return ret;
+}
+
 int main(void)
 {
 	int i, ret = 0;
 	char *list[] = {
-		"/tmp/libite-test/tok/",
-		"/tmp/libite-test/tok2",
-		"/tmp/libite-test/ab",
-		"/tmp/libite-test/b",
-		"/tmp/libite-test/a/",
-		"/tmp/libite-test/a/b",
-		"/tmp/libite-test/a/c/",
+		BASEDIR "/tok/",
+		BASEDIR "/tok2",
+		BASEDIR "/ab",
+		BASEDIR "/b",
+		BASEDIR "/a/",
+		BASEDIR "/a/b",
+		BASEDIR "/a/c/",
 		NULL
 	};
 
-	printf("Testing makepath() ...\n");
-	mkdir("/tmp/libite-test", 0755);
+	mkdir(BASEDIR, 0755);
 
+	printf("PASS 1/2: makepath() ======================================\n");
 	for (i = 0; list[i] && !ret; i++)
 		ret |= test_makepath(list[i]);
 
-	printf("\nCleaning up ...\n");
-	system("rm -rf /tmp/libite-test");
+	printf("PASS 2/2: fmkpath() =======================================\n");
+	for (i = 0; list[i] && !ret; i++)
+		ret |= test_fmkpath(list[i] + strlen(BASEDIR) + 1);
+
+	printf("DONE: Cleaning up =========================================\n");
+	system("rm -rf " BASEDIR);
 
 	return ret;
 }

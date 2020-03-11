@@ -232,6 +232,12 @@ Generic Functions
 
   Like `makepath()`, but also takes a `mode_t` permission mode argument.
 
+- `fmkpath(mode, fmt, ...)`
+
+  Like `mkpath()`, but takes a formatted string as argument.
+
+  > **Notice:** the swapped order of `pathname` and `mode`!
+
 - `movefile(src, dst)`
 
   Like `copyfile()`, but renames `src` to `dst`, or recreates symlink
