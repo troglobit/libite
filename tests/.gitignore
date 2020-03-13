@@ -17,6 +17,7 @@ progress
 rsync
 str
 strmatch
+systemf
 tempfile
 touch
 tree

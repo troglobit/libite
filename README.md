@@ -304,6 +304,12 @@ Generic Functions
   Find matching string in an array of strings.  Returns index in array
   on match, or `-1` on error or not found.
 
+`systemf(fmt, ...)`
+
+  Like `system()`, but takes a formatted string as argument.  This
+  greatly simplifies operations that usually consist of composing a
+  command from parts into a dynamic buffer before calling it.
+
 - `telnet_open(), telnet_close(), telnet_expect()`
 
   Poor mans telnet expect in C.  Opens connection to a Telnet service;

@@ -17,6 +17,7 @@ TESTS          += progress
 TESTS          += rsync
 TESTS          += str
 TESTS          += strmatch
+TESTS          += systemf
 TESTS          += touch
 TESTS          += tempfile
 TESTS          += which
