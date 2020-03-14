@@ -3,6 +3,15 @@ Change Log
 
 All notable changes to the project are documented in this file.
 
+[v2.2.0][UNRELEASED]
+-----------------------
+
+### Changes
+- Add support for `systemf()`, formatted `system()` replacement
+- Add support for `fmkpath()`, formatted string `mkpath()`
+- Add support for `fopenf()`, formatted string `fopen()` replacement
+
+
 [v2.1.2][] - 2020-02-22
 -----------------------
 
@@ -358,6 +367,7 @@ Initial extraction of frog DNA from [Finit][].  See [README][] for API details.
 
 
 [UNRELEASED]: https://github.com/troglobit/libite/compare/v2.1.2...HEAD
+[v2.2.0]: https://github.com/troglobit/libite/compare/v2.1.2...v2.2.0
 [v2.1.2]: https://github.com/troglobit/libite/compare/v2.1.1...v2.1.2
 [v2.1.1]: https://github.com/troglobit/libite/compare/v2.1.0...v2.1.1
 [v2.1.0]: https://github.com/troglobit/libite/compare/v2.0.2...v2.1.0
