@@ -2,7 +2,6 @@
 ===========================
 [![Travis Status][]][Travis]
 
-
 Table of Contents
 -----------------
 
@@ -12,7 +11,7 @@ Table of Contents
 * [Generic Functions](#generic-functions)
 * [OpenBSD Functions](#openbsd-functions)
 * [Build & Install](#origin--references)
-* [TODO](#todo)
+* [Origin & References](#origin--references)
 
 
 > **NOTE:** Incompatible changes in v2.0 compared to v1.x!
@@ -428,6 +427,14 @@ as a light weight utility library, these days NetBSD should also work.
 to generate a `configure` script.  It is a generated file and otherwise
 only included in released tarballs.
 
+Origin & References
+-------------------
+
+Much of the code in libite (-lite) is written by [Claudio Matsuoka][]
+for [Finit][original finit] and released under the MIT/X11 license.
+Joachim Nilsson later improved on the [Finit][] code base and included
+pieces of software released under the ISC and BSD licenses.  See each
+respective file for license details.
 
 [1]: https://github.com/troglobit/finit
 [2]: http://www.openbsd.org/
@@ -440,3 +447,6 @@ only included in released tarballs.
 [BSD]: https://en.wikipedia.org/wiki/BSD_licenses
 [Travis]: https://travis-ci.org/troglobit/libite
 [Travis Status]: https://travis-ci.org/troglobit/libite.png?branch=master
+[Claudio Matsuoka]: https://github.com/cmatsuoka
+[original finit]: http://helllabs.org/finit/
+[Finit]: https://github.com/troglobit/finit
