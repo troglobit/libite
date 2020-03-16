@@ -1,6 +1,6 @@
 -lite | Frog DNA, basically
 ===========================
-[![Travis Status][]][Travis]
+[![Travis Status][]][Travis] [![Coverity Status]][Coverity Scan]
 
 Table of Contents
 -----------------
@@ -447,6 +447,8 @@ respective file for license details.
 [BSD]: https://en.wikipedia.org/wiki/BSD_licenses
 [Travis]: https://travis-ci.org/troglobit/libite
 [Travis Status]: https://travis-ci.org/troglobit/libite.png?branch=master
+[Coverity Scan]:    https://scan.coverity.com/projects/20602
+[Coverity Status]:  https://img.shields.io/coverity/scan/20602.svg
 [Claudio Matsuoka]: https://github.com/cmatsuoka
 [original finit]: http://helllabs.org/finit/
 [Finit]: https://github.com/troglobit/finit
