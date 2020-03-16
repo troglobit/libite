@@ -107,20 +107,20 @@ int rsync(char *src, char *dst, int opt, int (*filter)(const char *file))
 		snprintf(source, sizeof(source), "%s%s%s", src, fisslashdir(src) ? "" : "/", files[i]);
 		if (fisdir(source)) {
 			char dst2[256];
-			struct stat st;
+			struct stat sb;
 
 			strcat(source, "/");
-			if (stat(source, &st))
+			if (stat(source, &sb))
 				return 1;
 
-			if (mdir(dst2, sizeof(dst2), dst, files[i], &st)) {
+			if (mdir(dst2, sizeof(dst2), dst, files[i], &sb)) {
 				result++;
 				continue;
 			}
 
 			rsync(source, dst2, opt, filter);
 			if (keep_mtim)
-				set_mtime(dst2, &st);
+				set_mtime(dst2, &sb);
 
 			continue;	/* Next file/dir in @src to copy... */
 		}
