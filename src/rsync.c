@@ -110,8 +110,10 @@ int rsync(char *src, char *dst, int opt, int (*filter)(const char *file))
 			struct stat sb;
 
 			strcat(source, "/");
-			if (stat(source, &sb))
-				return 1;
+			if (stat(source, &sb)) {
+				result++;
+				continue;
+			}
 
 			if (mdir(dst2, sizeof(dst2), dst, files[i], &sb)) {
 				result++;
