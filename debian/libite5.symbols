@@ -9,6 +9,8 @@ libite.so.5 libite5 #MINVER#
  fexist@Base 2.0.0
  fgetint@Base 2.0.0
  fisdir@Base 2.0.0
+ fmkpath@Base 2.2.0
+ fopenf@Base 2.2.0
  fparseln@Base 2.0.0
  fsendfile@Base 2.0.0
  ifconfig@Base 2.0.0
@@ -35,6 +37,7 @@ libite.so.5 libite5 #MINVER#
  strmatch@Base 2.1.0
  strnmatch@Base 2.1.0
  strtonum@Base 2.1.0
+ systemf@Base 2.2.0
  telnet_close@Base 2.1.0
  telnet_expect@Base 2.1.0
  telnet_open@Base 2.1.0
