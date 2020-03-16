@@ -3,13 +3,19 @@ Change Log
 
 All notable changes to the project are documented in this file.
 
-[v2.2.0][UNRELEASED]
+
+[v2.2.0][] - 2020-03-16
 -----------------------
 
 ### Changes
-- Add support for `systemf()`, formatted `system()` replacement
+- Add support for `systemf()`, formatted string `system()` replacement
 - Add support for `fmkpath()`, formatted string `mkpath()`
 - Add support for `fopenf()`, formatted string `fopen()` replacement
+
+### Fixes
+- Fix possible memory leak in `rsync()`, found by Coverity Scan
+- Check return value of `fstat()` to prevent bogus destination file
+  times when using `copyfile()`, found by Coverity Scan
 
 
 [v2.1.2][] - 2020-02-22
@@ -366,7 +372,7 @@ problems this may cause!
 Initial extraction of frog DNA from [Finit][].  See [README][] for API details.
 
 
-[UNRELEASED]: https://github.com/troglobit/libite/compare/v2.1.2...HEAD
+[UNRELEASED]: https://github.com/troglobit/libite/compare/v2.2.0...HEAD
 [v2.2.0]: https://github.com/troglobit/libite/compare/v2.1.2...v2.2.0
 [v2.1.2]: https://github.com/troglobit/libite/compare/v2.1.1...v2.1.2
 [v2.1.1]: https://github.com/troglobit/libite/compare/v2.1.0...v2.1.1

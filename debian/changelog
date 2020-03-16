@@ -1,3 +1,16 @@
+libite (2.2.0) unstable; urgency=medium
+
+  * New functions:
+    - systemf(), formatted string system() replacement
+    - fmkpath(), formatted string mkpath() replacement
+    - fopenf(), formatted string fopen() replacement
+  * Fixes
+    - possible memory leak in rsync()
+    - Check return value of fstat() to prevent bogus destination file
+      times when using copyfile()
+
+ -- Joachim Nilsson <troglobit@gmail.com>  Mon, 16 Mar 2020 15:42:02 +0100
+
 libite (2.1.2) stable; urgency=high
 
   * Fix upgrade of base package, new library name to match SONAME
