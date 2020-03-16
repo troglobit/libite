@@ -85,7 +85,9 @@ static void set_mtime(int in, int out)
 	struct stat st;
 	struct timespec tv[2];
 
-	fstat(in, &st);
+	if (fstat(in, &st))
+		return;
+
 	tv[0] = st.st_atim;
 	tv[1] = st.st_mtim;
 	futimens(out, tv);
