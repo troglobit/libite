@@ -1,7 +1,7 @@
 Source: libite
 Priority: optional
 Maintainer: Joachim Nilsson <troglobit@gmail.com>
-Build-Depends: debhelper (>= 10)
+Build-Depends: debhelper (>= 10), libtool
 Standards-Version: 4.3.0
 Section: libs
 Homepage: https://github.com/troglobit/libite/
