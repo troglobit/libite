@@ -44,7 +44,7 @@ sdbuf_t *telnet_open(int addr, short port)
 	struct sockaddr_in *sin;
 	struct sockaddr s;
 	sdbuf_t *ctx;
-	int saved_errno;
+	int saved;
 
 	ctx = (sdbuf_t *)malloc(sizeof(sdbuf_t));
 	if (!ctx) {
@@ -61,12 +61,12 @@ sdbuf_t *telnet_open(int addr, short port)
 
 	ctx->sd = socket(PF_INET, SOCK_STREAM, 0);
 	if (-1 == ctx->sd) {
-		saved_errno = errno;
+		saved = errno;
 //		perror ("Failed creating socket");
 		free(ctx->buf);
 		free(ctx);
 
-		errno = saved_errno;
+		errno = saved;
 		return NULL;
 	}
 
@@ -75,10 +75,10 @@ sdbuf_t *telnet_open(int addr, short port)
 	sin->sin_port = port;
 	sin->sin_addr.s_addr = addr;
 	if (-1 == connect(ctx->sd, &s, sizeof(s))) {
-		saved_errno = errno;
+		saved = errno;
 //		perror ("Cannot connect to telnet daemon");
 		telnet_close(ctx);
-		errno = saved_errno;
+		errno = saved;
 
 		return NULL;
 	}
