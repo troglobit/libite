@@ -298,23 +298,24 @@ Generic Functions
   `delete`, it is now called `opt`.  The APIs are 100% compatible if the
   value `1` was used.
 
-- `strmatch()`, `strnmatch()`
+- `strmatch(str, list)`, `strnmatch(str, list, len)`
 
-  Find matching string in an array of strings.  Returns index in array
-  on match, or `-1` on error or not found.
+  Find matching string in an array of strings.  Returns index in array on
+  match, or `-1` on error or not found.  `strnmatch()` takes an extra arg
+  to compare only `len` number of characters from `str`.
 
-`systemf(fmt, ...)`
+- `systemf(fmt, ...)`
 
   Like `system()`, but takes a formatted string as argument.  This
   greatly simplifies operations that usually consist of composing a
   command from parts into a dynamic buffer before calling it.
 
-- `telnet_open(), telnet_close(), telnet_expect()`
+- `telnet_open(addr, port), telnet_close(ctx), telnet_expect(ctx, script, output)`
 
   Poor mans telnet expect in C.  Opens connection to a Telnet service;
   FTP, Telnet, similar, and run an expect-like script.
 
-- `telnet_session()`
+- `telnet_session(addr, port, script output)`
 
   Wrapper for the above three in one API.
 
