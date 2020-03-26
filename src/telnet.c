@@ -45,6 +45,7 @@ sdbuf_t *telnet_open(int addr, short port)
 	struct sockaddr s;
 	sdbuf_t *ctx;
 	int saved;
+	int retries = 10;
 
 	ctx = (sdbuf_t *)malloc(sizeof(sdbuf_t));
 	if (!ctx) {
@@ -70,11 +71,17 @@ sdbuf_t *telnet_open(int addr, short port)
 		return NULL;
 	}
 
+ retry:
 	sin = (struct sockaddr_in *)&s;
 	sin->sin_family = AF_INET;
 	sin->sin_port = port;
 	sin->sin_addr.s_addr = addr;
 	if (-1 == connect(ctx->sd, &s, sizeof(s))) {
+		if (ETIMEDOUT == errno && retries-- > 0) {
+			sleep(1);
+			goto retry;
+		}
+
 		saved = errno;
 //		perror ("Cannot connect to telnet daemon");
 		telnet_close(ctx);
