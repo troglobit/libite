@@ -66,15 +66,15 @@ int main(void)
 
 	mkdir(BASEDIR, 0755);
 
-	printf("PASS 1/2: makepath() ======================================\n");
+	printf("Pass 1/2: makepath() =========================\n");
 	for (i = 0; list[i] && !ret; i++)
 		ret |= test_makepath(list[i]);
 
-	printf("PASS 2/2: fmkpath() =======================================\n");
+	printf("Pass 2/2: fmkpath() ==========================\n");
 	for (i = 0; list[i] && !ret; i++)
 		ret |= test_fmkpath(list[i] + strlen(BASEDIR) + 1);
 
-	printf("DONE: Cleaning up =========================================\n");
+	printf("Done: Cleaning up ============================\n");
 	system("rm -rf " BASEDIR);
 
 	return ret;
