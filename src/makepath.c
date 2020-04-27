@@ -70,8 +70,10 @@ int fmkpath(mode_t mode, const char *fmt, ...)
 	va_end(ap);
 
 	path = alloca(len + 1);
-	if (!path)
+	if (!path) {
+		errno = ENOMEM;
 		return -1;
+	}
 
 	va_start(ap, fmt);
 	len = vsnprintf(path, len + 1, fmt, ap);

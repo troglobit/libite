@@ -32,14 +32,13 @@ int systemf(const char *fmt, ...)
 	len = vsnprintf(NULL, 0, fmt, ap);
 	va_end(ap);
 
-	va_start(ap, fmt);
 	cmd = alloca(++len);
 	if (!cmd) {
-		va_end(ap);
 		errno = ENOMEM;
 		return -1;
 	}
 
+	va_start(ap, fmt);
 	vsnprintf(cmd, len, fmt, ap);
 	va_end(ap);
 

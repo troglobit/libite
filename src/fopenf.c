@@ -15,6 +15,7 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+#include <errno.h>
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdlib.h>
@@ -34,7 +35,6 @@
 FILE *fopenf(const char *mode, const char *fmt, ...)
 {
 	va_list ap;
-	FILE *fp = NULL;
 	char *file;
 	int len;
 
@@ -42,15 +42,17 @@ FILE *fopenf(const char *mode, const char *fmt, ...)
 	len = vsnprintf(NULL, 0, fmt, ap);
 	va_end(ap);
 
-	va_start(ap, fmt);
 	file = alloca(len + 1);
-	if (file) {
-		vsnprintf(file, len + 1, fmt, ap);
-		fp = fopen(file, mode);
+	if (!file) {
+		errno = ENOMEM;
+		return NULL;
 	}
+
+	va_start(ap, fmt);
+	vsnprintf(file, len + 1, fmt, ap);
 	va_end(ap);
 
-	return fp;
+	return fopen(file, mode);
 }
 
 /**
