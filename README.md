@@ -189,6 +189,13 @@ Generic Functions
   
   > **Notice:** the swapped order of `pathname` and `mode`!
 
+- `fremove(fmt, ...)`
+
+  Like `remove()`, but takes a formatted string as argument.  This
+  greatly simplifies operations that usually consist of composing a
+  filename from parts into a dynamic buffer before actually removing
+  the file.
+
 - `fsendfile(src, dst, len)`
 
   Copy data between file streams, very similar to `fcopyfile()`, but

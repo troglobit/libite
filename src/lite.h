@@ -66,6 +66,7 @@ int     fexist     (const char *file);
 int     fisdir     (const char *path);
 
 FILE   *fopenf     (const char *mode, const char *fmt, ...);
+int     fremove    (const char *fmt, ...);
 FILE   *tempfile   (void);
 ssize_t copyfile   (const char *src, const char *dst, int len, int opt);
 int     movefile   (const char *src, const char *dst);
