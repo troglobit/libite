@@ -3,6 +3,12 @@ Change Log
 
 All notable changes to the project are documented in this file.
 
+[v2.3.0][UNRELEASED]
+--------------------
+
+### Fixes
+- Handle `ETIMEDOUT` error for `connect()` call in `telnet_open()`
+
 
 [v2.2.0][] - 2020-03-16
 -----------------------
@@ -372,7 +378,8 @@ problems this may cause!
 Initial extraction of frog DNA from [Finit][].  See [README][] for API details.
 
 
-[UNRELEASED]: https://github.com/troglobit/libite/compare/v2.2.0...HEAD
+[UNRELEASED]: https://github.com/troglobit/libite/compare/v2.2.1...HEAD
+[v2.2.1]: https://github.com/troglobit/libite/compare/v2.2.0...v2.2.1
 [v2.2.0]: https://github.com/troglobit/libite/compare/v2.1.2...v2.2.0
 [v2.1.2]: https://github.com/troglobit/libite/compare/v2.1.1...v2.1.2
 [v2.1.1]: https://github.com/troglobit/libite/compare/v2.1.0...v2.1.1
