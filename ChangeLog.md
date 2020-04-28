@@ -6,6 +6,9 @@ All notable changes to the project are documented in this file.
 [v2.3.0][UNRELEASED]
 --------------------
 
+### Changes
+- Add support for `fremove()`, formatted string `remove()` replacement
+
 ### Fixes
 - Handle `ETIMEDOUT` error for `connect()` call in `telnet_open()`
 
