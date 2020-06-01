@@ -5,10 +5,13 @@ int main(void)
 {
 	size_t i = 0;
 	struct { char *file; int exist; } arr[] = {
-		{ "/etc/passwd", 1 },
-		{ "/etc/kalle",  0 },
-		{ "/sbin/init",  1 },
-		{ "/dev/null",   1 },
+		{ "data/fexist/regular",      1 },
+		{ "data/fexist/executable",   1 },
+		{ "data/fexist/link",         1 },
+		{ "data/fexist/nonexistence", 0 },
+		{ "data/fexist/broken-link",  0 },
+		{ "data/fexist/dir",          1 },
+		{ "/dev/null",                1 },
 		{ NULL,  0 },
 	};
 

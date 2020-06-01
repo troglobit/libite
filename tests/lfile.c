@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "check.h"
 
-#define FSTAB "/etc/fstab"
+#define FSTAB "data/lfile/fstab"
 
 static int fstab(void)
 {
@@ -42,28 +42,28 @@ int main(void)
 {
 	int val;
 
-	val = fgetint("/etc/protocols", " \n\t", "udp");
+	val = fgetint("data/lfile/protocols", " \n\t", "udp");
 	if (val == -1) {
 		perror("Failed locating 'udp' protocol");
 		return 1;
 	}
 	printf("udp has proto %d\n", val);
 
-	val = fgetint("/etc/services", " /\n\t", "ftp");
+	val = fgetint("data/lfile/services", " /\n\t", "ftp");
 	if (val == -1) {
 		perror("Failed locating 'ftp' service");
 		return 1;
 	}
 	printf("ftp is inet port %d\n", val);
 
-	val = fgetint("/etc/group", "x:\n", "utmp");
+	val = fgetint("data/lfile/group", "x:\n", "utmp");
 	if (val == -1) {
 		perror("Failed locating group 'utmp'");
 		return 1;
 	}
 	printf("utmp is gid %d\n", val);
 
-	val = fgetint("/etc/passwd", "x:\n", "nobody");
+	val = fgetint("data/lfile/passwd", "x:\n", "nobody");
 	if (val == -1) {
 		perror("Failed locating user 'nobody'");
 		return 1;
