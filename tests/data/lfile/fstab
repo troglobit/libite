@@ -1,0 +1,3 @@
+UUID=xxxxxxxxxx /               xfs     defaults        0       1
+/dev/sda1  /boot/efi       vfat    umask=0077      0       1
+/dev/sr0        /media/cdrom0   udf,iso9660 user,noauto     0       0

@@ -1,5 +1,14 @@
-EXTRA_DIST      = check.h
+EXTRA_DIST      = check.h \
+  data/fexist/dir/.placeholder data/fexist/executable data/fexist/link \
+  data/fexist/regular data/lfile/fstab data/lfile/group data/lfile/passwd \
+  data/lfile/protocols data/lfile/services data/which/executable \
+  data/which/executable-link data/which/regular
 CLEANFILES      = *~ *.trs *.log
+
+TESTS_ENVIRONMENT = ([ -d data ] || ln -sf $(srcdir)/data) &&
+
+clean-local:
+	-find -type l -name data -exec rm {} \;
 
 TESTS           =
 TESTS          += chomp

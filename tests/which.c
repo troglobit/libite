@@ -11,17 +11,16 @@ int main(void)
 	int result = 0;
 	size_t i;
 	struct tc test[] = {
-		{ "ls",             1 },
-		{ "free",           1 },
-		{ "modinfo",        1 },
-		{ "useradd",        1 },
-		{ "/usr/bin/which", 1 },
-		{ "/bin/ps aux",    1 },
-		{ "/etc/passwd",    0 },
+		{ "executable",      1 },
+		{ "executable -h",   1 },
+		{ "executable-link", 1 },
+		{ "regular",         0 },
+		{ "ls",              1 },
+		{ "/usr/bin/which",  1 },
 		{ NULL, 0 }
 	};
 
-	setenv("PATH", "/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin:/usr/local/sbin", 1);
+	setenv("PATH", "data/which:/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin:/usr/local/sbin", 1);
 	for (i = 0; test[i].cmd; i++) {
 		char *path;
 
