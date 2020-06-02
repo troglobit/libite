@@ -72,6 +72,7 @@ ssize_t copyfile   (const char *src, const char *dst, int len, int opt);
 int     movefile   (const char *src, const char *dst);
 int     fcopyfile  (FILE *src, FILE *dst);
 ssize_t fsendfile  (FILE *src, FILE *dst, size_t len);
+int     truncatef  (off_t length, const char *fmt, ...);
 
 int     ifconfig   (const char *ifname, const char *addr, const char *mask, int up);
 

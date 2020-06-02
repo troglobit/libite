@@ -335,6 +335,13 @@ Generic Functions
   **Note:** Requires Linux v3.11, or later, will fall back to the old
     and unsafe `tmpfile()` on older systems.
 
+- `truncatef(length, fmt, ...)`
+
+  Like `truncate()`, but takes a formatted string as argument.  This
+  simplifies some operations when the filename otherwise have to be
+  composed from parts into a separate array before calling the real
+  function.
+
 - `which(cmd)`, `whichp(cmd)`
 
   C implementation of UNIX which(1).  Returns a malloc'ed string with the
