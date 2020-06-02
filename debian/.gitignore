@@ -2,6 +2,7 @@
 *.substvars
 .debhelper/*
 tmp/*
+libite/*
 libite5/*
 libite-dev/*
 autoreconf*
