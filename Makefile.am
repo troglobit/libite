@@ -24,15 +24,15 @@ release-hook:
 		echo;									\
 	fi
 
-# lintian --profile debian -i -I --show-overrides ../$PKG.changes
-package build-deb:
-	@dpkg-buildpackage -uc -us -B
+## Generate .deb package
+package:
+	@debuild -uc -us -B --lintian-opts --profile debian -i -I --show-overrides
 
 ## Target to run when building a release
 release: release-hook distcheck package
-	@for file in $(DIST_ARCHIVES); do		\
-		md5sum    $$file > ../$$file.md5;	\
-		sha256sum $$file > ../$$file.sha256;	\
+	@for file in $(DIST_ARCHIVES); do						\
+		md5sum    $$file > ../$$file.md5;					\
+		sha256sum $$file > ../$$file.sha256;					\
 	done
 	@mv $(DIST_ARCHIVES) ../
 	@echo
