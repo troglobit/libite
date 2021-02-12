@@ -3,8 +3,8 @@ Change Log
 
 All notable changes to the project are documented in this file.
 
-[v2.3.0][UNRELEASED]
---------------------
+[v2.3.0][] - 2021-02-12
+-----------------------
 
 ### Changes
 - Add support for `fremove()`, formatted `remove()` replacement
@@ -383,7 +383,8 @@ problems this may cause!
 Initial extraction of frog DNA from [Finit][].  See [README][] for API details.
 
 
-[UNRELEASED]: https://github.com/troglobit/libite/compare/v2.2.1...HEAD
+[UNRELEASED]: https://github.com/troglobit/libite/compare/v2.3.0...HEAD
+[v2.3.0]: https://github.com/troglobit/libite/compare/v2.2.1...v2.3.0
 [v2.2.1]: https://github.com/troglobit/libite/compare/v2.2.0...v2.2.1
 [v2.2.0]: https://github.com/troglobit/libite/compare/v2.1.2...v2.2.0
 [v2.1.2]: https://github.com/troglobit/libite/compare/v2.1.1...v2.1.2

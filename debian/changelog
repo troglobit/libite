@@ -1,3 +1,13 @@
+libite (2.3.0) unstable; urgency=medium
+
+  * New functions:
+    - Add support for fremove(), formatted remove() replacement
+    - Add support for truncatef(), formatted truncate() replacement
+  * Fixes
+    - Handle ETIMEDOUT error for connect() call in telnet_open()
+
+ -- Joachim Wiberg <troglobit@gmail.com>  Fri, 12 Feb 2021 08:03:47 +0100
+
 libite (2.2.0) unstable; urgency=medium
 
   * New functions:

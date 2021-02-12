@@ -2,7 +2,7 @@ lib_LTLIBRARIES       = libite.la
 
 libite_la_CPPFLAGS    = -D_GNU_SOURCE
 libite_la_CFLAGS      = -W -Wall -Wextra
-libite_la_LDFLAGS     = $(AM_LDFLAGS) -version-info 6:0:1
+libite_la_LDFLAGS     = $(AM_LDFLAGS) -version-info 7:0:2
 libite_la_SOURCES     = chomp.c		copyfile.c			\
 			conio.c		conio.h				\
 			dir.c		fopenf.c	fremove.c	\
