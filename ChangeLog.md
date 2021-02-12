@@ -9,6 +9,7 @@ All notable changes to the project are documented in this file.
 ### Changes
 - Add support for `fremove()`, formatted `remove()` replacement
 - Add support for `truncatef()`, formatted `truncate()` replacement
+- Add tar.gz archives to distribution
 
 ### Fixes
 - Handle `ETIMEDOUT` error for `connect()` call in `telnet_open()`
