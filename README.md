@@ -447,7 +447,7 @@ Origin & References
 
 Much of the code in libite (-lite) is written by [Claudio Matsuoka][]
 for [Finit][original finit] and released under the MIT/X11 license.
-Joachim Nilsson later improved on the [Finit][] code base and included
+Joachim Wiberg later improved on the [Finit][] code base and included
 pieces of software released under the ISC and BSD licenses.  See each
 respective file for license details.
 

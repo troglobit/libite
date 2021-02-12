@@ -1,6 +1,6 @@
 /* Formatted system() which returns actual return status of command
  *
- * Copyright (c) 2020  Joachim Nilsson <troglobit@gmail.com>
+ * Copyright (c) 2021  Joachim Wiberg <troglobit@gmail.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
