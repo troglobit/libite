@@ -1,3 +1,10 @@
+libite (2.3.1) stable; urgency=medium
+
+  * Minor packaging fixes.
+  * Copyright updates, including LICENSE file, year + author last name
+
+ -- Joachim Wiberg <troglobit@gmail.com>  Fri, 12 Feb 2021 15:10:42 +0100
+
 libite (2.3.0) stable; urgency=medium
 
   * New functions:

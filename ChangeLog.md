@@ -3,6 +3,16 @@ Change Log
 
 All notable changes to the project are documented in this file.
 
+[v2.3.1][] - 2021-02-12
+-----------------------
+
+### Changes
+- Copyright updates, including LICENSE file, year + author last name
+
+### Fixes
+- Debian packaging fixes only
+
+
 [v2.3.0][] - 2021-02-12
 -----------------------
 
