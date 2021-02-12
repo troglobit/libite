@@ -12,6 +12,7 @@ libite.so.5 libite5 #MINVER#
  fmkpath@Base 2.2.0
  fopenf@Base 2.2.0
  fparseln@Base 2.0.0
+ fremove@Base 2.3.0
  fsendfile@Base 2.0.0
  ifconfig@Base 2.0.0
  initscr@Base 2.0.0
@@ -43,6 +44,7 @@ libite.so.5 libite5 #MINVER#
  telnet_open@Base 2.1.0
  telnet_session@Base 2.1.0
  tempfile@Base 2.0.0
+ truncatef@Base 2.3.0
  which@Base 2.0.0
  whichp@Base 2.0.0
  yorn@Base 2.1.0
