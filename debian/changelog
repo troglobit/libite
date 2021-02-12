@@ -1,4 +1,4 @@
-libite (2.3.0) unstable; urgency=medium
+libite (2.3.0) stable; urgency=medium
 
   * New functions:
     - Add support for fremove(), formatted remove() replacement
@@ -8,7 +8,7 @@ libite (2.3.0) unstable; urgency=medium
 
  -- Joachim Wiberg <troglobit@gmail.com>  Fri, 12 Feb 2021 08:03:47 +0100
 
-libite (2.2.0) unstable; urgency=medium
+libite (2.2.0) stable; urgency=medium
 
   * New functions:
     - systemf(), formatted string system() replacement
