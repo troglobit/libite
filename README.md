@@ -110,6 +110,10 @@ Helper Macros
 
   Create a file, or update mtime.  Errors on `stderr`
 
+- `touchf(fmt, ...)`
+
+  Like `touch()` but takes a formatted printf-like string as argument.
+
 - `S_ISEXEC(mode_t m)`
 
   Mysteriously missing from GLIBC

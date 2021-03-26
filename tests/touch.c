@@ -6,6 +6,8 @@
 
 #include "check.h"
 
+#define FMT "%s-bar"
+
 int verbose = 0;
 
 
@@ -32,8 +34,28 @@ static int mtime(char *file)
 	ret = timespec_newer(&after.st_mtim, &before.st_mtim);
 	PRINT("Before: %s\n", timespec2str(&before.st_mtim, buf, sizeof(buf)));
 	PRINT("After : %s\n", timespec2str(&after.st_mtim, buf, sizeof(buf)));
+	erase(file);
 
 	return !ret;
+}
+
+static int formatted(char *file)
+{
+	char vrfy[80];
+
+	if (touchf(FMT, file))
+		err(1, "Failed creating " FMT, file);
+
+	PRINT("Created " FMT "\n", file);
+
+	snprintf(vrfy, sizeof(vrfy), FMT, file);
+	if (!fexist(vrfy))
+		errx(1, "touchf() does not detect failure to create file " FMT, file);
+
+	PRINT("File " FMT " really does exist!\n", file);
+	erase(vrfy);
+
+	return 0;
 }
 
 int main(int argc, char *argv[])
@@ -49,13 +71,13 @@ int main(int argc, char *argv[])
 		err(1, "Failed creating tempfile, %s", file);
 	close(fd);
 
-	return mtime(file);
+	return mtime(file) || formatted(file);
 }
 
 /**
  * Local Variables:
  *  indent-tabs-mode: t
  *  c-file-style:     "linux"
- *  compile-command:  "make pidfile && ./pidfile -v"
+ *  compile-command:  "make touch && ./touch -v"
  * End:
  */

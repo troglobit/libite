@@ -107,6 +107,8 @@ int     telnet_close   (sdbuf_t *ctx);
 int     telnet_expect  (sdbuf_t *ctx, char *script[], FILE *output);
 int     telnet_session (int addr, short port, char *script[], FILE *output);
 
+int     touchf         (const char *fmt, ...);
+
 int     yorn       (const char *fmt, ...);
 
 char   *which      (const char *cmd);
