@@ -117,9 +117,9 @@ int     whichp     (const char *cmd);
 #include <sys/time.h>		/* utimensat() on *BSD */
 static inline int touch(const char *path)
 {
-	if (mknod((path), S_IFREG|0644, 0)) {
-		if (errno == EEXIST)
-			return utimensat(AT_FDCWD, path, NULL, 0);
+	if (utimensat(AT_FDCWD, path, NULL, 0)) {
+		if (errno == ENOENT)
+			return mknod((path), S_IFREG|0644, 0);
 		return -1;
 	}
 	return 0;
