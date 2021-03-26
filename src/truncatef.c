@@ -30,7 +30,6 @@
  * of having to compose the filename from parts in a seprate buffer.
  *
  * Returns:
-
  * Upon successful completion truncate() returns POSIX OK(0), otherwise,
  * -1 is returned and errno is set to indicate the error.
  */
