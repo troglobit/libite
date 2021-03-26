@@ -43,8 +43,9 @@ int systemf(const char *fmt, ...)
 	va_end(ap);
 
 	status = system(cmd);
+	if (status == -1)
+		return -1;
 
-	rc = WEXITSTATUS(status);
 	if (!WIFEXITED(status)) {
 		if (WIFSIGNALED(status) &&
 		    (WTERMSIG(status) == SIGINT ||
@@ -59,7 +60,8 @@ int systemf(const char *fmt, ...)
 			 */
 			rc = 1;
 		}
-	}
+	} else
+		rc = WEXITSTATUS(status);
 
 	return rc;
 }
