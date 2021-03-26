@@ -4,9 +4,10 @@
 int main(void)
 {
 	struct { char *cmd; int rc; } list[] = {
+		{ "/app/enoent",  127 },
 		{ "false",          1 },
 		{ "true",           0 },
-		{ "kill -9 $$",     1 },
+		{ "kill -9 $$",    -1 },
 		{ "kill -QUIT $$", -1 },
 		{ "kill -INT $$",  -1 }
 	};
@@ -15,8 +16,12 @@ int main(void)
 		int rc;
 
 		rc = systemf("%s", list[i].cmd);
-		if (rc != list[i].rc)
-			err(rc, "Failed command %s", list[i].cmd);
+		if (rc != list[i].rc) {
+			if (rc == -1)
+				err(rc, "Failed %s", list[i].cmd);
+			else
+				errx(rc, "Failed %s, rc %d vs %d", list[i].cmd, rc, list[i].rc);
+		}
 	}
 
 	return 0;
