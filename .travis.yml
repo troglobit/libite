@@ -24,15 +24,15 @@ addons:
       name: "troglobit/libite"
       description: "That missing frog DNA you've been looking for"
     notification_email: troglobit@gmail.com
-    build_command_prepend: "./autogen.sh && ./configure --prefix=/tmp --disable-silent-rules"
+    build_command_prepend: "./autogen.sh && ./configure --prefix= --disable-silent-rules"
     build_command: "make clean all"
     branch_pattern: dev
 
 script:
   - ./autogen.sh
-  - ./configure --prefix=/tmp --disable-silent-rules
+  - ./configure --prefix= --disable-silent-rules
   - make clean
   - make -j5
-  - make install-strip
-  - ls -lR /tmp
-  - make check
+  - make install-strip DESTDIR=/tmp/foo
+  - ls -lR /tmp/foo
+  - make distcheck
