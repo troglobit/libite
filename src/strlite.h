@@ -67,6 +67,8 @@ size_t  strlcat    (char *dst, const char *src, size_t siz);
 long long strtonum (const char *numstr, long long minval, long long maxval, const char **errstrp);
 #endif
 
+char   *strtrim    (char *str);
+
 /* Convert string to natural number (0-2147483647), returns -1 on error. */
 static inline int atonum(const char *str)
 {

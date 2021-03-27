@@ -11,7 +11,7 @@ libite_la_SOURCES     = chomp.c		copyfile.c			\
 			ifconfig.c	lfile.c				\
 			makepath.c	progress.c			\
 			pidfile.c	pidfilefn.c			\
-			reallocarray.c	rsync.c				\
+			reallocarray.c	rsync.c		strtrim.c	\
 			strlcpy.c 	strlcat.c 	strtonum.c	\
 			strdupa.h	strndupa.h	strnlen.h	\
 			strmatch.c	systemf.c	touchf.c	\

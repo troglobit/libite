@@ -319,6 +319,11 @@ Generic Functions
   match, or `-1` on error or not found.  `strnmatch()` takes an extra arg
   to compare only `len` number of characters from `str`.
 
+- `strtrim(str)`
+
+  Trims a string from any leading and trailing white-space, returns the
+  trimmed result in the same buffer.
+
 - `systemf(fmt, ...)`
 
   Like `system()`, but takes a formatted string as argument.  This
