@@ -455,6 +455,7 @@ as a light weight utility library, these days NetBSD should also work.
 to generate a `configure` script.  It is a generated file and otherwise
 only included in released tarballs.
 
+
 Origin & References
 -------------------
 
@@ -474,7 +475,7 @@ respective file for license details.
 [ISC]: https://en.wikipedia.org/wiki/ISC_license
 [BSD]: https://en.wikipedia.org/wiki/BSD_licenses
 [Travis]: https://travis-ci.org/troglobit/libite
-[Travis Status]: https://travis-ci.org/troglobit/libite.png?branch=master
+[Travis Status]: https://travis-ci.org/troglobit/libite.svg?branch=master
 [Coverity Scan]:    https://scan.coverity.com/projects/20602
 [Coverity Status]:  https://img.shields.io/coverity/scan/20602.svg
 [Claudio Matsuoka]: https://github.com/cmatsuoka
