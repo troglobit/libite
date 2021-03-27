@@ -60,6 +60,9 @@ typedef struct lfile lfile_t;
 typedef struct sdbuf sdbuf_t;
 
 char   *chomp      (char *str);
+
+int     erasef     (const char *fmt, ...);
+	
 char   *fparseln   (FILE *, size_t *, size_t *, const char[3], int);
 
 int     fexist     (const char *file);

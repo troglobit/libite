@@ -4,8 +4,8 @@ libite_la_CPPFLAGS    = -D_GNU_SOURCE
 libite_la_CFLAGS      = -W -Wall -Wextra
 libite_la_LDFLAGS     = $(AM_LDFLAGS) -version-info 7:0:2
 libite_la_SOURCES     = chomp.c		copyfile.c			\
-			conio.c		conio.h				\
-			dir.c		fopenf.c	fremove.c	\
+			conio.c		conio.h		dir.c		\
+			erasef.c	fopenf.c	fremove.c	\
 			fexist.c	fisdir.c			\
 			fparseln.c	fsendfile.c			\
 			ifconfig.c	lfile.c				\

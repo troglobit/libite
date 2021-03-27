@@ -94,6 +94,10 @@ Helper Macros
 
   Erase file/directory with `remove()`.  Errors on `stderr`
 
+- `erasef(fmt, ...)`
+
+  Like `erase()` but takes a formatted printf-like string as argument.
+
 - `makedir(path)`
 
   Create directory, like `mkdir()`.  Errors on `stderr`

@@ -1,3 +1,4 @@
+/* test of touch(), touchf(), erase(), and erasef() */
 #include <err.h>
 #include <paths.h>
 #include <signal.h>
@@ -53,7 +54,15 @@ static int formatted(char *file)
 		errx(1, "touchf() does not detect failure to create file " FMT, file);
 
 	PRINT("File " FMT " really does exist!\n", file);
-	erase(vrfy);
+
+	erasef(FMT, file);
+	if (fexist(vrfy)) {
+		int saved = errno;
+
+		erase(vrfy);
+		errno = saved;
+		errx(1, "erasef() failed removing the created file " FMT, file);
+	}
 
 	return 0;
 }
