@@ -3,6 +3,26 @@ Change Log
 
 All notable changes to the project are documented in this file.
 
+
+[v2.4.0][] - 2021-03-27
+-----------------------
+
+### Changes
+
+- Add support for `touchf()`, formatted string support for `touch()`
+- Add support for `erasef()`, formatted string support for `erase()`
+- Add support for `strtrim()`, trims leading and trailing white-space
+  from a string
+
+### Fixes
+
+- Fix `systemf()` improper handling of `system()` return value.  Now
+  checks if exited OK, then returning the exit status of the command, or
+  if not exited OK, then checks if the command was signaled, and returns
+  -1 with `errno` set.  This also allows for returning 127, like
+  `system()`, if the shell, or the program itself, did not exist
+
+
 [v2.3.1][] - 2021-02-12
 -----------------------
 
@@ -393,7 +413,9 @@ problems this may cause!
 Initial extraction of frog DNA from [Finit][].  See [README][] for API details.
 
 
-[UNRELEASED]: https://github.com/troglobit/libite/compare/v2.3.0...HEAD
+[UNRELEASED]: https://github.com/troglobit/libite/compare/v2.4.0...HEAD
+[v2.4.0]: https://github.com/troglobit/libite/compare/v2.3.1...v2.4.0
+[v2.3.1]: https://github.com/troglobit/libite/compare/v2.3.0...v2.3.1
 [v2.3.0]: https://github.com/troglobit/libite/compare/v2.2.1...v2.3.0
 [v2.2.1]: https://github.com/troglobit/libite/compare/v2.2.0...v2.2.1
 [v2.2.0]: https://github.com/troglobit/libite/compare/v2.1.2...v2.2.0

@@ -1,3 +1,17 @@
+libite (2.4.0) stable; urgency=medium
+
+  * New functions:
+    - touchf(), formatted string support for touch()
+    - erasef(), formatted string support for erase()
+    - strtrim(), trims leading and trailing white-space from a string
+  * Fix systemf() improper handling of system() return value.  Now checks
+    if exited OK, then returning the exit status of the command, or if not
+    exited OK, then checks if the command was signaled, and returns -1 with
+    errno set.  This also allows for returning 127, like system(), if the
+    shell, or the program itself, did not exist.
+
+ -- Joachim Wiberg <troglobit@gmail.com>  Sat, 27 Mar 2021 09:12:32 +0100
+
 libite (2.3.1) stable; urgency=medium
 
   * Minor packaging fixes.
