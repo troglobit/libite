@@ -25,8 +25,8 @@ int systemf(const char *fmt, ...)
 {
 	va_list ap;
 	char *cmd;
-	int len, status;
-	int rc = -1;
+	int len;
+	int rc;
 
 	va_start(ap, fmt);
 	len = vsnprintf(NULL, 0, fmt, ap);
@@ -42,26 +42,17 @@ int systemf(const char *fmt, ...)
 	vsnprintf(cmd, len, fmt, ap);
 	va_end(ap);
 
-	status = system(cmd);
-	if (status == -1)
+	rc = system(cmd);
+	if (rc == -1)
 		return -1;
 
-	if (!WIFEXITED(status)) {
-		if (WIFSIGNALED(status) &&
-		    (WTERMSIG(status) == SIGINT ||
-		     WTERMSIG(status) == SIGQUIT)) {
-			errno = EINTR;
-			rc = -1;
-		} else if (!rc) {
-			/*
-			 * Alert callee that command didn't complete
-			 * successfully.  Some programs don't change
-			 * their exit code when signaled.
-			 */
-			rc = 1;
-		}
-	} else
-		rc = WEXITSTATUS(status);
+	if (WIFEXITED(rc)) {
+		errno = 0;
+		rc = WEXITSTATUS(rc);
+	} else if (WIFSIGNALED(rc)) {
+		errno = EINTR;
+		rc = -1;
+	}
 
 	return rc;
 }
