@@ -109,7 +109,7 @@ static inline int string_compare(const char *a, const char *b)
  */
 static inline int string_case_compare(const char *a, const char *b)
 {
-   return strlen (a) == strlen (b) && !strcasecmp (a, b);
+   return strlen(a) == strlen(b) && !strcasecmp(a, b);
 }
 
 #endif /* LITE_STRING_H_ */
