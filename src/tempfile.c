@@ -15,6 +15,7 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+#include <errno.h>
 #include <paths.h>
 #include <fcntl.h>		/* O_TMPFILE requires -D_GNU_SOURCE */
 #include <stdio.h>		/* fdopen() */
@@ -42,8 +43,12 @@ FILE *tempfile(void)
 	oldmask = umask(0077);
 	fd = open(_PATH_TMP, O_TMPFILE | O_RDWR | O_EXCL | O_CLOEXEC, S_IRUSR | S_IWUSR);
 	umask(oldmask);
-	if (-1 == fd)
+	if (-1 == fd) {
+		if (errno == EOPNOTSUPP)
+			return tmpfile();
+
 		return NULL;
+	}
 
 	return fdopen(fd, "w+");
 #else

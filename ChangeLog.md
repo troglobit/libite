@@ -4,6 +4,14 @@ Change Log
 All notable changes to the project are documented in this file.
 
 
+[v2.4.1][UNRELEASED]
+-----------------------
+
+### Changes
+### Fixes
+- Fix issue with `tempfile()` returning EOPNOTSUPP on Azure
+
+
 [v2.4.0][] - 2021-03-27
 -----------------------
 
