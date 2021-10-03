@@ -52,6 +52,8 @@ jobs:
     name: Verify Debian Package
     runs-on: ubuntu-latest
     container: debian:stable
+    env:
+      MAKEFLAGS: -j3
     steps:
       - uses: actions/checkout@v2
       - name: Installing dependencies
@@ -63,6 +65,7 @@ jobs:
         run: |
           ./autogen.sh
           ./configure
-          make distcheck || (cat test/test-suite.log; false)
+          make check || (cat test/test-suite.log; false)
+          make distcheck
           make package
           cat ../*.changes
