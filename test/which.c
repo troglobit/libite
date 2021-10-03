@@ -11,13 +11,13 @@ int main(void)
 	int result = 0;
 	size_t i;
 	struct tc test[] = {
-		{ "executable",      1 },
-		{ "executable -h",   1 },
-		{ "executable-link", 1 },
-		{ "regular",         0 },
-		{ "ls",              1 },
-		{ "/usr/bin/which",  1 },
-		{ NULL, 0 }
+		{ "executable",      1, 0 },
+		{ "executable -h",   1, 0 },
+		{ "executable-link", 1, 0 },
+		{ "regular",         0, 0 },
+		{ "ls",              1, 0 },
+		{ "/usr/bin/which",  1, 0 },
+		{ NULL, 0, 0 }
 	};
 
 	setenv("PATH", "data/which:/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin:/usr/local/sbin", 1);

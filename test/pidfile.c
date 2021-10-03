@@ -17,12 +17,16 @@ static struct stat before, after;
 
 static void sigterm_handler(int signo)
 {
+	(void)signo;
+
 	PRINT("Exiting ...\n");
 	remove(PIDFILE);
 }
 
 static void sigalrm_handler(int signo)
 {
+	(void)signo;
+
 	PRINT("Calling pidfile(%s)\n", pidfile_arg ?: "NULL");
 	if (pidfile(pidfile_arg))
 		err(1, "failed creating1 %s", pidfile_arg);

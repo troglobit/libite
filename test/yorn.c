@@ -4,7 +4,7 @@
 
 #include "check.h"
 
-int main(int argc, char *argv[])
+int main(void)
 {
 	int chan[2];
 	int status;

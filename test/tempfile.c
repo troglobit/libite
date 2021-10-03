@@ -13,24 +13,23 @@
 
 int main(void)
 {
-	int ret;
-	FILE *fp;
 	char buf[80] = "";
+	FILE *fp;
 
 	printf("Before tempfile():\n");
-	ret = system("ls -lrt " _PATH_TMP " | tail -3");
+	system("ls -lrt " _PATH_TMP " | tail -3");
 
 	fp = tempfile();
 	fail_unless(fp != NULL);
 
-	ret = fputs(READBACK, fp);
+	fputs(READBACK, fp);
 	rewind(fp);
 	if (fgets(buf, sizeof(buf), fp))
 		fprintf(stderr, "\nRead-back from tempfile: %s", buf);
 	fail_unless(!strcmp(buf, READBACK));
 
 	printf("\nAfter tempfile(), should be same list:\n");
-	ret = system("ls -lrt " _PATH_TMP " | tail -3");
+	system("ls -lrt " _PATH_TMP " | tail -3");
 
 	return fclose(fp);
 }
