@@ -35,6 +35,9 @@ recommended when traversing lists to delete/free nodes.
 The code is open sourced under a mix of permissive Open Source licenses:
 [MIT/X11 license][MIT], [ISC license][ISC], and [BSD licenses][BSD].
 
+> **Tip:** have a look at my blog post about other useful UNIX API's!
+>          https://troglobit.com/post/2020-02-22-useful-unix-apis/
+
 
 Using -lite
 -----------
