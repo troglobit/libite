@@ -4,7 +4,7 @@ AM_INIT_AUTOMAKE([1.11 foreign dist-xz])
 AM_SILENT_RULES([yes])
 
 AC_CONFIG_SRCDIR(src/lite.h)
-AM_CONFIG_HEADER(config.h)
+AC_CONFIG_HEADERS(config.h)
 AC_CONFIG_FILES([Makefile src/Makefile tests/Makefile libite.pc])
 AC_CONFIG_MACRO_DIR([m4])
 
