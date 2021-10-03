@@ -15,6 +15,13 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+/**
+ * @file progress.c
+ * @author Joachim Wiberg
+ * @date 2012-2021
+ * @copyright ISC License
+ */
+
 #include <limits.h>		/* INT_MAX */
 #include <stdio.h>
 #include <string.h>
@@ -40,21 +47,21 @@ static char spinner(char *style)
 }
 
 /**
- * progress - Advanced ASCII progress bar with spinner
- * @percent: Start first call with this set to 0, end with 100
- * @max_width: Max width of progress bar, in total characters.
+ * Advanced ASCII progress bar with spinner
+ * @param percent    Start first call with this set to 0, end with 100
+ * @param max_width  Max width of progress bar, in total characters.
  *
  * This function draws an advanced ASCII progressbar at the current
  * line.  It always start from the first column.
  *
- * The progress bar will hide the cursor if started with @percent 0 and
- * show it again at the end, when called with @percent 100.
+ * The progress bar will hide the cursor if started with @p percent 0
+ * and show it again at the end, when called with @p percent 100.
  *
  * While being called with the same percentage the spinner will spin,
  * to show the user the process hasn't frozen.
  *
- * If the output TTY cannot interpret control characters, like \r, it is
- * advised to instead used the progress_simple() function.
+ * If the output TTY cannot interpret control characters, like `\r`, it
+ * is advised to instead used the progress_simple() function.
  */
 void progress(int percent, int max_width)
 {
@@ -85,6 +92,10 @@ void progress(int percent, int max_width)
 	}
 }
 
+/**
+ * Alternative progress bar on systems where progress() doesn't work
+ * @param percent  Start first call with this set to 0, end with 100
+ */
 void progress_simple(int percent)
 {
 	static int last = 1;

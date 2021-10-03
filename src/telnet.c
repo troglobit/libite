@@ -15,6 +15,13 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+/**
+ * @file telnet.c
+ * @author Joachim Wiberg
+ * @date 2010-2021
+ * @copyright ISC License
+ */
+
 #include <errno.h>
 #include <poll.h>
 #include <unistd.h>
@@ -33,12 +40,19 @@
 # define TELL(fmt, args...)
 #endif
 
+/** @private for internal use only */
 struct sdbuf {
-	int sd;
+	int   sd;
 	char *buf;
-} sdbuf;
+};
 
-/* Open telnet connection to @addr:@port and connect. */
+/**
+ * Open telnet connection to addr:port and connect.
+ * @param addr  Integer encoded IPv4 address in network byte order
+ * @param port  Internet port number in network byte order
+ *
+ * @returns An @ref sdbuf_t socket buffer context.
+ */
 sdbuf_t *telnet_open(int addr, short port)
 {
 	struct sockaddr_in *sin;
@@ -93,6 +107,12 @@ sdbuf_t *telnet_open(int addr, short port)
 	return ctx;
 }
 
+/**
+ * Close a telnet session previously opened with telnet_open()
+ * @param ctx  An @ref sdbuf_t socket buffer context
+ *
+ * @returns Always returns POSIX OK(0).
+ */
 int telnet_close(sdbuf_t *ctx)
 {
 	free(ctx->buf);
@@ -137,20 +157,19 @@ static int wait_substr(sdbuf_t *ctx, char *str)
 }
 
 /**
- * telnet_expect - Poor man's telnet expect
- * @ctx:    Telnet session context from telnet_open()
- * @script: %NULL terminated list of expect and response strings
- * @output: Optional output from session
+ * Poor man's telnet expect
+ * @param ctx     Telnet session context from telnet_open()
+ * @param script  @c NULL terminated list of expect and response strings
+ * @param output  Optional output from session
  *
- * Issues @script sequence on telnet session specified in @ctx, with
- * optional @output from session.
+ * Issues @p script sequence on telnet session specified in @p ctx, with
+ * optional @p output from session.
  *
- * The @script consists of strings of expect and response pairs.  For
+ * The @p script consists of strings of expect and response pairs.  For
  * example, expect "ogin: " followed by response "root\n", expect
- * "assword: "with response "secret\n", concluded by %NULL.
+ * "assword: "with response "secret\n", concluded by @c NULL.
  *
- * Returns:
- * POSIX OK(0) or non-zero on error.
+ * @returns POSIX OK(0) or non-zero on error.
  */
 int telnet_expect(sdbuf_t *ctx, char *script[], FILE *output)
 {
@@ -258,20 +277,20 @@ int telnet_expect(sdbuf_t *ctx, char *script[], FILE *output)
 }
 
 /**
- * telnet_session - Very simple expect-like implementation for telnet.
- * @addr:   Must be in network byte order, use htonl().
- * @port:   IP port to connect to, use htons().
- * @script: Expect like script of paired 'expect', 'response' strings.
- * @output: A &FILE pointer to a tmpfile() for output from the last command.
+ * Very simple expect-like implementation for telnet.
+ * @param addr    Integer encoded IPv4 address, in network byte order, use htonl().
+ * @param port    Internet port to connect to, in network byte order, use htons().
+ * @param script  Expect like script of paired 'expect', 'response' strings.
+ * @param output  A FILE pointer to a tempfile() for output from the last command.
  *
  * This is a very simple expect-like implementation for querying and
  * operating daemons remotely over telnet.
  *
- * The @script is a query-response type of list of strings leading up to
- * a final command, which output is then written to the given @output file.
+ * The @p script is a query-response type of list of strings leading up
+ * to a final command, which output is then written to the given @p
+ * output file.
  *
- * Returns:
- * POSIX OK(0), or non-zero with errno set on error.
+ * @returns POSIX OK(0), or non-zero with @a errno set on error.
  */
 int telnet_session(int addr, short port, char *script[], FILE *output)
 {

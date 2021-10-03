@@ -15,12 +15,32 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+/**
+ * @file systemf.c
+ * @author Joachim Wiberg
+ * @date 2021
+ * @copyright ISC License
+ */
+
 #include <errno.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/wait.h>
 
+/**
+ * Like system(), but takes a formatted string as argument.
+ * @param fmt  printf style format list to command to run
+ *
+ * This system() wrapper greatly simplifies operations that usually
+ * consist of composing a command from parts into a dynamic buffer
+ * before calling it.  The return value from system() is also parsed,
+ * checking for proper exit and signals.
+ *
+ * @returns If the command exits normally, the return code of the command
+ * is returned.  Otherwise, if the command is signalled, the return code
+ * is -1 and @a errno is set to @c EINTR.
+ */
 int systemf(const char *fmt, ...)
 {
 	va_list ap;

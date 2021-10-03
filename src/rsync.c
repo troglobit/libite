@@ -15,6 +15,13 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+/**
+ * @file rsync.c
+ * @author Joachim Wiberg
+ * @date 2011-2021
+ * @copyright ISC License
+ */
+
 #include <errno.h>
 #include <fcntl.h>	/* AT_* macros */
 #include <stdlib.h>	/* NULL, free() */
@@ -34,31 +41,31 @@ static int set_mtime(char *fn, struct stat *st);
 
 
 /**
- * rsync - Synchronize contents and optionally remove non-existing backups
- * @src: Source directory
- * @dst: Destination directory
- * @opt: An option mask of %LITE_FOPT_RSYNC_DELETE, %LITE_FOPT_KEEP_MTIME
- * @filter: Optional filtering function for source directory.
+ * Synchronize contents and optionally remove non-existing backups
+ * @param src     Source directory
+ * @param dst     Destination directory
+ * @param opt     An option mask of ::LITE_FOPT_RSYNC_DELETE, ::LITE_FOPT_KEEP_MTIME
+ * @param filter  Optional filtering function for source directory.
  *
- * This is a miniature implementation of the famous rsync for local use only.
- * In fact, it is not even a true rsync since it copies all files from @src
- * to @dst.  The @delete option is useful for creating backups, when set all
- * files removed from src since last backup are pruned from the destination
- * (backup) directory.
+ * This is a miniature implementation of the famous rsync for local use
+ * only.  In fact, it is not even a true rsync since it copies all files
+ * from @p src to @p dst.  The ::LITE_FOPT_RSYNC_DELETE @p opt flag is
+ * useful for creating backups, when set all files removed from src
+ * since last backup are pruned from the destination (backup) directory.
  *
- * The @opt parameter to rsync() is an option mask for the most common
- * rsync(1) options.  Previously this argument was called @delete and
+ * The @p opt parameter to rsync() is an option mask for the most common
+ * rsync(1) options.  Previously this argument was called @p delete and
  * to maintain backwards compatibility the value 1 is reserved:
  *
- * %LITE_FOPT_RSYNC_DELETE: Prune files from @dst that no longer exist in @src.
+ * %LITE_FOPT_RSYNC_DELETE: Prune files from @p dst that no longer exist in @p src.
  * %LITE_FOPT_KEEP_MTIME:   Preserve modification time
  *
- * The filter callback, @filter, if provided, is used to determine what
- * files to include from the source directory when backing up.  If a
- * file is to be skipped the callback should simply return zero.
+ * The filter callback, @p filter, if provided, is used to determine
+ * what files to include from the source directory when backing up.  If
+ * a file is to be skipped the callback should simply return zero.
  *
  * Returns:
- * POSIX OK(0), or non-zero with @errno set on error.
+ * POSIX OK(0), or non-zero with @a errno set on error.
  */
 int rsync(char *src, char *dst, int opt, int (*filter)(const char *file))
 {

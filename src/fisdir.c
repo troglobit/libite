@@ -21,15 +21,21 @@
  * THE SOFTWARE.
  */
 
+/**
+ * @file fisdir.c
+ * @author Claudio Matsuoka
+ * @date 2008
+ * @copyright MIT License
+ */
+
 #include <sys/stat.h>
 #include <unistd.h>
 
 /**
- * fisdir - Check if a path exists and is a directory.
- * @path: Path to file or directory
+ * Check if a path exists and is a directory.
+ * @param path Path to file or directory
  *
- * Returns:
- * %TRUE(1) if @path exists and is a directory, otherwise %FALSE(0).
+ * @returns @c TRUE(1) if @p path exists and is a directory, otherwise @c FALSE(0).
  */
 int fisdir(const char *path)
 {

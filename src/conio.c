@@ -15,11 +15,32 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+/**
+ * @file conio.c
+ * @author Joachim Wiberg
+ * @date 2009-2021
+ * @copyright ISC License
+ */
+
 #include <poll.h>
 #include <stdio.h>
 #include <termios.h>
 #include <unistd.h>
 
+/**
+ * Probe terminal size
+ * @param row pointer to integer to store number of rows
+ * @param col pointer to integer to store number of columns
+ *
+ * This function checks if stdin and stdout isatty() and then sets the
+ * TTY in raw mode to silently ask the size using ANSI escape sequences.
+ * This is achieved by trying to go to corner 999,999 followed by
+ * querying the cursor position.  Afterwards the TTY is returned to the
+ * state if was before, e.g. cooked.  The number of rows and columns is
+ * returned in the input arguments to this function.
+ *
+ * If stdio is @a not a TTY, then a default 24x80 is returned.
+ */
 void initscr(int *row, int *col)
 {
 	if (!row || !col)

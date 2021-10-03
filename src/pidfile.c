@@ -31,6 +31,13 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
+/**
+ * @file pidfile.c
+ * @author NetBSD Foundation Inc.
+ * @date 1999
+ * @copyright 2-clause BSD License
+ */
+
 #include <sys/stat.h>		/* utimensat() */
 #include <sys/time.h>		/* utimensat() on *BSD */
 #include <sys/types.h>
@@ -50,8 +57,18 @@ const  char *__pidfile_path = _PATH_VARRUN; /* Note: includes trailing slash '/'
 const  char *__pidfile_name = NULL;
 extern char *__progname;
 
-int
-pidfile(const char *basename)
+/**
+ * Create or update mtime of process PID file.
+ * @param basename  Program name, or @c NULL, may start with '/'
+ *
+ * This function is intended to be used by UNIX daemons to save the PID of the main process
+ * responsible for handling signals.  If @p basename is @c NULL the implicit @a __progname
+ * variable from the C-library is used.  The @p basename may also start with '/', in which
+ * case it is interpreted as the absolute path to the PID file.
+ *
+ * @returns POSIX OK(0) on success, otherwise non-zero on error.
+ */
+int pidfile(const char *basename)
 {
 	int save_errno;
 	int atexit_already;

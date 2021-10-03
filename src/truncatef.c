@@ -15,6 +15,13 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+/**
+ * @file truncatef.c
+ * @author Joachim Wiberg
+ * @date 2021
+ * @copyright ISC License
+ */
+
 #include <errno.h>
 #include <stdio.h>
 #include <stdarg.h>
@@ -22,16 +29,15 @@
 #include <unistd.h>
 
 /**
- * truncatef - Truncate a file based on the formatted string
- * @length: Size in bytes to truncate file to, zero to empty it
- * @fmt:  Formatted string to be composed into a pathname
+ * Truncate a file based on the formatted string
+ * @param length  Size in bytes to truncate file to, zero to empty it
+ * @param fmt     Formatted string to be composed into a pathname
  *
  * This is an extension to the truncate() family, lessening the burden
  * of having to compose the filename from parts in a seprate buffer.
  *
- * Returns:
- * Upon successful completion truncate() returns POSIX OK(0), otherwise,
- * -1 is returned and errno is set to indicate the error.
+ * @returns Upon successful completion truncate() returns POSIX OK(0),
+ * otherwise, -1 is returned and @a errno is set to indicate error.
  */
 int truncatef(off_t length, const char *fmt, ...)
 {

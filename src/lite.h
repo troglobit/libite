@@ -22,6 +22,17 @@
  * THE SOFTWARE.
  */
 
+/**
+ * Collection of frog DNA
+ * @file lite.h
+ * @author Claudio Matsuoka (2008-2010)
+ * @author Joachim Wiberg (2008-2021)
+ * @copyright MIT License
+ *
+ * The latest version of this manual and the libite (-lite) software
+ * library are available at https://github.com/troglobit/libite/
+ */
+
 #ifdef __cplusplus
 extern "C"
 {
@@ -43,21 +54,21 @@ extern "C"
 /*
  * fparseln() specific operation flags.
  */
-#define FPARSELN_UNESCESC	0x01
-#define FPARSELN_UNESCCONT	0x02
-#define FPARSELN_UNESCCOMM	0x04
-#define FPARSELN_UNESCREST	0x08
-#define FPARSELN_UNESCALL	0x0f
+#define FPARSELN_UNESCESC	0x01	/**< Remove escape preceding an escaped comment. */
+#define FPARSELN_UNESCCONT	0x02	/**< Remove escape preceding an escaped continuation. */
+#define FPARSELN_UNESCCOMM	0x04	/**< Remove escape preceding an escaped escape. */
+#define FPARSELN_UNESCREST	0x08	/**< Remove escape preceding any other character. */
+#define FPARSELN_UNESCALL	0x0f	/**< All of the above. */
 
 /*
  * copyfile() and rsync() option flags
  */
-#define LITE_FOPT_RSYNC_DELETE  0x01
-#define LITE_FOPT_COPYFILE_SYM  0x01
-#define LITE_FOPT_KEEP_MTIME    0x02
+#define LITE_FOPT_RSYNC_DELETE  0x01	/**< Prune files from destination that are not in source */
+#define LITE_FOPT_COPYFILE_SYM  0x01	/**< Recreate symlink or follow to copy target */
+#define LITE_FOPT_KEEP_MTIME    0x02	/**< Preserve modification time */
 
-typedef struct lfile lfile_t;
-typedef struct sdbuf sdbuf_t;
+typedef struct lfile lfile_t;		/**< Opqaue context struct for lfile APIs */
+typedef struct sdbuf sdbuf_t;		/**< Opqaue context struct for telnet APIs */
 
 char   *chomp      (char *str);
 
@@ -120,6 +131,12 @@ int     whichp     (const char *cmd);
 #ifndef touch
 #include <sys/stat.h>		/* utimensat() */
 #include <sys/time.h>		/* utimensat() on *BSD */
+/**
+ * Create a file, ignoring errors for already existing files
+ * @param path  Path to file to create.
+ *
+ * @returns POSIX OK(0), or non-zero on error.
+ */
 static inline int touch(const char *path)
 {
 	if (utimensat(AT_FDCWD, path, NULL, 0)) {
@@ -131,6 +148,12 @@ static inline int touch(const char *path)
 }
 #endif
 #ifndef makedir
+/**
+ * Create a directory, ignoring errors for already existing files
+ * @param path  Path to directory to create.
+ *
+ * @returns POSIX OK(0), or non-zero on error.
+ */
 static inline int makedir(const char *path, mode_t mode)
 {
 	if (mkdir(path, mode) && errno != EEXIST)
@@ -139,6 +162,12 @@ static inline int makedir(const char *path, mode_t mode)
 }
 #endif
 #ifndef makefifo
+/**
+ * Create a FIFO, ignoring errors for already existing files
+ * @param path  Path to FIFO to create.
+ *
+ * @returns POSIX OK(0), or non-zero on error.
+ */
 static inline int makefifo(const char *path, mode_t mode)
 {
 	if (mkfifo(path, mode) && errno != EEXIST)
@@ -147,6 +176,12 @@ static inline int makefifo(const char *path, mode_t mode)
 }
 #endif
 #ifndef erase
+/**
+ * Remove a file, ignoring errors for missing files
+ * @param path  Path to file to remove.
+ *
+ * @returns POSIX OK(0), or non-zero on error.
+ */
 static inline int erase(const char *path)
 {
 	if (remove(path) && errno != ENOENT)
@@ -168,27 +203,32 @@ static inline int erase(const char *path)
 
 /* Unline isset(), setbit() et al, these work with integers/shorts/longwords/etc. */
 #ifndef ISCLR
-#define ISCLR(word,bit)   ((word &   (1 << (bit)) ? 0 : 1))
+#define ISCLR(word,bit)   ((word &   (1 << (bit)) ? 0 : 1)) /**< Is bit cleared in word? */
 #endif
 #ifndef ISSET
-#define ISSET(word,bit)   ((word &   (1 << (bit)) ? 1 : 0))
+#define ISSET(word,bit)   ((word &   (1 << (bit)) ? 1 : 0)) /**< Is bit set in word? */
 #endif
 #ifndef ISOTHER
-#define ISOTHER(word,bit) ((word &  ~(1 << (bit)) ? 1 : 0)) /* Is any other bit set? */
+#define ISOTHER(word,bit) ((word &  ~(1 << (bit)) ? 1 : 0)) /**< Is any other bit set? */
 #endif
 #ifndef SETBIT
-#define SETBIT(word,bit)   (word |=  (1 << (bit)))
+#define SETBIT(word,bit)   (word |=  (1 << (bit)))          /**< Set bit in word. */
 #endif
 #ifndef CLRBIT
-#define CLRBIT(word,bit)   (word &= ~(1 << (bit)))
+#define CLRBIT(word,bit)   (word &= ~(1 << (bit)))          /**< Clear bit in word. */
 #endif
 
 /* From The Practice of Programming, by Kernighan and Pike */
 #ifndef NELEMS
-#define NELEMS(array) (sizeof(array) / sizeof(array[0]))
+#define NELEMS(array) (sizeof(array) / sizeof(array[0]))    /**< Number of elements in array. */
 #endif
 
-/* Does directory end with a slash? */
+/**
+ * Does directory end with a slash?
+ * @param dir  Path string to check.
+ *
+ * @returns @c TRUE(1) or @c FALSE(0)
+ */
 static inline int fisslashdir(const char *dir)
 {
    if (!dir)
@@ -202,7 +242,7 @@ static inline int fisslashdir(const char *dir)
 
 /* Compat */
 #define copy_filep(src, dst)        fcopyfile(src, dst)
-#define pidfile_read_pid(file)      pifile_read(file)
+#define pidfile_read_pid(file)      pidfile_read(file)
 #define signal_pidfile(file, signo) pidfile_signal(file, signo)
 
 #endif /* LITE_H_ */

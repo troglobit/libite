@@ -15,6 +15,13 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+/**
+ * @file tempfile.c
+ * @author Joachim Wiberg
+ * @date 2015-2021
+ * @copyright ISC License
+ */
+
 #include <errno.h>
 #include <paths.h>
 #include <fcntl.h>		/* O_TMPFILE requires -D_GNU_SOURCE */
@@ -22,17 +29,19 @@
 #include <sys/stat.h>		/* umask() */
 
 /**
- * tempfile - A secure tmpfile() replacement
+ * A secure tmpfile() replacement
  *
  * This is the secure replacement for tmpfile() that does not exist in
- * GLIBC.  The function uses the Linux specific %O_TMPFILE and %O_EXCL
- * for security.  When the %FILE is fclose()'ed the file contents is
- * lost.  The file is hidden in the %_PATH_TMP directory on the system.
+ * GLIBC.  It uses the Linux specific @c O_TMPFILE and @c O_EXCL to hide
+ * the filename.  When the @c FILE is fclose()'ed, the file contents is
+ * lost.  The file is hidden in the @c _PATH_TMP ("/tmp") directory in
+ * the system.
  *
- * This function requires Linux 3.11, or later, due to %O_TMPFILE.
+ * This function requires Linux 3.11, or later, due to @c O_TMPFILE.
+ * Not all file systems support hidden inodes, in which case this
+ * function defaults to call tmpfile() as a fallback.
  *
- * Returns:
- * An open %FILE pointer, or %NULL on error.
+ * @returns An open @c FILE pointer, or @c NULL on error.
  */
 FILE *tempfile(void)
 {

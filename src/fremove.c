@@ -15,20 +15,27 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+/**
+ * @file fremove.c
+ * @author Joachim Wiberg
+ * @date 2021
+ * @copyright ISC License
+ */
+
 #include <errno.h>
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdlib.h>
 
 /**
- * fremove - Remove a file based on the formatted string and optional arguments
- * @fmt: Formatted string to be composed into a pathname
+ * Remove a file based on the formatted string and optional arguments
+ * @param fmt Formatted string to be composed into a pathname
  *
  * This function is an extension to remove(), lessening the burden of
  * first having to compose the filename from parts in a seprate buffer.
  *
- * Returns:
- * Return value for remove(3).
+ * @returns same as remove(3), with an extra @a errno, @c ENOBUFS if
+ * alloca() fails to get a temporary buffer for composing the file name.
  */
 int fremove(const char *fmt, ...)
 {

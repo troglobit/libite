@@ -15,22 +15,29 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+/**
+ * @file fopenf.c
+ * @author Joachim Wiberg
+ * @date 2021
+ * @copyright ISC License
+ */
+
 #include <errno.h>
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdlib.h>
 
 /**
- * fopenf - Open a file based on the formatted string and optional arguments
- * @mode: Last argument in optional list, if omitted EINVAL
- * @fmt:  Formatted string to be composed into a pathname
+ * Open a file based on the formatted string and optional arguments
+ * @param mode An fopen() mode string, e.g. "w+"
+ * @param fmt  Formatted string to be composed into a pathname
  *
  * This function is an extension to the fopen() family, lessening the burden
  * of first having to compose the filename from parts in a seprate buffer.
  *
- * Returns:
- * Upon successful completion fopenf() a FILE pointer.  Otherwise, NULL
- * is returned and errno is set to indicate the error.
+ * @returns Upon successful completion, fopenf() returns a FILE pointer.
+ * Otherwise, @c NULL is returned and @a errno is set to indicate the
+ * error.
  */
 FILE *fopenf(const char *mode, const char *fmt, ...)
 {

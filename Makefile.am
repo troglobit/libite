@@ -3,6 +3,19 @@ SUBDIRS             = src test
 doc_DATA            = README.md LICENSE ChangeLog.md
 EXTRA_DIST          = README.md LICENSE ChangeLog.md
 
+if ENABLE_DOXYGEN
+SUBDIRS            += doc
+.PHONY: doc
+doc:
+	$(MAKE) -C @top_builddir@/doc $@
+
+## The distribution should include man pages, which are generated
+dist-hook: doc
+else
+doc:
+	@echo "Doxygen documentation (html + man) disabled, skipping ..."
+endif
+
 ## Check if tagged in git
 release-hook:
 	@if [ ! `git tag -l v$(PACKAGE_VERSION) | grep $(PACKAGE_VERSION)` ]; then	\

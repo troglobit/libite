@@ -22,6 +22,14 @@
  * THE SOFTWARE.
  */
 
+/**
+ * @file ifconfig.c
+ * @author Claudio Matsuoka
+ * @author Joachim Wiberg
+ * @date 2008-2021
+ * @copyright MIT License
+ */
+
 #include <arpa/inet.h>
 #include <errno.h>
 #include <net/if.h>
@@ -34,14 +42,13 @@
 extern size_t strlcpy(char *dst, const char *src, size_t siz);
 
 /**
- * ifconfig - Basic ifconfig like operations on an interface
- * @ifname: Name of interface to operate on
- * @addr:   If @up then set this optional IPv4 address
- * @mask:   If @up and @addr, and @addr is not INADDR_ANY, then set netmask
- * @up:     Control %IFF_UP flag on interface
+ * Basic ifconfig like operations on an interface
+ * @param ifname  Name of interface to operate on
+ * @param addr    If @p up then set this optional IPv4 address
+ * @param mask    If @p up and @p addr, and @p addr is not @c INADDR_ANY, then set netmask
+ * @param up      Control @c IFF_UP flag on interface
  *
- * Returns:
- * POSIX OK(0) on success, or non-zero on error.
+ * @returns POSIX OK(0) on success, or non-zero on error.
  */
 int ifconfig(const char *ifname, const char *addr, const char *mask, int up)
 {

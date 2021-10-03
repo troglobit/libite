@@ -21,15 +21,21 @@
  * THE SOFTWARE.
  */
 
+/**
+ * @file fexist.c
+ * @author Claudio Matsuoka
+ * @date 2008
+ * @copyright MIT License
+ */
+
 #include <errno.h>
 #include <unistd.h>
 
 /**
- * fexist - Check if a file exists in the file system.
- * @file: File to look for, with full path.
+ * Check if a file exists in the file system.
+ * @param file File to look for, with full path.
  *
- * Returns:
- * %TRUE(1) if the file exists, otherwise %FALSE(0).
+ * @returns @c TRUE(1) if the @a file exists, otherwise @c FALSE(0).
  */
 int fexist(const char *file)
 {

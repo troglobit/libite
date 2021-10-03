@@ -15,6 +15,13 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+/**
+ * @file yorn.c
+ * @author Joachim Wiberg
+ * @date 2009-2021
+ * @copyright ISC License
+ */
+
 #include <stdio.h>
 #include <stdio_ext.h>		/* __fpurge() */
 #include <stdarg.h>
@@ -56,14 +63,13 @@ static char rawgetch(void)
 }
 
 /**
- * yorn - Pose a a Yes or No question and return answer
- * @fmt: Standard printf() style argument(s).
+ * Pose a a Yes or No question and return answer
+ * @param fmt  Standard printf() style argument(s).
  *
  * This function prints the given question on screen, waits for user
  * input in the form of yes or no.
  *
- * Returns:
- * True(1) or False(0).  True if the answer is yes.
+ * @returns TRUE(1) or FALSE(0).  True if the answer is yes.
  */
 int yorn(const char *fmt, ...)
 {

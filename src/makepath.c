@@ -15,6 +15,13 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+/**
+ * @file makepath.c
+ * @author Joachim Wiberg
+ * @date 2013-2021
+ * @copyright ISC License
+ */
+
 #include <errno.h>
 #include <libgen.h>
 #include <stdarg.h>
@@ -24,12 +31,11 @@
 #include "lite.h"
 
 /**
- * mkpath - Like makepath() but takes a mode_t argument
- * @dir:  Directory to created, relative or absolute
- * @mode: A &mode_t mode to create @dir with
+ * makepath() but takes a mode_t argument.
+ * @param dir   Directory to created, relative or absolute
+ * @param mode  A &mode_t mode to create @a dir with
  *
- * Returns:
- * POSIX OK(0) on success, otherwise -1 with @errno set.
+ * @returns POSIX OK(0) on success, otherwise -1 with @a errno set.
  */
 int mkpath(const char *dir, mode_t mode)
 {
@@ -49,15 +55,13 @@ int mkpath(const char *dir, mode_t mode)
 }
 
 /**
- * fmkpath - Formatted version of mkpath()
- * @mode: A &mode_t mode to create directories with
- * @fmt:  Formatted string to be composed into a pathname
+ * Formatted version of mkpath().
+ * @param mode  A mode_t mode to create directories with
+ * @param fmt   Formatted string to be composed into a pathname
  *
- * Note:
- * Notice the swapped arguments, compared to mkpath()!
+ * @note Notice the swapped arguments, compared to mkpath()!
  *
- * Returns:
- * POSIX OK(0) on success, otherwise -1 with @errno set.
+ * @returns POSIX OK(0) on success, otherwise -1 with @a errno set.
  */
 int fmkpath(mode_t mode, const char *fmt, ...)
 {
@@ -83,19 +87,20 @@ int fmkpath(mode_t mode, const char *fmt, ...)
 }
 
 /**
- * makepath - Create all components of the specified directory.
- * @dir: Directory to create.
+ * Create all components of the specified directory.
+ * @param dir  Directory to create.
  *
- * Comment:
- * It is recommended to use mkpath() over this function since it has
- * the @mode argument while this function instead default ot 0777,
- * which in most cases is insecure.
+ * @note It is strongly recommended to use mkpath() over this function
+ * since it has the @a mode argument while this function default to
+ * 0777, which in most cases is insecure.
  *
- * Returns:
- * POSIX OK (0) on success, otherwise -1 and errno set appropriately.
- * This function returns EINVAL on bad argument, or ENOMEM when it
- * fails allocating temporary memory.  For other error codes see the
- * mkdir() syscall description.
+ * @returns POSIX OK (0) on success, otherwise -1 and @a errno set
+ * appropriately.
+ * 
+ * @exception EINVAL on bad argument, or
+ * @exception ENOMEM when it fails allocating temporary memory.
+ *
+ * For other error codes see the mkdir(2) syscall description.
  */
 int makepath(const char *dir)
 {

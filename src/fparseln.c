@@ -24,6 +24,13 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+/**
+ * @file fparseln.c
+ * @author Christos Zoulas
+ * @date 1997
+ * @copyright 2-clause BSD License
+ */
+
 #include <assert.h>
 #include <errno.h>
 #include <stdio.h>
@@ -63,10 +70,25 @@ isescaped(const char *sp, const char *p, int esc)
 }
 
 
-/* fparseln():
- *	Read a line from a file parsing continuations ending in \
- *	and eliminating trailing newlines, or comments starting with
- *	the comment char.
+/**
+ * Read a line from a file parsing continuations and trailing newlines
+ * @param fp     FILE pointer to read from
+ * @param size   The resulting length of the string, unused if @c NULL
+ * @param lineno Incremented with number of lines read, unused if @c NULL
+ * @param str    Characters to look for, escape character, continuation, and comment
+ * @param flags  ::FPARSELN_UNESCCOMM, ::FPARSELN_UNESCCONT, ::FPARSELN_UNESCESC, ::FPARSELN_UNESCREST, ::FPARSELN_UNESCALL
+ *
+ * This function reads a line from a file, parsing continuations ending
+ * in '\' and eliminating trailing newlines, or comments starting with
+ * the comment char '#'.
+ *
+ * If @a size is not @c NULL, the resulting length of the returned string
+ * is stored in @a size.
+ *
+ * If @a lineno is not @c NULL, it is incremented for each actual line
+ * read from @a fp.
+ *
+ * @returns the line read from @a fp, or @c NULL on EOF or error.
  */
 char *
 fparseln(FILE *fp, size_t *size, size_t *lineno, const char str[3], int flags)

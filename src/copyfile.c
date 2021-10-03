@@ -21,6 +21,13 @@
  * THE SOFTWARE.
  */
 
+/**
+ * @file copyfile.c
+ * @author Claudio Matsuoka
+ * @date 2008
+ * @copyright MIT License
+ */
+
 #include <errno.h>
 #include <fcntl.h>
 #include <stdlib.h>
@@ -94,28 +101,30 @@ static void set_mtime(int in, int out)
 }
 
 /**
- * copyfile - Copy a file to another.
- * @src: Full path name to source file.
- * @dst: Full path name to target file.
- * @len: Number of bytes to copy, zero (0) for entire file.
- * @opt: An option mask of %LITE_FOPT_COPYFILE_SYM, %LITE_FOPT_KEEP_MTIME
+ * Copy a file to another.
+ * @param src Full path name to source file.
+ * @param dst Full path name to target file.
+ * @param len Number of bytes to copy, zero (0) for entire file.
+ * @param opt An option mask of ::LITE_FOPT_COPYFILE_SYM, ::LITE_FOPT_KEEP_MTIME
  *
  * This is a C implementation of the command line cp(1) utility.  It is one
  * of the classic missing links in the UNIX C library.  This version is from
  * the finit project, http://helllabs.org/finit/, which is a reimplementation
  * of fastinit for the Asus EeePC.
  *
- * The @opt field replaces the @sym argument in previous releases and
- * works as follows.  To maintain backwards compatibility with @sym
- * the %LITE_FOPT_COPYFILE_SYM maintains a value of 1:
+ * The @a opt field replaces the @a sym argument in previous releases
+ * and works as follows.  To maintain backwards compatibility with @a
+ * sym the ::LITE_FOPT_COPYFILE_SYM has a value of @c 1.  Supported
+ * option flags are:
  *
- * %LITE_FOPT_COPYFILE_SYM: Recreate symlink or follow to copy target
- * %LITE_FOPT_KEEP_MTIME:   Preserve modification time
+ * - ::LITE_FOPT_COPYFILE_SYM  Recreate symlink or follow to copy target
+ * - ::LITE_FOPT_KEEP_MTIME    Preserve modification time
  *
- * Returns:
- * The number of bytes copied, zero may be error (check errno!), but it
- * may also indicate that @src was empty.  If @src is a directory @errno
- * will be set to %EISDIR since copyfile() is not recursive.
+ * @returns The number of bytes copied, or zero, which may be an error
+ * (check @a errno, see Exceptions below), but it may also indicate that
+ * @a src was empty.  See exceptions, below.
+ *
+ * @exception EISDIR if @a src is a directory, since copyfile() is not recursive.
  */
 ssize_t copyfile(const char *src, const char *dst, int len, int opt)
 {
@@ -203,20 +212,19 @@ exit:
 }
 
 /**
- * movefile - Move a file to another location
- * @src: Source file.
- * @dst: Target file, or location.
+ * Move a file to another location
+ * @param src Source file.
+ * @param dst Target file, or location.
  *
  * This is a C implementation of the command line mv(1) utility.
  * Usually the rename() API is sufficient, but not when moving across
  * file system boundaries.
  *
- * The @src argument must include the full path to the source file,
- * whereas the @dst argument may only be a directory, in which case the
- * same file name from @src is used.
+ * The @p src argument must include the full path to the source file,
+ * whereas the @p dst argument may only be a directory, in which case
+ * the same file name from @p src is used.
  *
- * Returns:
- * POSIX OK(0), or non-zero with errno set.
+ * @returns POSIX OK(0), or non-zero with @a errno set.
  */
 int movefile(const char *src, const char *dst)
 {
@@ -246,15 +254,11 @@ int movefile(const char *src, const char *dst)
 }
 
 /**
- * fcopyfile - Copy between FILE *fp.
- * @src: Source FILE.
- * @dst: Destination FILE.
+ * Copy between FILE *fp.
+ * @param src Source FILE.
+ * @param dst Destination FILE.
  *
- * Function takes signals into account and will restart the syscalls as
- * long as error is %EINTR.
- *
- * Returns:
- * POSIX OK(0), or non-zero with errno set on error.
+ * @returns POSIX OK(0), or non-zero with @a errno set on error.
  */
 int fcopyfile(FILE *src, FILE *dst)
 {

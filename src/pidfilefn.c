@@ -15,6 +15,13 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+/**
+ * @file pidfilefn.c
+ * @author Joachim Wiberg
+ * @date 2009-2021
+ * @copyright ISC License
+ */
+
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -24,16 +31,20 @@
 extern char *chomp(char *str);
 
 /**
- * pidfile_read - Reads a PID value from a pidfile.
- * @pidfile: File containing PID, usually in /var/run/<PROC>.pid
+ * Reads a PID value from a pidfile.
+ * @param pidfile  File containing PID, usually in @c /var/run/PROCNAME.pid
  *
- * This function takes a @pidfile and returns the PID found therein.
+ * This function takes a @p pidfile and returns the PID found therein.
  *
- * Returns:
- * On invalid @pidfile -1 and errno set to %EINVAL, when @pidfile does not exist -1
- * and errno set to %ENOENT.  When the pidfile is empty or when its contents cannot
- * be translated this function returns zero (0), on success this function returns
- * a PID value greater than one. PID 1 is reserved for the system init process.
+ * @returns On invalid @p pidfile, -1 with @a errno set. If the @p
+ * pidfile is empty, or when its contents cannot be translated, this
+ * function returns zero (0), on success this function returns a PID
+ * value greater than one.
+ *
+ * @note PID 1 is reserved for the system init  process.
+ *
+ * @exception EINVAL on invalid @p pidfile, or
+ * @exception ENOENT when @p pidfile does not exist.
  */
 pid_t pidfile_read(const char *pidfile)
 {
@@ -66,15 +77,14 @@ pid_t pidfile_read(const char *pidfile)
 }
 
 /**
- * pidfile_poll - Poll for the existence of a pidfile and return PID
- * @pidfile: Path to pidfile to poll for
+ * Poll for the existence of a pidfile and return PID.
+ * @param pidfile  Path to pidfile to poll for
  *
- * This function polls for the pidfile at @pidfile for at most 5 seconds
- * before timing out. If the file is created within that time span the
- * file is read and its PID contents returned.
+ * This function polls for the pidfile at @p pidfile for at most 5
+ * seconds before timing out. If the file is created within that time
+ * span the file is read and its PID contents returned.
  *
- * Returns:
- * The PID read from @pidfile, or zero on timeout.
+ * @returns The PID read from @p pidfile, or zero on timeout.
  */
 pid_t pidfile_poll(const char *pidfile)
 {
@@ -92,15 +102,14 @@ pid_t pidfile_poll(const char *pidfile)
 }
 
 /**
- * pidfile_signal - Send signal to a PID and cleanup pidfile afterwards
- * @pidfile: File containing PID, usually in /var/run/<PROC>.pid
- * @signal: Signal to send to PID found in @pidfile.
+ * Send signal to a PID and cleanup pidfile afterwards.
+ * @param pidfile  File containing PID, usually in @c /var/run/PROCNAME.pid
+ * @param signal  Signal to send to PID found in @p pidfile.
  *
- * If @signal is any of %SIGTERM, %SIGKILL, or if kill() returns -1 the
- * @pidfile is removed.
+ * If @p signal is any of @c SIGTERM or @c SIGKILL, or if kill(2)
+ * returns -1, the @p pidfile is removed.
  *
- * Returns:
- * POSIX OK(0) on success, non-zero otherwise.
+ * @returns POSIX OK(0) on success, non-zero otherwise.
  */
 int pidfile_signal(const char *pidfile, int signal)
 {

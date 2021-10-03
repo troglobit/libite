@@ -15,26 +15,33 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+/**
+ * @file lfile.c
+ * @author Joachim Wiberg
+ * @date 2015-2021
+ * @copyright ISC License
+ */
+
 #include <errno.h>
 #include <stdio.h>		/* FILE */
 #include <stdlib.h>		/* atoi() */
 #include <string.h>		/* strlen(), strncmp(), strtok_r() */
 #include <sys/param.h>		/* MAX() */
 
+/** @private for internal use only */
 typedef struct lfile {
-	FILE *fp;
-	char buf[256];
-	char *save;
-	const char *sep;
+	FILE *fp;		/**< FILE pointer to current stream */
+	char buf[256];		/**< Internal buffer, limted to 256 bytes per line */
+	char *save;		/**< Internal save pointer */
+	const char *sep;	/**< Record separator, from lfopen() */
 } lfile_t;
 
 /**
- * lfopen - Open file and return parsing context
- * @file: File to parse
- * @sep:  Separator(s) to use in lftok()
+ * Open file and return parsing context.
+ * @param file  File to parse
+ * @param sep   Separator(s) to use in lftok()
  *
- * Returns:
- * Pointer to a &lftile_t parser context, or %NULL on error.
+ * @returns Pointer to an @a lfile_t parser context, or @c NULL on error.
  */
 lfile_t *lfopen(const char *file, const char *sep)
 {
@@ -62,8 +69,8 @@ lfile_t *lfopen(const char *file, const char *sep)
 }
 
 /**
- * lfclose - Close a parser context
- * @lf: Pointer to &lfile_t context from lfopen()
+ * Close a parser context.
+ * @param lf: Pointer to @a lfile_t parser context from lfopen()
  */
 void lfclose(lfile_t *lf)
 {
@@ -76,12 +83,11 @@ void lfclose(lfile_t *lf)
 }
 
 /**
- * lftok - Get next token in file
- * @lf: Pointer to &lfile_t context from lfopen()
+ * Get next token in file
+ * @param lf: Pointer to @a lfile_t parser context from lfopen()
  *
- * Returns:
- * Next token, read from file previously opened with lfopen(),
- * or %NULL if EOF.
+ * @returns Next token, read from file previously opened with lfopen(),
+ * or @c NULL if EOF.
  */
 char *lftok(lfile_t *lf)
 {
@@ -110,18 +116,17 @@ char *lftok(lfile_t *lf)
 }
 
 /**
- * lfgetkey - Find key in file
- * @lf:  Pointer to &lfile_t context from lfopen()
- * @key: Key to look for
+ * Find key in file
+ * @param lf   Pointer to @a lfile_t parser context from lfopen()
+ * @param key  Key to look for
  *
- * Locate @key from the current position in the file parser context
- * returned from lfopen().  Please note, the search for @key does not
+ * Locate @a key from the current position in the file parser context
+ * returned from lfopen().  Please note, the search for @a key does not
  * start from the beginning of the file, it searches from the current
  * position.  To restart search from the beginning use rewind() on the
  * lf->fp.
  *
- * Returns:
- * The value to @key, or %NULL if not found.
+ * @returns The value to @a key, or @c NULL if not found.
  */
 char *lfgetkey(lfile_t *lf, const char *key)
 {
@@ -139,15 +144,14 @@ char *lfgetkey(lfile_t *lf, const char *key)
 }
 
 /**
- * lfgetint - Same as lfgetkey() but returns an integer
- * @lf:  Pointer to &lfile_t context from lfopen()
- * @key: Key to look for
+ * Same as lfgetkey() but returns an integer.
+ * @param lf   Pointer to @a lfile_t parser context from lfopen()
+ * @param key  Key to look for
  *
  * This function is the same as lfgetkey() but returns the positive
- * integer value for the matching @key, if found.
+ * integer value for the matching @a key, if found.
  *
- * Returns:
- * The positive integer value for @key, or -1 if not found.
+ * @returns The positive integer value for @a key, or -1 if not found.
  */
 int lfgetint(lfile_t *lf, const char *key)
 {
@@ -160,16 +164,15 @@ int lfgetint(lfile_t *lf, const char *key)
 }
 
 /**
- * fgetint - Find the integer value for key in a file
- * @file: File to search for @key
- * @sep:  Separator for tokens in @file
- * @key:  Key to look for in @file
+ * Find the integer value for key in a file.
+ * @param file  File to search for @a key
+ * @param sep   Separator for tokens in @a file
+ * @param key   Key to look for in @a file
  *
  * This is a convenience wrapper for lfopen(), lfgetint(), and
  * lfclose().
  *
- * Returns:
- * The positive integer value for @key, or -1 if not found.
+ * @returns The positive integer value for @a key, or -1 if not found.
  */
 int fgetint(const char *file, const char *sep, const char *key)
 {

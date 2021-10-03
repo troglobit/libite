@@ -15,6 +15,13 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+/**
+ * @file which.c
+ * @author Joachim Wiberg
+ * @date 2017-2021
+ * @copyright ISC License
+ */
+
 #include <ctype.h>
 #include <errno.h>
 #include <stdio.h>		/* snprintf() */
@@ -38,8 +45,11 @@ static char *strip_args(char *path)
 	return path;
 }
 
-/*
- * Like which(1), returns a malloc'ed path to cmd on success, or NULL
+/**
+ * Like which(1), or `command -v foo`
+ * @param cmd  Command to look for in $PATH
+ *
+ * @returns A malloc()'ed path to @a cmd on success, or @c NULL.
  */
 char *which(const char *cmd)
 {
@@ -103,8 +113,11 @@ char *which(const char *cmd)
 	return NULL;
 }
 
-/*
- * Like which(), above, but only answers TRUE(1)/FALSE(0)
+/**
+ * Predicate variant of which()
+ * @param cmd  Command to look for in $PATH
+ *
+ * @returns @c TRUE(1) or @c FALSE(0) if @p cmd exists in $PATH.
  */
 int whichp(const char *cmd)
 {

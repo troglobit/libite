@@ -15,6 +15,13 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+/**
+ * @file reallocarray.c
+ * @author Otto Moerbeek
+ * @date 2008
+ * @copyright ISC License
+ */
+
 #include <sys/types.h>
 #include <errno.h>
 #include <stdint.h>
@@ -26,8 +33,15 @@
  */
 #define MUL_NO_OVERFLOW ((size_t)1 << (sizeof(size_t) * 4))
 
-void *
-reallocarray(void *optr, size_t nmemb, size_t size)
+/**
+ * Similar to realloc() but for an array of items, like calloc()
+ * @param optr   Pointer to old (current) array
+ * @param nmemb  Number of elements
+ * @param size   Size of each element, in bytes
+ *
+ * @returns A pointer to the new array, or @c NULL on error.
+ */
+void *reallocarray(void *optr, size_t nmemb, size_t size)
 {
 	if ((nmemb >= MUL_NO_OVERFLOW || size >= MUL_NO_OVERFLOW) &&
 	    nmemb > 0 && SIZE_MAX / nmemb < size) {

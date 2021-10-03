@@ -15,6 +15,13 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+/**
+ * @file dir.c
+ * @author Joachim Wiberg
+ * @date 2008-2021
+ * @copyright ISC License
+ */
+
 #include <errno.h>
 #include <dirent.h>
 #include <stdlib.h>
@@ -48,32 +55,29 @@ static int matcher(const struct dirent *entry)
 }
 
 /**
- * dir - List all files of a certain type in the given directory.
- * @dir:   Base directory for dir operation.
- * @type:  File type suffix, e.g. ".cfg".
- * @filter: Optional file name filter.
- * @list:  Pointer to an array of file names.
- * @strip: Flag, if set dir() strips the file type.
+ * List all files of a certain type in the given directory.
+ * @param dir    Base directory for dir operation.
+ * @param type   File type suffix, e.g. ".cfg".
+ * @param filter Optional file name filter.
+ * @param list   Pointer to an array of file names.
+ * @param strip  Flag, if set dir() strips the file type.
  *
- * This function returns a @list of files, matching the @type suffix,
- * in the given directory @dir.
+ * This function returns a @a list of files, matching the @a type
+ * suffix, in the given directory @a dir.
  *
- * The @list argument is a pointer to where to store the dynamically
+ * The @a list argument is a pointer to where to store the dynamically
  * allocated list of file names.  This list should be free'd by first
  * calling free() on each file name and then on the list itself.
  *
- * If @filter is not %NULL it will be called for each file found.  If
- * @filter returns non-zero the @file argument will be included in the
- * resulting @list.  If @filter returns zero for given @file it will
- * be discarded.
+ * If @a filter is not @c NULL it will be called for each file found.
+ * If @a filter returns non-zero the @a file argument is included in the
+ * resulting @a list.  If @a filter returns zero for given @a file it is
+ * discarded.  If the @a strip flag is set the resulting @a list of
+ * files has their file type stripped, including the dot.  So a match
+ * "config0.cfg" would be returned as "config0".
  *
- * If the @strip flag is set the resulting @list of files has their
- * file type stripped, including the dot.  So a match "config0.cfg"
- * would be returned as "config0".
- *
- * Returns:
- * Number of files in @list, zero if no matching files of @type, or
- * non-zero on error with @errno set.
+ * @returns The number of files in @a list, zero if no matching files of
+ * @a type, or non-zero on error with @a errno set.
  */
 int dir(const char *dir, const char *type, int (*filter) (const char *file), char ***list, int strip)
 {

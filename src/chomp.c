@@ -15,19 +15,25 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+/**
+ * @file chomp.c
+ * @author Joachim Wiberg
+ * @date 2014-2021
+ * @copyright ISC License
+ */
+
 #include <errno.h>
 #include <string.h>
 
 /**
- * chomp - Perl like chomp function, chop off last char(s) if newline.
- * @str: String to chomp
+ * Perl like chomp function, chop off last char(s) if newline.
+ * @param str  String to chomp
  *
  * This function is like Perl chomp, but it's set to chop of all
  * trailing newlines.  Useful in combination with fgets().
  *
- * Returns:
- * If @str is a valid pointer this function returns @str, otherwise
- * @errno is set to %EINVAL and this function returns %NULL.
+ * @returns @a str, or @c NULL with @a errno set, if @a str is not a valid pointer.
+ * @exception EINVAL if the input argument is not a valid pointer.
  */
 char *chomp(char *str)
 {

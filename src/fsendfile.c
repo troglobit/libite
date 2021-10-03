@@ -21,25 +21,32 @@
  * THE SOFTWARE.
  */
 
+/**
+ * @file fsendfile.c
+ * @author Tobias Waldekranz
+ * @date 2013
+ * @copyright MIT License
+ */
+
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 
 /**
- * fsendfile - copy data between file streams
- * @src: Source stream
- * @dst: Destination stream
- * @len: Number of bytes to copy
+ * Copy data between file streams.
+ * @param src  Source stream
+ * @param dst  Destination stream
+ * @param len  Number of bytes to copy
  *
- * @dst may be %NULL, in which case @len bytes are read and discarded
- * from @src.  This can be useful for streams where seeking is not
- * permitted.  Additionally, @len may be the special value zero (0), in
- * which case fsendfile() will copy until %EOF is seen on @src.
+ * The @p dst argument may be @c NULL, in which case @a len bytes are
+ * read and discarded from @a src.  This can be useful for streams where
+ * seeking is not permitted.  Additionally, @a len may be the special
+ * value zero (0), in which case fsendfile() copies until @c EOF is seen
+ * on @a src.
  *
- * Returns:
- * The number of bytes copied.  If an error is detected -1 is returned
- * and @errno will be set accordingly.
+ * @returns The number of bytes copied.  If an error is detected -1 is
+ * returned and @a errno will be set accordingly.
  */
 ssize_t fsendfile(FILE *src, FILE *dst, size_t len)
 {

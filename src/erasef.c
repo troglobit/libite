@@ -15,6 +15,13 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+/**
+ * @file erasef.c
+ * @author Joachim Wiberg
+ * @date 2021
+ * @copyright ISC License
+ */
+
 #include <errno.h>
 #include <stdio.h>
 #include <stdarg.h>
@@ -24,16 +31,15 @@
 #include "lite.h"
 
 /**
- * erasef - Like erase() but with formatted string support
- * @fmt:  Formatted string to be composed into a pathname
+ * Like erase() but with formatted string support.
+ * @param fmt  Formatted string to be composed into a pathname
  *
  * This is a wrapper for the erase() function in lite.h, lessening the
  * burden of having to compose the filename from parts in a seprate
  * buffer.
  *
- * Returns:
- * Upon successful completion erasef() returns POSIX OK(0), otherwise,
- * -1 is returned and errno is set to indicate the error.
+ * @returns Upon successful completion erasef() returns POSIX OK(0),
+ * otherwise, -1 is returned and @a errno is set to indicate the error.
  */
 int erasef(const char *fmt, ...)
 {
