@@ -6,7 +6,7 @@ SUBDIRS             = src test
 
 ## Check if tagged in git
 release-hook:
-	@if [ ! `git tag | grep $(PACKAGE_VERSION)` ]; then				\
+	@if [ ! `git tag -l v$(PACKAGE_VERSION) | grep $(PACKAGE_VERSION)` ]; then	\
 		echo;									\
 		printf "\e[1m\e[41mCannot find release tag $(PACKAGE_VERSION)\e[0m\n";	\
 		printf "\e[1m\e[5mDo release anyway?\e[0m "; read yorn;			\
@@ -27,7 +27,7 @@ package:
 	@debuild -uc -us -B --lintian-opts --profile debian -i -I --show-overrides
 
 ## Target to run when building a release
-release: release-hook distcheck package
+release: release-hook distcheck
 	@for file in $(DIST_ARCHIVES); do						\
 		md5sum    $$file > ../$$file.md5;					\
 		sha256sum $$file > ../$$file.sha256;					\
