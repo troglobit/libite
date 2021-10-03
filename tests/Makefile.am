@@ -1,8 +1,14 @@
-EXTRA_DIST      = check.h \
-  data/fexist/dir/.placeholder data/fexist/executable data/fexist/link \
-  data/fexist/regular data/lfile/fstab data/lfile/group data/lfile/passwd \
-  data/lfile/protocols data/lfile/services data/which/executable \
-  data/which/executable-link data/which/regular
+# Ignore warnings about unused result, in e.g. write()
+AM_CFLAGS       = -W -Wall -Wextra -Wno-unused-result
+AM_CPPFLAGS     = -D_GNU_SOURCE
+AM_LDFLAGS      = -L../src/ ../src/libite.la -static
+
+EXTRA_DIST      = check.h data/fexist/dir/.placeholder data/fexist/executable
+EXTRA_DIST     += data/fexist/link data/fexist/regular data/lfile/fstab
+EXTRA_DIST     += data/lfile/group data/lfile/passwd data/lfile/protocols
+EXTRA_DIST     += data/lfile/services data/which/executable
+EXTRA_DIST     += data/which/executable-link data/which/regular
+
 CLEANFILES      = *~ *.trs *.log
 
 TESTS_ENVIRONMENT = ([ -d data ] || ln -sf $(srcdir)/data) &&
@@ -33,9 +39,3 @@ TESTS          += which
 TESTS          += yorn
 
 check_PROGRAMS  = $(TESTS)
-
-# Ignore warnings about unused result, in e.g. write()
-CFLAGS         += -Wno-unused-result
-CPPFLAGS       += -D_GNU_SOURCE
-LDADD           = -L../src/ ../src/libite.la
-LDFLAGS        += -static
