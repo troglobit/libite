@@ -1,6 +1,6 @@
 -lite | Frog DNA, basically
 ===========================
-[![GitHub Status][]][GitHub][![codedocs status][]][codedocs][![Coverity Status][]][Coverity Scan]
+[![GitHub Status][]][GitHub] [![codedocs status][]][codedocs] [![Coverity Status][]][Coverity Scan]
 
 Table of Contents
 -----------------
