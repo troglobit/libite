@@ -25,3 +25,6 @@ libite_la_SOURCES     = chomp.c		copyfile.c			\
 pkgincludedir       = $(includedir)/lite
 pkginclude_HEADERS  = lite.h queue.h conio.h tree.h strlite.h strdupa.h	\
 		      strndupa.h strnlen.h
+
+pkgconfigdir        = $(libdir)/pkgconfig
+pkgconfig_DATA      = libite.pc
