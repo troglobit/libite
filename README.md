@@ -70,6 +70,8 @@ and in your `Makefile.am`:
     proggy_CFLAGS = $(lite_CFLAGS)
     proggy_LDADD  = $(lite_LIBS)
 
+> API Documentaion: https://codedocs.xyz/troglobit/libite/
+
 
 Important Note
 --------------
