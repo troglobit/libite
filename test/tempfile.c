@@ -18,8 +18,11 @@ int main(void)
 
 	printf("Before tempfile():\n");
 	system("ls -lrt " _PATH_TMP " | tail -3");
+	fflush(stdout);
 
 	fp = tempfile();
+	if (fp == NULL)
+		fprintf(stderr, "Failed tempfile(), errno %d: %s", errno, strerror(errno));
 	fail_unless(fp != NULL);
 
 	fputs(READBACK, fp);
@@ -30,6 +33,7 @@ int main(void)
 
 	printf("\nAfter tempfile(), should be same list:\n");
 	system("ls -lrt " _PATH_TMP " | tail -3");
+	fflush(stdout);
 
 	return fclose(fp);
 }
