@@ -5,7 +5,7 @@ AM_SILENT_RULES([yes])
 
 AC_CONFIG_SRCDIR(src/lite.h)
 AC_CONFIG_HEADERS(config.h)
-AC_CONFIG_FILES([Makefile src/Makefile tests/Makefile libite.pc])
+AC_CONFIG_FILES([Makefile src/Makefile test/Makefile libite.pc])
 AC_CONFIG_MACRO_DIR([m4])
 
 AC_PROG_CC

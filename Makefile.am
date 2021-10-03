@@ -4,7 +4,7 @@ doc_DATA            = README.md LICENSE ChangeLog.md
 EXTRA_DIST          = README.md LICENSE ChangeLog.md
 pkgconfigdir        = $(libdir)/pkgconfig
 pkgconfig_DATA      = libite.pc
-SUBDIRS             = src tests
+SUBDIRS             = src test
 
 ## Check if tagged in git
 release-hook:

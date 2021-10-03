@@ -124,5 +124,5 @@ Files: yorn.c
 Copyright: 2009-2021 Joachim Wiberg <troglobit@gmail.com>
 License: ISC
 
-Files: tests/*.c
+Files: test/*.c
 License: public-domain
