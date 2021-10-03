@@ -1,4 +1,5 @@
-EXTRA_DIST     = Doxyfile.in
+dist_doc_DATA  = API.md
+EXTRA_DIST     = API.md Doxyfile.in
 DISTCLEANFILES = libite.tag
 
 if ENABLE_HTML
