@@ -1,16 +1,18 @@
 -lite | Frog DNA, basically
 ===========================
-[![Travis Status][]][Travis] [![Coverity Status]][Coverity Scan]
+[![GitHub Status][]][GitHub] [![Coverity Status][]][Coverity Scan]
 
 Table of Contents
 -----------------
 
 * [Introduction](#introduction)
 * [Using -lite](#using--lite)
+* [Important Node](#important-note)
 * [Helper Macros](#helper-macros)
 * [Generic Functions](#generic-functions)
-* [OpenBSD Functions](#openbsd-functions)
-* [Build & Install](#origin--references)
+* [GNU Functions](#gnu-functions)
+* [OpenBSD/NetBSD/FreeBSD Functions](#openbsd-netbsd-freebsd-functions)
+* [Build & Install](#build--install)
 * [Origin & References](#origin--references)
 
 
@@ -460,24 +462,23 @@ Origin & References
 -------------------
 
 Much of the code in libite (-lite) is written by [Claudio Matsuoka][]
-for [Finit][original finit] and released under the MIT/X11 license.
-Joachim Wiberg later improved on the [Finit][] code base and included
-pieces of software released under the ISC and BSD licenses.  See each
-respective file for license details.
+for the original [Finit][original finit] and released under the MIT/X11
+license.  Joachim Wiberg later improved on the [Finit][1] code base and
+included pieces of software released under the ISC and BSD licenses.
+See each respective file for license details.
 
-[1]: https://github.com/troglobit/finit
-[2]: http://www.openbsd.org/
-[3]: http://www.openbsd.org/cgi-bin/man.cgi?query=strlcpy
-[4]: http://www.openbsd.org/cgi-bin/man.cgi/OpenBSD-current/man3/LIST_EMPTY.3
-[5]: https://developer.gnome.org/glib/
-[7]: http://www.openbsd.org/cgi-bin/man.cgi/OpenBSD-current/man3/SPLAY_FOREACH.3
-[MIT]: https://en.wikipedia.org/wiki/MIT_License
-[ISC]: https://en.wikipedia.org/wiki/ISC_license
-[BSD]: https://en.wikipedia.org/wiki/BSD_licenses
-[Travis]: https://travis-ci.org/troglobit/libite
-[Travis Status]: https://travis-ci.org/troglobit/libite.svg?branch=master
+[1]:                https://github.com/troglobit/finit
+[2]:                http://www.openbsd.org/
+[3]:                http://www.openbsd.org/cgi-bin/man.cgi?query=strlcpy
+[4]:                http://www.openbsd.org/cgi-bin/man.cgi/OpenBSD-current/man3/LIST_EMPTY.3
+[5]:                https://developer.gnome.org/glib/
+[7]:                http://www.openbsd.org/cgi-bin/man.cgi/OpenBSD-current/man3/SPLAY_FOREACH.3
+[MIT]:              https://en.wikipedia.org/wiki/MIT_License
+[ISC]:              https://en.wikipedia.org/wiki/ISC_license
+[BSD]:              https://en.wikipedia.org/wiki/BSD_licenses
+[GitHub]:           https://github.com/troglobit/libite/actions/workflows/build.yml/
+[GitHub Status]:    https://github.com/troglobit/libite/actions/workflows/build.yml/badge.svg
 [Coverity Scan]:    https://scan.coverity.com/projects/20602
 [Coverity Status]:  https://img.shields.io/coverity/scan/20602.svg
 [Claudio Matsuoka]: https://github.com/cmatsuoka
-[original finit]: http://helllabs.org/finit/
-[Finit]: https://github.com/troglobit/finit
+[original finit]:   http://helllabs.org/finit/
