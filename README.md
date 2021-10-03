@@ -7,11 +7,12 @@ Table of Contents
 
 * [Introduction](#introduction)
 * [Using -lite](#using--lite)
-* [Important Node](#important-note)
-* [Helper Macros](doc/API.md#helper-macros)
-* [Generic Functions](doc/API.md#generic-functions)
-* [GNU Functions](doc/API.md#gnu-functions)
-* [OpenBSD/NetBSD/FreeBSD Functions](doc/API.md#openbsd-netbsd-freebsd-functions)
+* [API](doc/API.md#overview)
+  * [Important Node](doc/API.md#important-note)
+  * [Helper Macros](doc/API.md#helper-macros)
+  * [Generic Functions](doc/API.md#generic-functions)
+  * [GNU Functions](doc/API.md#gnu-functions)
+  * [OpenBSD/NetBSD/FreeBSD Functions](doc/API.md#openbsd-netbsd-freebsd-functions)
 * [Build & Install](#build--install)
 * [Origin & References](#origin--references)
 
