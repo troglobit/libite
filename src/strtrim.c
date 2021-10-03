@@ -16,6 +16,14 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+/**
+ * @file strtrim.c
+ * @author Mattias Walström
+ * @author Joachim Wiberg
+ * @date 2014,2021
+ * @copyright ISC License
+ */
+
 #include <ctype.h>
 #include <errno.h>
 #include <stdlib.h>
@@ -23,16 +31,15 @@
 #include "lite.h"
 
 /**
- * strtrim - Strip leading and trailing whitespace from a string
- * @str: The string to trim
+ * Strip leading and trailing whitespace from a string
+ * @param str  The string to trim
  *
  * Trims a string from any leading and trailing white-space, returns the
  * trimmed result in the same buffer.
  *
- * Returns:
- * If @str is a valid, non-NULL, string this function returns the same
- * string stripped from whitespace.  This function only returns %NULL
- * if @str itself is %NULL.
+ * @returns If @p str is a valid, non-NULL string this function returns
+ * the same string stripped from whitespace.  This function only returns
+ * @c NULL if @p str itself is @c NULL.
  */
 char *strtrim(char *str)
 {

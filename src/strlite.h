@@ -21,6 +21,13 @@
  * THE SOFTWARE.
  */
 
+/**
+ * @file strlite.h
+ * @author Joachim Wiberg
+ * @date 2008-2021
+ * @copyright MIT License
+ */
+
 #ifdef __cplusplus
 extern "C"
 {
@@ -38,6 +45,7 @@ extern "C"
 #include "strnlen.h"
 
 #ifndef min
+/** Geneirc min() macro, if a < b => a, else b */
 #define min(a,b)				\
 	({					\
 		__typeof__ (a) _a = (a);	\
@@ -46,6 +54,7 @@ extern "C"
 	})
 #endif
 #ifndef max
+/** Geneirc max() macro, if a > b => a, else b */
 #define max(a,b)				\
 	({					\
 		__typeof__ (a) _a = (a);	\
@@ -69,7 +78,11 @@ long long strtonum (const char *numstr, long long minval, long long maxval, cons
 
 char   *strtrim    (char *str);
 
-/* Convert string to natural number (0-2147483647), returns -1 on error. */
+/**
+ * Convert string to natural number (0-2147483647)
+ * @param str string to convert to number.
+ * @returns -1 on error.
+ */
 static inline int atonum(const char *str)
 {
 	int val = -1;
@@ -84,13 +97,22 @@ static inline int atonum(const char *str)
 	return val;
 }
 
-/* Validate string, non NULL and not zero length */
-static inline int string_valid(const char *s)
+/**
+ * Validate string, non NULL and not zero length
+ * @param str string to validate
+ * @returns @c TRUE(1) or @c FALSE(0).
+ */
+static inline int string_valid(const char *str)
 {
-   return s && strlen(s);
+   return str && strlen(str);
 }
 
-/* Relaxed comparison, e.g., sys_string_match("small", "smaller") => TRUE */
+/**
+ * Relaxed comparison, e.g., sys_string_match("small", "smaller") => TRUE
+ * @param a first string
+ * @param b second string
+ * @returns @c TRUE(1) or @c FALSE(0).
+ */
 static inline int string_match(const char *a, const char *b)
 {
    size_t min = MIN(strlen(a), strlen(b));
@@ -98,14 +120,23 @@ static inline int string_match(const char *a, const char *b)
    return !strncasecmp(a, b, min);
 }
 
-/* Strict comparison, e.g., sys_string_match("small", "smaller") => FALSE */
+/**
+ * Strict comparison, e.g., sys_string_match("small", "smaller") => FALSE
+ * @param a first string
+ * @param b second string
+ * @returns @c TRUE(1) or @c FALSE(0).
+ */
 static inline int string_compare(const char *a, const char *b)
 {
    return strlen(a) == strlen(b) && !strcmp(a, b);
 }
 
-/* Strict comparison, like sys_string_compare(), but case insensitive,
+/**
+ * Strict comparison, like sys_string_compare(), but case insensitive,
  * e.g., sys_string_match("small", "SmAlL") => TRUE
+ * @param a first string
+ * @param b second string
+ * @returns @c TRUE(1) or @c FALSE(0).
  */
 static inline int string_case_compare(const char *a, const char *b)
 {

@@ -16,14 +16,29 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+/**
+ * @file strlcpy.c
+ * @author Todd C. Miller
+ * @date 1998, 2015
+ * @copyright ISC License
+ */
+
+
 #include <sys/types.h>
 #include <string.h>
 
 #ifndef strlcpy
-/*
- * Copy string src to buffer dst of size dsize.  At most dsize-1
- * chars will be copied.  Always NUL terminates (unless dsize == 0).
- * Returns strlen(src); if retval >= dsize, truncation occurred.
+/**
+ * Safe version of strncpy() from OpenBSD
+ * @param dst   Destination string
+ * @param src   Source string
+ * @param dsize Total maximum size of @p dst
+ *
+ * This function copies string @p src to buffer @p dst of size @p dsize
+ * bytes.  At most dsize-1 chars will be copied.  Always NUL terminates
+ * (unless dsize==0).
+ *
+ * @returns strlen(src); if retval >= dsize, truncation occurred.
  */
 size_t
 strlcpy(char *dst, const char *src, size_t dsize)

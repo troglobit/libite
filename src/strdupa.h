@@ -24,6 +24,13 @@
  * ==========================================================================
  */
 
+/**
+ * @file strdupa.h
+ * @author William Ahern
+ * @date 2009
+ * @copyright MIT License
+ */
+
 #ifdef __cplusplus
 extern "C"
 {
@@ -43,6 +50,11 @@ extern "C"
 #include <stddef.h>	/* size_t */
 #include <string.h>	/* memcpy(3) strlen(3) */
 
+/**
+ * Duplicate string on stack.
+ * @param src string to duplicate
+ * @returns the result of memcpy(3)
+ */
 #define strdupa(src) (__extension__ ({			\
 	size_t len_	= strlen(src);			\
 	char *dst_	= __builtin_alloca(len_ + 1);	\

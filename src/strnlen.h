@@ -15,6 +15,13 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+/**
+ * @file strnlen.h
+ * @author Joachim Wiberg
+ * @date 2016-2021
+ * @copyright ISC License
+ */
+
 #ifdef __cplusplus
 extern "C"
 {
@@ -32,8 +39,14 @@ extern "C"
 #if !HAVE_STRNLEN
 #include <stddef.h>	/* size_t */
 
-#define strnlen(str, lim) xstrnlen(str, lim)
+#define strnlen(str, lim) xstrnlen(str, lim) /**< Wrapper for xstrnlen() */
 
+/**
+ * Reimplementation of GLIBC strnlen()
+ * @param str string to return length of
+ * @param lim max number of bytes to read
+ * @returns length of @p str in bytes, but at most @lim bytes.
+ */
 static inline size_t xstrnlen(const char *str, size_t lim)
 {
 	size_t i = 0;

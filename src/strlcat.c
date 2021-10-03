@@ -16,16 +16,30 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+/**
+ * @file strlcat.c
+ * @author Todd C. Miller
+ * @date 1998, 2015
+ * @copyright ISC License
+ */
+
 #include <sys/types.h>
 #include <string.h>
 
 #ifndef strlcat
-/*
- * Appends src to string dst of size dsize (unlike strncat, dsize is the
- * full size of dst, not space left).  At most dsize-1 characters
- * will be copied.  Always NUL terminates (unless dsize <= strlen(dst)).
- * Returns strlen(src) + MIN(dsize, strlen(initial dst)).
- * If retval >= dsize, truncation occurred.
+/**
+ * Safe version of strncat() from OpenBSD
+ * @param dst   Destination string
+ * @param src   Source string
+ * @param dsize Total maximum size of @p dst
+ *
+ * Appends @p src to string @p dst of size @p dsize (unlike strncat(),
+ * @p dsize is the full size of @p dst, not space left).  At most
+ * dsize-1 characters will be copied.  Always NUL terminates (unless
+ * dsize <= strlen(dst)).
+ *
+ * @returns strlen(src) + MIN(dsize, strlen(initial dst)).  
+ *          If retval >= dsize, truncation occurred.
  */
 size_t
 strlcat(char *dst, const char *src, size_t dsize)

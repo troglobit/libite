@@ -32,7 +32,12 @@ extern "C"
 #ifndef	_SYS_TREE_H_
 #define	_SYS_TREE_H_
 
-/*
+/**
+ * @file tree.h
+ * @author Niels Provos
+ * @date 2002
+ * @copyright 2-clause BSD License
+ *
  * This file defines data structures for different types of trees:
  * splay trees and red-black trees.
  *

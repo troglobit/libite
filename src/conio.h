@@ -15,6 +15,15 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+/**
+ * @file conio.h
+ * @author Joachim Wiberg
+ * @date 2009-2021
+ * @copyright ISC License
+ *
+ * Helper macros and functions for interacting with TTY terminals.
+ */
+
 #ifdef __cplusplus
 extern "C"
 {
@@ -25,7 +34,7 @@ extern "C"
 
 #include <stdio.h>
 
-/* Attributes */
+/** Attributes */
 #define RESETATTR    0
 #define BRIGHT       1
 #define DIM          2
@@ -34,7 +43,7 @@ extern "C"
 #define REVERSE      7
 #define HIDDEN       8
 
-/* Colors for text and background */
+/** Colors for text and background */
 #define BLACK        0x0
 #define RED          0x1
 #define GREEN        0x2
@@ -54,39 +63,50 @@ extern "C"
 #define WHITE        0x17
 
 #ifndef SCREEN_WIDTH
-#define SCREEN_WIDTH 80		/* Override using, e.g. #define SCREEN_WIDTH tty_width() */
+#define SCREEN_WIDTH 80	/**< Fallback screen width, possible to override. */
 #endif
 
-/* Esc[2JEsc[1;1H             - Clear screen and move cursor to 1,1 (upper left) pos. */
+/** Clear screen and move cursor to 1,1 (upper left) pos. */
 #define clrscr()              fputs("\033[2J\033[1;1H", stdout)
-/* Esc[K                      - Erases from the current cursor position to the end of the current line. */
+/** Erases from the current cursor position to the end of the current line. */
 #define clreol()              fputs("\033[K", stdout)
-/* Esc[2K                     - Erases the entire current line. */
+/** Erases the entire current line. */
 #define delline()             fputs("\033[2K", stdout)
-/* Esc[Line;ColumnH           - Moves the cursor to the specified position (coordinates) */
+/** Moves the cursor to the specified position (coordinates) */
 #define gotoxy(x,y)           fprintf(stdout, "\033[%d;%dH", y, x)
-/* Esc[?25l (lower case L)    - Hide Cursor */
+/** Hide Cursor */
 #define hidecursor()          fputs("\033[?25l", stdout)
-/* Esc[?25h (lower case H)    - Show Cursor */
+/** Show Cursor */
 #define showcursor()          fputs("\033[?25h", stdout)
 
-/* Esc[Value;...;Valuem       - Set Graphics Mode (attr, color, val) */
+/** Set Graphics Mode (attr, color, val) */
 #define __set_gm(a,c,v)							\
 	if (!c)								\
 		fprintf(stdout, "\033[%dm", a);				\
 	else								\
 		fprintf(stdout, "\033[%d;%dm", c & 0x10 ? 1 : 0, (c & 0xF) + v)
+
+/** Set text attribute */
 #define textattr(attr)        __set_gm(attr, 0, 0)
+/** Set text color */
 #define textcolor(color)      __set_gm(RESETATTR, color, 30)
+/** Set text background */
 #define textbackground(color) __set_gm(RESETATTR, color, 40)
 
 void initscr(int *row, int *col);
 
-/* Print table heading @line to @fp, with optional leading newline
- * Example:
+/**
+ * Print table heading, with optional leading newline.
+ * @param fp    output stream
+ * @param line  string to print
+ * @param nl    leading newline or not
+ * @param attr  attribute
+ *
+ * @verbatim
  * _________________ <-- Empty line with UNDERSCORE to frame first heading
  * First heading     <-- In normal/RESETATTR
  * SUBHEADING        <-- In REVERSE and with capital letters like 'top'
+ * @endverbatim
  */
 static inline void printhdr(FILE *fp, const char *line, int nl, int attr)
 {
@@ -99,6 +119,12 @@ static inline void printhdr(FILE *fp, const char *line, int nl, int attr)
 		SCREEN_WIDTH - (int)strlen(line), "");
 }
 
+/**
+ * Print reverse mode table heading, e.g. black text on white background.
+ * @param fp    output stream
+ * @param line  string to print
+ * @param nl    leading newline or not
+ */
 static inline void printheader(FILE *fp, const char *line, int nl)
 {
 	printhdr(fp, line, nl, REVERSE);

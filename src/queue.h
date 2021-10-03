@@ -40,7 +40,12 @@ extern "C"
 #ifndef	_SYS_QUEUE_H_
 #define	_SYS_QUEUE_H_
 
-/*
+/**
+ * @file queue.h
+ * @author The Regents of the University of California
+ * @date 1991, 1993
+ * @copyright 3-clause BSD License
+ *
  * This file defines five types of data structures: singly-linked lists,
  * lists, simple queues, tail queues and XOR simple queues.
  *

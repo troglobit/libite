@@ -15,24 +15,30 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+/**
+ * @file strmatch.c
+ * @author Joachim Wiberg
+ * @date 2009-2021
+ * @copyright ISC License
+ */
+
 #include <errno.h>
 #include <string.h>
 
 
 /**
- * strnmatch - Finds matching strings from a finite list
- * @str: String to look for
- * @list: List of strings to search.
- * @num: Number of entries in @list.
+ * Finds matching strings from a finite list
+ * @param str   String to look for
+ * @param list  List of strings to search.
+ * @param num   Number of entries in @p list.
  *
- * This function searches the @list of strings for @str.  If a (partial) match
- * is found it returns the index in the @list.
+ * This function searches the @p list of strings for @p str.  If a
+ * (partial) match is found it returns the index in the @p list.
  *
- * Very similar in function to strmatch(), but works for sets of strings that
- * are not %NULL terminated.
+ * Very similar in function to strmatch(), but works for sets of strings
+ * that are not @c NUL terminated.
  *
- * Returns:
- * -1 on error, otherwise the index to the matching string.
+ * @returns -1 on error, otherwise the index to the matching string.
  */
 int strnmatch(const char *str, const char **list, size_t num)
 {
@@ -53,18 +59,17 @@ int strnmatch(const char *str, const char **list, size_t num)
 }
 
 /**
- * strmatch - Finds matching strings from a list
- * @str: String to look for
- * @list: %NULL terminated list of strings to search.
+ * Finds matching strings from a list
+ * @param str   String to look for.
+ * @param list  NUL terminated list of strings to search.
  *
- * This function searches the @list of strings for @str.  If a (partial) match
- * is found it returns the index in the @list.
+ * This function searches the @p list of strings for @p str.  If a
+ * (partial) match is found it returns the index in the @p list.
  *
- * Please note, the @list MUST be terminated by a %NULL element.  If that is
- * not possible for you, we recommend using strnmatch() instead.
+ * Please note, the @p list MUST be terminated by a NUL element.  If
+ * that is not possible, we recommend using strnmatch() instead.
  *
- * Returns:
- * -1 on error, otherwise the index to the matching string.
+ * @returns -1 on error, otherwise the index to the matching string.
  */
 int strmatch(const char *str, const char **list)
 {
