@@ -1,6 +1,6 @@
 -lite | Frog DNA, basically
 ===========================
-[![GitHub Status][]][GitHub] [![Coverity Status][]][Coverity Scan]
+[![GitHub Status][]][GitHub][![codedocs status][]][codedocs][![Coverity Status][]][Coverity Scan]
 
 Table of Contents
 -----------------
@@ -480,5 +480,7 @@ See each respective file for license details.
 [GitHub Status]:    https://github.com/troglobit/libite/actions/workflows/build.yml/badge.svg
 [Coverity Scan]:    https://scan.coverity.com/projects/20602
 [Coverity Status]:  https://img.shields.io/coverity/scan/20602.svg
+[codedocs]:         https://codedocs.xyz/troglobit/libite.log
+[codedocs status]:  https://codedocs.xyz/troglobit/libite.svg
 [Claudio Matsuoka]: https://github.com/cmatsuoka
 [original finit]:   http://helllabs.org/finit/
