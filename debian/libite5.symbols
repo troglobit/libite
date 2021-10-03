@@ -33,7 +33,6 @@ libite.so.5 libite5 #MINVER#
  progress_simple@Base 2.0.0
  reallocarray@Base 2.0.0
  rsync@Base 2.0.0
- sdbuf@Base 2.0.0
  strlcat@Base 2.0.0
  strlcpy@Base 2.0.0
  strmatch@Base 2.1.0
