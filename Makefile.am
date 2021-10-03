@@ -1,8 +1,7 @@
 ACLOCAL_AMFLAGS     = -I m4
-
+SUBDIRS             = src test
 doc_DATA            = README.md LICENSE ChangeLog.md
 EXTRA_DIST          = README.md LICENSE ChangeLog.md
-SUBDIRS             = src test
 
 ## Check if tagged in git
 release-hook:
