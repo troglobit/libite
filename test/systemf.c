@@ -1,6 +1,16 @@
 #include <err.h>
 #include "check.h"
 
+/*
+ * Depending on the system and default shell, `kill -QUIT $$` (below)
+ * may leave a core file, so we need to clean that up here to prevent
+ * the distcleancheck target from failing.
+ */
+static void cleanup(void)
+{
+	remove("core");
+}
+
 int main(void)
 {
 	struct { char *cmd; int rc; } list[] = {
@@ -11,6 +21,8 @@ int main(void)
 		{ "kill -QUIT $$", -1 },
 		{ "kill -INT $$",  -1 }
 	};
+
+	atexit(cleanup);
 
 	for (size_t i = 0; i < NELEMS(list); i++) {
 		int rc;
