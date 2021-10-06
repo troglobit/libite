@@ -26,6 +26,7 @@
 #include <paths.h>
 #include <fcntl.h>		/* O_TMPFILE requires -D_GNU_SOURCE */
 #include <stdio.h>		/* fdopen() */
+#include <stdlib.h>		/* mkostemp() */
 #include <sys/stat.h>		/* umask() */
 
 /**
@@ -53,10 +54,14 @@ FILE *tempfile(void)
 	fd = open(_PATH_TMP, O_TMPFILE | O_RDWR | O_EXCL | O_CLOEXEC, S_IRUSR | S_IWUSR);
 	umask(oldmask);
 	if (-1 == fd) {
-		if (errno == EOPNOTSUPP)
-			return tmpfile();
+		if (errno == EOPNOTSUPP) {
+			char nm[15] = _PATH_TMP "XXXXXXXX";
 
-		return NULL;
+			fd = mkostemp(nm, O_CLOEXEC);
+			if (-1 == fd)
+				return NULL;
+		} else
+			return NULL;
 	}
 
 	return fdopen(fd, "w+");

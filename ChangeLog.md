@@ -9,7 +9,8 @@ All notable changes to the project are documented in this file.
 
 ### Changes
 ### Fixes
-- Fix issue with `tempfile()` returning EOPNOTSUPP on Azure
+- Fix issue with `tempfile()` returning EOPNOTSUPP on Azure, use
+  fallback to `mkostemp()` with `O_CLOEXEC` flag set
 
 
 [v2.4.0][] - 2021-03-27
