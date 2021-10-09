@@ -1,12 +1,13 @@
 Source: libite
+Section: libs
 Priority: optional
 Maintainer: Joachim Wiberg <troglobit@gmail.com>
-Build-Depends: debhelper (>= 10), libtool
+Build-Depends: debhelper (>= 10)
+Build-Depends-Indep: doxygen
 Standards-Version: 4.3.0
-Section: libs
 Homepage: https://github.com/troglobit/libite/
-Vcs-Git: https://github.com/troglobit/libite.git
 Vcs-Browser: https://github.com/troglobit/libite/
+Vcs-Git: https://github.com/troglobit/libite.git
 
 Package: libite-dev
 Priority: optional
