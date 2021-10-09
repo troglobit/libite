@@ -71,13 +71,13 @@ disable your brain and follow the rules, one by one.
 have changed.  The initial version is 1:0:0, we follow the rules above to
 the letter: increase revision, increase current and set revision to zero,
 and finally increase age.  This, rather confusingly, gives us 2:0:1 which
-libtool then translates to `libconfuse.so.1.1.0`.
+libtool then translates to `libite.so.1.1.0`.
 
 **Example #2:** some existing functions are changed, they now return an
 `int` instead of `void`.  The initial version is 0:0:0, and we follow the
 rules again: increment revision, increment current and set revision to
 zero, set age to zero.  This gives us 1:0:0, which is then translated to
- `libconfuse.so.1.0.0`.
+ `libite.so.1.0.0`.
 
 ### Note
 
