@@ -4,11 +4,19 @@ Change Log
 All notable changes to the project are documented in this file.
 
 
-[v2.4.1][UNRELEASED]
+[v2.4.1][] - 2021-10-09
 -----------------------
 
 ### Changes
+- Add doxygen API documentation to project, included in tarball, and
+  automatically generated at https://codedocs.xyz/troglobit/libite/
+- Relocate `tests/` to `test/` in source tree
+- Relocate `docs/` to `doc/` in source tree
+
 ### Fixes
+- Prefix CFLAGS/CPPFLAGS/etc with `AM_` in `test/Makefile.am` to prevent
+  clashing with environment.  Fix imported from libuEv
+- Replace obsolete `AM_CONFIG_HEADER` with `AC_CONFIG_HEADERS`
 - Fix issue with `tempfile()` returning EOPNOTSUPP on Azure, use
   fallback to `mkostemp()` with `O_CLOEXEC` flag set
 
@@ -422,7 +430,8 @@ problems this may cause!
 Initial extraction of frog DNA from [Finit][].  See [README][] for API details.
 
 
-[UNRELEASED]: https://github.com/troglobit/libite/compare/v2.4.0...HEAD
+[UNRELEASED]: https://github.com/troglobit/libite/compare/v2.4.1...HEAD
+[v2.4.1]: https://github.com/troglobit/libite/compare/v2.4.0...v2.4.1
 [v2.4.0]: https://github.com/troglobit/libite/compare/v2.3.1...v2.4.0
 [v2.3.1]: https://github.com/troglobit/libite/compare/v2.3.0...v2.3.1
 [v2.3.0]: https://github.com/troglobit/libite/compare/v2.2.1...v2.3.0

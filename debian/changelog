@@ -1,3 +1,11 @@
+libite (2.4.1) stable; urgency=medium
+
+  * Add doxygen documentation, https://codedocs.xyz/troglobit/libite/
+  * Fix issue with tempfile() returning EOPNOTSUP on certain file systems,
+    added fallback that uses mkstemp() with O_CLOEXEC flag set
+
+ -- Joachim Wiberg <troglobit@gmail.com>  Sat, 09 Oct 2021 08:56:43 +0200
+
 libite (2.4.0) stable; urgency=medium
 
   * New functions:
