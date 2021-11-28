@@ -48,10 +48,12 @@ To prevent clashing with include files of the same name `-lite` employs
 an include file namespace `libite/`, which is strongly recommended to
 use in your applications:
 
-    #include <libite/lite.h>
-    #include <libite/conio.h>
-    #include <libite/queue.h>
-    #include <libite/tree.h>
+```C
+#include <libite/lite.h>
+#include <libite/conio.h>
+#include <libite/queue.h>
+#include <libite/tree.h>
+```
 
 > **Note:** prior to v2.5.0, the `lite/` namespace was used for headers,
 > which is still available in the default install.  This clashed with
@@ -59,30 +61,38 @@ use in your applications:
 
 The output from the `pkg-config` tool holds no surprises:
 
-    $ pkg-config --libs --static --cflags libite
-    -I/usr/local/include -D_LIBITE_LITE -L/usr/local/lib -lite
+```sh
+$ pkg-config --libs --static --cflags libite
+-I/usr/local/include -D_LIBITE_LITE -L/usr/local/lib -lite
+```
 
 Notice that `_LIBITE_LITE` is defined since v2.5.0, useful for software
 that want to be able to build against headers from an older libite:
 
-    #ifdef _LIBITE_LITE
-    # include <libite/lite.h>
-    #else
-    # include <lite/lite.h>
-    #endif
+```C
+#ifdef _LIBITE_LITE
+# include <libite/lite.h>
+#else
+# include <lite/lite.h>
+#endif
+```
 
 The prefix path `/usr/local/` shown here is only the default.  Use the
 `configure` script to select a different prefix when installing libite.
 
 For GNU autotools based projects, use the following in `configure.ac`:
 
-    # Check for required libraries
-    PKG_CHECK_MODULES([lite], [libite >= 1.5.0])
+```m4
+# Check for required libraries
+PKG_CHECK_MODULES([lite], [libite >= 1.5.0])
+```
 
 and in your `Makefile.am`:
 
-    proggy_CFLAGS = $(lite_CFLAGS)
-    proggy_LDADD  = $(lite_LIBS)
+```Makefile
+proggy_CFLAGS = $(lite_CFLAGS)
+proggy_LDADD  = $(lite_LIBS)
+```
 
 > API Documentaion: https://codedocs.xyz/troglobit/libite/
 
