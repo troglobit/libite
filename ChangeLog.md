@@ -7,6 +7,21 @@ All notable changes to the project are documented in this file.
 [v2.5.0][UNRELEASED]
 -----------------------
 
+> **Note:** namespace change; the -lite library include files have moved
+>           from `lite/*.h` to `libite/*.h` due to an unfortunate clash
+>           with "LiTE is a Toobox Engine", from the DirectFB project.
+>           For a transitional period, however, a compatibility symlink
+>           is installed; `lite -> libite/`.
+
+### Changes
+- Header files have moved from `lite/*.h` to `libite/*.h` to prevent
+  clashing with DirectFB LiTE library.
+- Include guards in header files have been renamed, much in the same
+  fashion as the move (above), from `LITE_foo_H_` to `LIBITE_FOO_H_`
+- Add configure option to disable compatibility symlink, for systems
+  that do not want name clashes with DirectFB/LiTE, or do not need to
+  be backwards compatible; use `configure --without-symlink`
+
 ### Fixes
 - Minor, use defensive coding in `strnlen()` replacement.  Only used
   on systems that do not have a native implementation.
