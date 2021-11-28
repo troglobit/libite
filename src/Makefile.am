@@ -21,7 +21,7 @@ libite_la_SOURCES     = chomp.c		copyfile.c			\
 			queue.h		tree.h
 
 
-## Distribute these header files in the <lite/...> name space
+## Distribute these header files in the <libite/...> namespace
 pkgincludedir       = $(includedir)/libite
 pkginclude_HEADERS  = lite.h queue.h conio.h tree.h strlite.h strdupa.h	\
 		      strndupa.h strnlen.h
@@ -29,7 +29,7 @@ pkginclude_HEADERS  = lite.h queue.h conio.h tree.h strlite.h strdupa.h	\
 pkgconfigdir        = $(libdir)/pkgconfig
 pkgconfig_DATA      = libite.pc
 
-## For compatibility with existing installations that look for lite/lite.h
+## For compatibility with previous <lite/...> namespace
 if COMPAT_SYMLINK
 install-data-hook:
 	link=$(DESTDIR)$(includedir)/lite;                   \
