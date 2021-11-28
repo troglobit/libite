@@ -51,7 +51,7 @@ static inline size_t xstrnlen(const char *str, size_t lim)
 {
 	size_t i = 0;
 
-	while (str[i] && i < lim)
+	while (i < lim && str[i])
 		i++;
 
 	return i;
