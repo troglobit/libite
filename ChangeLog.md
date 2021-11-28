@@ -4,6 +4,14 @@ Change Log
 All notable changes to the project are documented in this file.
 
 
+[v2.5.0][UNRELEASED]
+-----------------------
+
+### Fixes
+- Minor, use defensive coding in `strnlen()` replacement.  Only used
+  on systems that do not have a native implementation.
+
+
 [v2.4.1][] - 2021-10-09
 -----------------------
 
@@ -431,6 +439,7 @@ Initial extraction of frog DNA from [Finit][].  See [README][] for API details.
 
 
 [UNRELEASED]: https://github.com/troglobit/libite/compare/v2.4.1...HEAD
+[v2.5.0]: https://github.com/troglobit/libite/compare/v2.4.1...v2.5.0
 [v2.4.1]: https://github.com/troglobit/libite/compare/v2.4.0...v2.4.1
 [v2.4.0]: https://github.com/troglobit/libite/compare/v2.3.1...v2.4.0
 [v2.3.1]: https://github.com/troglobit/libite/compare/v2.3.0...v2.3.1
