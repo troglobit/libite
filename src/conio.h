@@ -29,8 +29,8 @@ extern "C"
 {
 #endif
 
-#ifndef CONIO_H_
-#define CONIO_H_
+#ifndef LIBITE_CONIO_H_
+#define LIBITE_CONIO_H_
 
 #include <stdio.h>
 
@@ -130,7 +130,7 @@ static inline void printheader(FILE *fp, const char *line, int nl)
 	printhdr(fp, line, nl, REVERSE);
 }
 
-#endif /* CONIO_H_ */
+#endif /* LIBITE_CONIO_H_ */
 
 #ifdef __cplusplus
 }

@@ -33,8 +33,8 @@ extern "C"
 {
 #endif
 
-#ifndef LITE_STRING_H_
-#define LITE_STRING_H_
+#ifndef LIBITE_STRING_H_
+#define LIBITE_STRING_H_
 
 #include <stdint.h>    /* uint8_t, uint16_t, uint32_t, INT32_MAX, etc. */
 #include <string.h>
@@ -143,7 +143,7 @@ static inline int string_case_compare(const char *a, const char *b)
    return strlen(a) == strlen(b) && !strcasecmp(a, b);
 }
 
-#endif /* LITE_STRING_H_ */
+#endif /* LIBITE_STRING_H_ */
 
 #ifdef __cplusplus
 }

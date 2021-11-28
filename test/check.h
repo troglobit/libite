@@ -1,5 +1,5 @@
-#ifndef LITE_TESTS_CHECK_H_
-#define LITE_TESTS_CHECK_H_
+#ifndef LIBLITE_TESTS_CHECK_H_
+#define LIBLITE_TESTS_CHECK_H_
 
 #include <stdarg.h>
 #include <stdlib.h>
@@ -78,4 +78,4 @@ static inline char *timespec2str(struct timespec *ts, char *buf, size_t len)
 	return buf;
 }
 
-#endif /* LITE_TESTS_CHECK_H_ */
+#endif /* LIBLITE_TESTS_CHECK_H_ */

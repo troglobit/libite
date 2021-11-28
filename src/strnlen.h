@@ -27,8 +27,8 @@ extern "C"
 {
 #endif
 
-#ifndef LITE_STRNLEN_H_
-#define LITE_STRNLEN_H_
+#ifndef LIBITE_STRNLEN_H_
+#define LIBITE_STRNLEN_H_
 
 #if !defined(HAVE_STRNLEN)
 #if defined(strnlen)
@@ -58,7 +58,7 @@ static inline size_t xstrnlen(const char *str, size_t lim)
 }
 #endif
 
-#endif /* LITE_STRNLEN_H_ */
+#endif /* LIBITE_STRNLEN_H_ */
 
 #ifdef __cplusplus
 }

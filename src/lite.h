@@ -38,8 +38,8 @@ extern "C"
 {
 #endif
 
-#ifndef LITE_H_
-#define LITE_H_
+#ifndef LIBITE_LITE_H_
+#define LIBITE_LITE_H_
 
 #include <errno.h>
 #include <fcntl.h>     /* Definition of AT_* constants for utimensat() */
@@ -245,7 +245,7 @@ static inline int fisslashdir(const char *dir)
 #define pidfile_read_pid(file)      pidfile_read(file)
 #define signal_pidfile(file, signo) pidfile_signal(file, signo)
 
-#endif /* LITE_H_ */
+#endif /* LIBITE_LITE_H_ */
 
 #ifdef __cplusplus
 }

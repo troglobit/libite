@@ -36,8 +36,8 @@ extern "C"
 {
 #endif
 
-#ifndef LITE_STRDUPA_H
-#define LITE_STRDUPA_H
+#ifndef LIBITE_STRDUPA_H
+#define LIBITE_STRDUPA_H
 
 #if !defined(HAVE_STRDUPA)
 #if defined(strdupa)
@@ -67,7 +67,7 @@ extern "C"
 #endif /* __GNUC__ */
 #endif /* !HAVE_STRDUPA */
 
-#endif /* LITE_STRDUPA_H */
+#endif /* LIBITE_STRDUPA_H */
 
 #ifdef __cplusplus
 }
