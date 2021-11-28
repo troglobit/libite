@@ -27,7 +27,13 @@ DX_CHM_FEATURE(OFF)
 DX_HTML_FEATURE(ON)
 DX_MAN_FEATURE(OFF)
 DX_INIT_DOXYGEN(${PACKAGE_NAME}, [${top_builddir}/doc/Doxyfile], [${top_builddir}/doc])
-AM_CONDITIONAL(ENABLE_DOXYGEN,[test "x${DX_FLAG_doc}" = x1])
-AM_CONDITIONAL(ENABLE_HTML,[test "x${DX_FLAG_html}" = x1])
+
+AC_ARG_WITH([symlink],
+        AS_HELP_STRING([--without-symlink], [Disable compat /usr/include/lite -> libite symlink]),,
+	[with_symlink=yes])
+
+AM_CONDITIONAL([ENABLE_DOXYGEN], [test "x${DX_FLAG_doc}"  = x1])
+AM_CONDITIONAL([ENABLE_HTML],    [test "x${DX_FLAG_html}" = x1])
+AM_CONDITIONAL([COMPAT_SYMLINK], [test "x$with_symlink"  != "xno"])
 
 AC_OUTPUT

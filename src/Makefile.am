@@ -28,3 +28,18 @@ pkginclude_HEADERS  = lite.h queue.h conio.h tree.h strlite.h strdupa.h	\
 
 pkgconfigdir        = $(libdir)/pkgconfig
 pkgconfig_DATA      = libite.pc
+
+## For compatibility with existing installations that look for lite/lite.h
+if COMPAT_SYMLINK
+install-data-hook:
+	link=$(DESTDIR)$(includedir)/lite;                   \
+	if [ ! -f $$link ]; then                             \
+		$(LN_S) libite $$link;                       \
+	fi
+
+uninstall-hook:
+	link=$(shell readlink $(DESTDIR)$(includedir)/lite); \
+	if [ "$$link" = "libite" ]; then                     \
+		$(RM) $(DESTDIR)$(includedir)/lite;          \
+	fi
+endif
