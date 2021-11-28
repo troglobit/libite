@@ -61,7 +61,7 @@ use in your applications:
 
 The output from the `pkg-config` tool holds no surprises:
 
-```sh
+```bash
 $ pkg-config --libs --static --cflags libite
 -I/usr/local/include -D_LIBITE_LITE -L/usr/local/lib -lite
 ```
@@ -103,16 +103,18 @@ Build & Install
 This library was initially built for and developed on GNU/Linux systems
 as a light weight utility library, these days NetBSD should also work.
 
-    ./configure
-    make -j5
-    sudo make install-strip
-    sudo ldconfig
+```bash
+$ ./configure
+$ make -j5
+$ sudo make install-strip
+$ sudo ldconfig
+```
 
-Use `./configure --without-symlink` to skip the `lite -> libite/`
-compatibility symlink in the include directory.  This is required for
-systems with DirectFB LiTE.  The default, however, is to install the
-symlink to ensure compatibility with existing software that depends on
-the `-lite` library headers in their previous namespace.
+Use <kbd>./configure --without-symlink</kbd> to prevent the install step
+from creating the `lite -> libite/` compatibility symlink for the header
+files, required for systems with DirectFB LiTE.  The default, however,
+is to install the symlink to ensure compatibility with existing software
+that depends on the `-lite` library headers in their previous namespace.
 
 **Note:** When checking out code from GIT, use <kbd>./autogen.sh</kbd>
 to generate a `configure` script.  It is a generated file and otherwise
