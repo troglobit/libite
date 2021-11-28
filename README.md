@@ -45,18 +45,31 @@ Using -lite
 
 Libite is by default installed as a library and a set of include files.
 To prevent clashing with include files of the same name `-lite` employs
-an include file namespace `lite/`, which is strongly recommended to use
-in your applications:
+an include file namespace `libite/`, which is strongly recommended to
+use in your applications:
 
-    #include <lite/lite.h>
-    #include <lite/conio.h>
-    #include <lite/queue.h>
-    #include <lite/tree.h>
+    #include <libite/lite.h>
+    #include <libite/conio.h>
+    #include <libite/queue.h>
+    #include <libite/tree.h>
 
-The output from the `pkg-config` tool holds no surprises in this regard:
+> **Note:** prior to v2.5.0, the `lite/` namespace was used for headers,
+> which is still available in the default install.  This clashed with
+> the headers of the LiTE library from the DirectFB project.
+
+The output from the `pkg-config` tool holds no surprises:
 
     $ pkg-config --libs --static --cflags libite
-    -I/usr/local/include -L/usr/local/lib -lite
+    -I/usr/local/include -D_LIBITE_LITE -L/usr/local/lib -lite
+
+Notice that `_LIBITE_LITE` is defined since v2.5.0, useful for software
+that want to be able to build against headers from an older libite:
+
+    #ifdef _LIBITE_LITE
+    # include <libite/lite.h>
+    #else
+    # include <lite/lite.h>
+    #endif
 
 The prefix path `/usr/local/` shown here is only the default.  Use the
 `configure` script to select a different prefix when installing libite.
@@ -84,6 +97,12 @@ as a light weight utility library, these days NetBSD should also work.
     make -j5
     sudo make install-strip
     sudo ldconfig
+
+Use `./configure --without-symlink` to skip the `lite -> libite/`
+compatibility symlink in the include directory.  This is required for
+systems with DirectFB LiTE.  The default, however, is to install the
+symlink to ensure compatibility with existing software that depends on
+the `-lite` library headers in their previous namespace.
 
 **Note:** When checking out code from GIT, use <kbd>./autogen.sh</kbd>
 to generate a `configure` script.  It is a generated file and otherwise
