@@ -22,7 +22,7 @@ libite_la_SOURCES     = chomp.c		copyfile.c			\
 
 
 ## Distribute these header files in the <lite/...> name space
-pkgincludedir       = $(includedir)/lite
+pkgincludedir       = $(includedir)/libite
 pkginclude_HEADERS  = lite.h queue.h conio.h tree.h strlite.h strdupa.h	\
 		      strndupa.h strnlen.h
 

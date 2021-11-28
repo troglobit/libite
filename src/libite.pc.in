@@ -8,5 +8,4 @@ Description: Frog DNA, basically
 Version: @VERSION@
 Requires:
 Libs: -L${libdir} -lite
-Cflags: -I${includedir}
-
+Cflags: -I${includedir} -D_LIBITE_LITE
