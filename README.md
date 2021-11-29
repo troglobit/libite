@@ -66,16 +66,16 @@ $ pkg-config --libs --static --cflags libite
 -I/usr/local/include -D_LIBITE_LITE -L/usr/local/lib -lite
 ```
 
-Notice that `_LIBITE_LITE` is defined since v2.5.0, useful for software
-that want to be able to build against headers from an older libite:
-
-```C
-#ifdef _LIBITE_LITE
-# include <libite/lite.h>
-#else
-# include <lite/lite.h>
-#endif
-```
+> **Note:** `_LIBITE_LITE` is defined since v2.5.0, useful for software
+> that want to be able to build against headers from an older libite:
+>
+> ```C
+> #ifdef _LIBITE_LITE
+> # include <libite/lite.h>
+> #else
+> # include <lite/lite.h>
+> #endif
+> ```
 
 The prefix path `/usr/local/` shown here is only the default.  Use the
 `configure` script to select a different prefix when installing libite.
