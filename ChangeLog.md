@@ -4,7 +4,7 @@ Change Log
 All notable changes to the project are documented in this file.
 
 
-[v2.5.0][UNRELEASED]
+[v2.5.0][] - 2021-11-30
 -----------------------
 
 > **Note:** namespace change; the -lite library include files have moved

@@ -4,7 +4,7 @@ libite (2.5.0) stable; urgency=medium
     clashing with DirectFB LiTE library.  For a transitional period,
     however, a compatibility symlink is installed; `lite -> libite/`.
 
- -- Joachim Wiberg <troglobit@gmail.com>  Mon, 29 Nov 2021 00:10:25 +0100
+ -- Joachim Wiberg <troglobit@gmail.com>  Tue, 30 Nov 2021 06:57:17 +0100
 
 libite (2.4.1) stable; urgency=medium
 
