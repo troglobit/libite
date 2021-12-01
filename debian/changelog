@@ -1,3 +1,9 @@
+libite (2.5.1) stable; urgency=medium
+
+  * Use dh_link(1) to install `/usr/include/lite -> libite/`.
+
+ -- Joachim Wiberg <troglobit@gmail.com>  Thu, 02 Dec 2021 00:08:41 +0100
+
 libite (2.5.0) stable; urgency=medium
 
   * Header files have moved from `lite/*.h` to `libite/*.h` to prevent
