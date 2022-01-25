@@ -41,7 +41,7 @@ int fisdir(const char *path)
 {
 	struct stat sb;
 
-	if (!stat(path, &sb) && S_ISDIR(sb.st_mode))
+	if (path && !stat(path, &sb) && S_ISDIR(sb.st_mode))
 		return 1;
 
 	return 0;
