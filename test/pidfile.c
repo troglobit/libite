@@ -41,7 +41,7 @@ static int mtime()
 	char buf[80];
 
 	/* Must sleep a while here otherwise we execute too fast => no mtime change :-( */
-	usleep(10000);
+	sleep(2);
 
 	PRINT("Calling pidfile() again to update mtime ...\n");
 	if (pidfile(pidfile_arg))
