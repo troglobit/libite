@@ -139,10 +139,15 @@ int     whichp     (const char *cmd);
  */
 static inline int touch(const char *path)
 {
+	int fd;
+
 	if (utimensat(AT_FDCWD, path, NULL, 0)) {
-		if (errno == ENOENT)
-			return mknod((path), S_IFREG|0644, 0);
-		return -1;
+		if (errno != ENOENT)
+			return -1;
+		fd = creat(path, S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
+		if (fd < 0)
+			return -1;
+		close(fd);
 	}
 	return 0;
 }

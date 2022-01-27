@@ -23,7 +23,7 @@ static int mtime(char *file)
 	stat(file, &before);
 
 	/* Must sleep a while here otherwise we execute too fast => no mtime change :-( */
-	usleep(10000);
+	sleep(2);
 
 	PRINT("Calling touch() again to update mtime ...\n");
 	if (touch(file)) {
