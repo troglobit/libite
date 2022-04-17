@@ -4,6 +4,18 @@ Change Log
 All notable changes to the project are documented in this file.
 
 
+[v2.5.2][] - 2022-04-17
+-----------------------
+
+### Changes
+- Add printf format attribute hint to all vararg functions.  This will
+  help users of these functions by telling CC what to look for
+
+### Fixes
+- Fix `fisdir()` segfault on GNU/Hurd
+- Fix `touch)` on Debian/kFreeBSD, use `creat()` instad of `mknod()`
+
+
 [v2.5.1][] - 2021-12-02
 -----------------------
 
@@ -463,7 +475,8 @@ problems this may cause!
 Initial extraction of frog DNA from [Finit][].  See [README][] for API details.
 
 
-[UNRELEASED]: https://github.com/troglobit/libite/compare/v2.5.1...HEAD
+[UNRELEASED]: https://github.com/troglobit/libite/compare/v2.5.2...HEAD
+[v2.5.2]: https://github.com/troglobit/libite/compare/v2.5.1...v2.5.2
 [v2.5.1]: https://github.com/troglobit/libite/compare/v2.5.0...v2.5.1
 [v2.5.0]: https://github.com/troglobit/libite/compare/v2.4.1...v2.5.0
 [v2.4.1]: https://github.com/troglobit/libite/compare/v2.4.0...v2.4.1
