@@ -72,21 +72,21 @@ typedef struct sdbuf sdbuf_t;		/**< Opqaue context struct for telnet APIs */
 
 char   *chomp      (char *str);
 
-int     erasef     (const char *fmt, ...);
+int     erasef     (const char *fmt, ...) __attribute__ ((format (printf, 1, 2)));
 	
 char   *fparseln   (FILE *, size_t *, size_t *, const char[3], int);
 
 int     fexist     (const char *file);
 int     fisdir     (const char *path);
 
-FILE   *fopenf     (const char *mode, const char *fmt, ...);
-int     fremove    (const char *fmt, ...);
+FILE   *fopenf     (const char *mode, const char *fmt, ...) __attribute__ ((format (printf, 2, 3)));
+int     fremove    (const char *fmt, ...) __attribute__ ((format (printf, 1, 2)));
 FILE   *tempfile   (void);
 ssize_t copyfile   (const char *src, const char *dst, int len, int opt);
 int     movefile   (const char *src, const char *dst);
 int     fcopyfile  (FILE *src, FILE *dst);
 ssize_t fsendfile  (FILE *src, FILE *dst, size_t len);
-int     truncatef  (off_t length, const char *fmt, ...);
+int     truncatef  (off_t length, const char *fmt, ...) __attribute__ ((format (printf, 2, 3)));
 
 int     ifconfig   (const char *ifname, const char *addr, const char *mask, int up);
 
@@ -97,7 +97,7 @@ char   *lfgetkey   (lfile_t *lf, const char *key);
 int     lfgetint   (lfile_t *lf, const char *key);
 int     fgetint    (const char *file, const char *sep, const char *key);
 
-int     fmkpath    (mode_t mode, const char *fmt, ...);
+int     fmkpath    (mode_t mode, const char *fmt, ...) __attribute__ ((format (printf, 2, 3)));
 int     mkpath     (const char *dir, mode_t mode);
 int     makepath   (const char *dir);
 
@@ -114,16 +114,16 @@ void   *reallocarray(void *optr, size_t nmemb, size_t size);
 void    progress       (int percent, int max_width);
 void    progress_simple(int percent);
 
-int     systemf        (const char *fmt, ...);
+int     systemf        (const char *fmt, ...) __attribute__ ((format (printf, 1, 2)));
 
 sdbuf_t*telnet_open    (int addr, short port);
 int     telnet_close   (sdbuf_t *ctx);
 int     telnet_expect  (sdbuf_t *ctx, char *script[], FILE *output);
 int     telnet_session (int addr, short port, char *script[], FILE *output);
 
-int     touchf         (const char *fmt, ...);
+int     touchf         (const char *fmt, ...) __attribute__ ((format (printf, 1, 2)));
 
-int     yorn       (const char *fmt, ...);
+int     yorn       (const char *fmt, ...) __attribute__ ((format (printf, 1, 2)));
 
 char   *which      (const char *cmd);
 int     whichp     (const char *cmd);
