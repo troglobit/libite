@@ -85,9 +85,9 @@ int rsync(char *src, char *dst, int opt, int (*filter)(const char *file))
 			return 1;
 
 		if (copy(src, dst, keep_mtim))
-			result++;
+			return 1;
 
-		return errno;
+		return 0;
 	}
 
 	/* Copy dir as well? */
