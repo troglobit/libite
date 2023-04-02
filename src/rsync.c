@@ -77,7 +77,9 @@ int rsync(char *src, char *dst, int opt, int (*filter)(const char *file))
 	char **files;		/* Array of file names. */
 	struct stat st;
 
-	if (!fisdir(dst))
+	errno = 0;
+
+	if (stat(dst, &st) && fisslashdir(dst))
 		makedir(dst, 0755);
 
 	if (!fisdir(src)) {
