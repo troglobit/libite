@@ -48,52 +48,82 @@ void setup_test(void)
 	}
 }
 
-static void check_tree(char *heading, char *dir)
+int check_dir_to_dir(void)
 {
-	if (verbose) {
-		if (heading)
-			puts(heading);
+	int rc = 0;
+
+	rc += rsync(SRC, DST, LITE_FOPT_KEEP_MTIME, NULL);
+	rc += systemf("diff -rq %s %s", SRC, DST);
+	systemf("rm -rf %s/*", DST);
+
+	return rc;
+}
+
+int check_file_to_file(void)
+{
+	int rc = 0;
+
+	touch(SRC "foo.txt");
+	PRINT("SRC ==========================\n");
+	if (verbose) system("ls -l " SRC);
+	rc += rsync(SRC "foo.txt", DST "foo.txt", LITE_FOPT_KEEP_MTIME, NULL);
+	if (!fexist(DST "foo.txt") || fisdir(DST "foo.txt")) {
+		PRINT("No dst file or it's a directory\n");
+		rc++;
 	}
 
-	// XXX: Fixme, add code to list tree, nftw() possibly
+	PRINT("DST ==========================\n");
+	if (verbose) system("ls -l " DST);
+	systemf("rm -rf %s %s/*", SRC "foo.txt" , DST);
+
+	return rc;
+}
+
+int check_file_to_dir(void)
+{
+	int rc = 0;
+
+	touch(SRC "foo.txt");
+	PRINT("SRC ==========================\n");
+	if (verbose) system("ls -l " SRC);
+	rc += rsync(SRC "foo.txt", DST, LITE_FOPT_KEEP_MTIME, NULL);
+	if (!fexist(DST "foo.txt") || fisdir(DST "foo.txt"))
+		rc++;
+	PRINT("DST ==========================\n");
+	if (verbose) system("ls -l " DST);
+	systemf("rm -rf %s %s/*", SRC "foo.txt" , DST);
+
+	return rc;
+}
+
+int check_file_to_nodir(void)
+{
+	int rc = 0;
+
+	touch(SRC "foo.txt");
+	PRINT("SRC ==========================\n");
+	if (verbose) system("ls -l " SRC);
+	system("rm -rf " DST);
+	rc += rsync(SRC "foo.txt", DST, LITE_FOPT_KEEP_MTIME, NULL);
+	if (!fexist(DST "foo.txt") || fisdir(DST "foo.txt"))
+		rc++;
+	PRINT("DST ==========================\n");
+	if (verbose) system("ls -l " DST);
+	systemf("rm -rf %s %s/*", SRC "foo.txt" , DST);
+
+	return rc;
 }
 
 int run_test(void)
 {
 	int result = 0;
 
-#if 0
 	setup_test();
-	check_tree("Before:", BASE);
 
-	result += rsync(SRC, DST, 0, NULL);
-	check_tree("After:", BASE);
-	cleanup_test();
-#endif
-
-	setup_test();
-	sleep(1);
-	result += rsync(BASE "src", DST, LITE_FOPT_KEEP_MTIME, NULL);
-	check_tree("Only partial rsync of src <-- No slash!", BASE);
-#if 0
-	cleanup_test();
-	setup_test();
-	result += rsync(BASE "src/sub1", BASE "dst", 0, NULL);
-	check_tree("Only partial rsync of src/sub1 <-- No slashes!!", BASE);
-
-	cleanup_test();
-	setup_test();
-	result += rsync(BASE "src/sub1/", DST, 0, NULL);
-	check_tree("Only partial rsync of src/sub1/", BASE);
-
-	cleanup_test();
-	setup_test();
-	result += rsync(BASE "src/sub1", DST, 0, NULL);
-	check_tree("Only partial rsync of src/sub1 <-- No slash!", BASE);
-
-	result += rsync("/etc", "/var/tmp", 0, NULL);
-	check_tree("Real life test:", "/var/tmp");
-#endif
+	result += test(check_dir_to_dir(),   "Verifying src/        -> dst/");
+	result += test(check_file_to_file(), "Verifying src/foo.txt -> dst/foo.txt");
+	result += test(check_file_to_dir(),  "Verifying src/foo.txt -> dst/");
+	result += test(check_file_to_nodir(),"Verifying src/foo.txt -> dst/ (non-existing target dir)");
 
 	return result;
 }
