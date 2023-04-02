@@ -38,6 +38,7 @@ static int adjust_target(const char *src, char **dst)
 {
 	int isdir = 0;
 
+	retry:
 	if (fisdir(*dst)) {
 		int slash = 0;
 		char *tmp, *ptr = strrchr(src, '/');
@@ -58,6 +59,13 @@ static int adjust_target(const char *src, char **dst)
 
 		sprintf(tmp, "%s%s%s", *dst, slash ? "" : "/", ptr);
 		*dst = tmp;
+	} else {
+		struct stat st;
+
+		if (stat(*dst, &st) && fisslashdir(*dst)) {
+			makedir(*dst, 0755);
+			goto retry;
+		}
 	}
 
 	return isdir;
@@ -67,7 +75,7 @@ static int adjust_target(const char *src, char **dst)
  * breaks loop on error and EOF */
 static ssize_t do_copy(int in, int out, size_t num, char *buffer, size_t len)
 {
-	ssize_t ret = 0, size = 0;
+	ssize_t ret = 0, size = -1;
 
 	do {
 		size_t count = num > len ? len : num;
@@ -76,6 +84,8 @@ static ssize_t do_copy(int in, int out, size_t num, char *buffer, size_t len)
 		if (ret <= 0) {
 			if (ret == -1 && EINTR == errno)
 				continue;
+			if (ret == 0 && size == -1)
+				size = 0;
 			break;
 		}
 
@@ -194,7 +204,7 @@ ssize_t copyfile(const char *src, const char *dst, int len, int opt)
 	}
 
 	size = do_copy(in, out, num, buffer, BUFSIZ);
-	if (!size && errno)
+	if (size < 0)
 		saved_errno = errno;
 	else if (keep_mtim)
 		set_mtime(in, out);
