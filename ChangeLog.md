@@ -4,14 +4,17 @@ Change Log
 All notable changes to the project are documented in this file.
 
 
-[v2.5.3][UNRELEASED]
+[v2.5.3][] - 2023-04-08
 -----------------------
 
-### Fixes
+### Changes
+- Refactor `copyfile()` unit test and verify number of bytes copied
+- Add missing `rsync()` unit test to ensure proper function
 
-- rsync does not copy single files correctly
-- copyfile does not handle empty source files correctly (error)
-- copyfile does not properly create destination dir
+### Fixes
+- `rsync()` does not copy single files correctly
+- `copyfile()` does not handle empty source files correctly (error)
+- `copyfile()` does not properly create destination dir
 
 
 [v2.5.2][] - 2022-04-17
