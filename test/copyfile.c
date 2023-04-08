@@ -2,6 +2,9 @@
 #include <errno.h>
 #include "check.h"
 
+#define ERR(fmt, args...)  { printf(fmt, ##args);  rc = 1; }
+#define ERRX(fmt, args...) { printf(fmt, ##args); rc = 1; }
+
 static int sz()
 {
 	struct stat st;
@@ -34,34 +37,47 @@ int main(void)
 		NULL
 	};
 	FILE *src, *dst;
-	int i = 0;
+	int rc, i;
 
 	printf("=>Start testing fcopyfile()\n");
-	while (files[i]) {
+	for (i = 0; files[i]; i += 3) {
 		printf("fcopyfile(%s, %s)\t", files[i], files[i + 1]);
 		src = fopen(files[i], "r");
 		dst = fopen(files[i + 1], "w");
-		if (fcopyfile(src, dst)) {
-			if (!fisdir(files[i + 1]))
-			    err(1, "Failed fcopyfile(%s, %s)", files[i], files[i + 1]);
-		}
+
+		rc = fcopyfile(src, dst);
 
 		if (src)
 			fclose(src);
 		if (dst)
 			fclose(dst);
 
-		if (fexist(files[i + 2]))
-			printf("OK => %s", files[i + 2]);
+		if (rc) {
+			if (!fisdir(files[i + 1]))
+				err(1, "Failed fcopyfile(%s, %s)", files[i], files[i + 1]);
+
+			/* Expected to fail, user tried to copy to fp=NULL due to dir */
+			printf("OK\n");
+			continue;
+		}
+
+		if (fexist(files[i + 2])) {
+			if (systemf("diff -q %s %s", files[i], files[i + 2])) {
+				ERRX("src and dst differ");
+			} else
+				printf("OK => %s", files[i + 2]);
+		} else
+			ERR("cannot find %s", files[i + 2]);
 		printf("\n");
 
 		erase(files[i + 2]);
-		i += 3;
+
+		if (rc)
+			return rc;
 	}
 
 	printf("\n=>Start testing copyfile()\n");
-	i = 0;
-	while (files[i]) {
+	for (i = 0; files[i]; i += 3) {
 		printf("copyfile(%s, %s)\t", files[i], files[i + 1]);
 		if (!copyfile(files[i], files[i + 1], 0, 0))
 			err(1, "Failed copyfile(%s, %s)", files[i], files[i + 1]);
@@ -71,7 +87,6 @@ int main(void)
 		printf("\n");
 
 		erase(files[i + 2]);
-		i += 3;
 	}
 
 	return sz();
