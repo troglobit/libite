@@ -71,8 +71,10 @@ static int adjust_target(const char *src, char **dst)
 	return isdir;
 }
 
-/* Actual copy loop, used by both copyfile() and fcopyfile()
- * breaks loop on error and EOF */
+/*
+ * Actual copy loop, used by both copyfile() and fcopyfile() breaks loop
+ * on error and EOF
+ */
 static ssize_t do_copy(int in, int out, size_t num, char *buffer, size_t len)
 {
 	ssize_t ret = 0, size = -1;
@@ -89,8 +91,11 @@ static ssize_t do_copy(int in, int out, size_t num, char *buffer, size_t len)
 			break;
 		}
 
-		if (ret > 0)
+		if (ret > 0) {
+			if (size == -1)
+				size = 0;
 			size += write(out, buffer, ret);
+		}
 		num  -= count;
 	} while (num > 0);
 
