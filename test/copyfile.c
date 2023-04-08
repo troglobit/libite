@@ -5,6 +5,13 @@
 #define ERR(fmt, args...)  { printf(fmt, ##args);  rc = 1; }
 #define ERRX(fmt, args...) { printf(fmt, ##args); rc = 1; }
 
+static char *files[] = {
+	"/etc/passwd", "/tmp/mypwd", "/tmp/mypwd",
+	"/etc/passwd", "/tmp/",      "/tmp/passwd",
+	"/etc/passwd", "/tmp",       "/tmp/passwd",
+	NULL
+};
+
 static int sz()
 {
 	struct stat st;
@@ -28,14 +35,8 @@ static int sz()
 	return 0;
 }
 
-int main(void)
+static int check_fcopyfile()
 {
-	char *files[] = {
-		"/etc/passwd", "/tmp/mypwd", "/tmp/mypwd",
-		"/etc/passwd", "/tmp/",      "/tmp/passwd",
-		"/etc/passwd", "/tmp",       "/tmp/passwd",
-		NULL
-	};
 	FILE *src, *dst;
 	int rc, i;
 
@@ -76,6 +77,13 @@ int main(void)
 			return rc;
 	}
 
+	return 0;
+}
+
+static int check_copyfile()
+{
+	int i;
+
 	printf("\n=>Start testing copyfile()\n");
 	for (i = 0; files[i]; i += 3) {
 		printf("copyfile(%s, %s)\t", files[i], files[i + 1]);
@@ -89,5 +97,12 @@ int main(void)
 		erase(files[i + 2]);
 	}
 
-	return sz();
+	return 0;
+}
+
+int main(void)
+{
+	return	check_fcopyfile() ||
+		check_copyfile()  ||
+		sz();
 }
