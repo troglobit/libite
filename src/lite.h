@@ -104,6 +104,8 @@ int     makepath   (const char *dir);
 int     dir        (const char *dir, const char *type, int (*filter) (const char *file), char ***list, int strip);
 int     rsync      (char *src, char *dst, int opt,  int (*filter) (const char *file));
 
+FILE   *popenf     (const char *type, const char *fmt, ...) __attribute__ ((format (printf, 2, 3)));
+
 int     pidfile       (const char *basename);
 int     pidfile_signal(const char *pidfile, int signal);
 pid_t   pidfile_read  (const char *pidfile);
