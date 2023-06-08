@@ -79,6 +79,7 @@ char   *fparseln   (FILE *, size_t *, size_t *, const char[3], int);
 int     fexist     (const char *file);
 int     fisdir     (const char *path);
 
+FILE   *vfopenf    (const char *mode, const char *fmt, va_list ap);
 FILE   *fopenf     (const char *mode, const char *fmt, ...) __attribute__ ((format (printf, 2, 3)));
 int     fremove    (const char *fmt, ...) __attribute__ ((format (printf, 1, 2)));
 FILE   *tempfile   (void);

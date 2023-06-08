@@ -28,9 +28,42 @@
 #include <stdlib.h>
 
 /**
+ * Similar to fopenf() except it takes a @a va_list argument
+ * @param mode An fopen() mode string, e.g. "w+".
+ * @param fmt  Formatted string to be composed into a pathname.
+ * @param ap   List of variable arguemnts from va_start().
+ *
+ * See fopenf() for details.
+ *
+ * @returns a FILE pointer, or @c NULL on error.
+ */
+FILE *vfopenf(const char *mode, const char *fmt, va_list ap)
+{
+	va_list apc;
+	char *file;
+	int len;
+
+	va_copy(apc, ap);
+	len = vsnprintf(NULL, 0, fmt, apc);
+	va_end(apc);
+
+	file = alloca(len + 1);
+	if (!file) {
+		errno = ENOMEM;
+		return NULL;
+	}
+
+	va_copy(apc, ap);
+	vsnprintf(file, len + 1, fmt, apc);
+	va_end(apc);
+
+	return fopen(file, mode);
+}
+
+/**
  * Open a file based on the formatted string and optional arguments
- * @param mode An fopen() mode string, e.g. "w+"
- * @param fmt  Formatted string to be composed into a pathname
+ * @param mode An fopen() mode string, e.g. "w+".
+ * @param fmt  Formatted string to be composed into a pathname.
  *
  * This function is an extension to the fopen() family, lessening the burden
  * of first having to compose the filename from parts in a seprate buffer.
@@ -42,24 +75,15 @@
 FILE *fopenf(const char *mode, const char *fmt, ...)
 {
 	va_list ap;
-	char *file;
-	int len;
+	FILE *fp;
 
 	va_start(ap, fmt);
-	len = vsnprintf(NULL, 0, fmt, ap);
+	fp = vfopenf(mode, fmt, ap);
 	va_end(ap);
-
-	file = alloca(len + 1);
-	if (!file) {
-		errno = ENOMEM;
+	if (!fp)
 		return NULL;
-	}
 
-	va_start(ap, fmt);
-	vsnprintf(file, len + 1, fmt, ap);
-	va_end(ap);
-
-	return fopen(file, mode);
+	return fp;
 }
 
 /**
