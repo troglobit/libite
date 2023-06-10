@@ -77,6 +77,7 @@ int     erasef     (const char *fmt, ...) __attribute__ ((format (printf, 1, 2))
 char   *fparseln   (FILE *, size_t *, size_t *, const char[3], int);
 
 int     fexist     (const char *file);
+int     fexistf    (const char *fmt, ...) __attribute__ ((format (printf, 1, 2)));;
 int     fisdir     (const char *path);
 
 FILE   *vfopenf    (const char *mode, const char *fmt, va_list ap);

@@ -29,7 +29,12 @@
  */
 
 #include <errno.h>
+#include <stdio.h>
+#include <stdarg.h>
+#include <stdlib.h>
 #include <unistd.h>
+
+#include "lite.h"
 
 /**
  * Check if a file exists in the file system.
@@ -48,6 +53,39 @@ int fexist(const char *file)
 		return 0;
 
 	return 1;
+}
+
+/**
+ * Like fexist() but with formatted string support
+ * @param fmt  Formatted string to be composed into the file to look for.
+ *
+ * This is a wrapper for the fexist() function in lite.h, lessening the
+ * burden of having to compose the filename from parts in a seprate
+ * buffer.
+ *
+ * @returns @c TRUE(1) if the @a file exists, otherwise @c FALSE(0).
+ */
+int fexistf(const char *fmt, ...)
+{
+	va_list ap;
+	char *file;
+	int len;
+
+	va_start(ap, fmt);
+	len = vsnprintf(NULL, 0, fmt, ap);
+	va_end(ap);
+
+	file = alloca(len + 1);
+	if (!file) {
+		errno = ENOMEM;
+		return -1;
+	}
+
+	va_start(ap, fmt);
+	vsnprintf(file, len + 1, fmt, ap);
+	va_end(ap);
+
+	return fexist(file);
 }
 
 /**
