@@ -90,6 +90,16 @@ int     fcopyfile  (FILE *src, FILE *dst);
 ssize_t fsendfile  (FILE *src, FILE *dst, size_t len);
 int     truncatef  (off_t length, const char *fmt, ...) __attribute__ ((format (printf, 2, 3)));
 
+char *vreadsnf (char *line, size_t len, const char *fmt, va_list ap);
+char *readsnf  (char *line, size_t len, const char *fmt, ...);
+int   writesf  (const char *str, const char *mode, const char *fmt, ...);
+
+int   vreadllf (long long *value, const char *fmt, va_list ap);
+int   readllf  (long long *value, const char *fmt, ...);
+int   readdf   (int *value, const char *fmt, ...);
+int   writellf (long long value, const char *mode, const char *fmt, ...);
+int   writedf  (int value, const char *mode, const char *fmt, ...);
+
 int     ifconfig   (const char *ifname, const char *addr, const char *mask, int up);
 
 lfile_t*lfopen     (const char *file, const char *sep);

@@ -9,7 +9,7 @@ libite_la_SOURCES     = chomp.c		copyfile.c			\
 			fexist.c	fisdir.c			\
 			fparseln.c	fsendfile.c			\
 			ifconfig.c	lfile.c				\
-			makepath.c	progress.c			\
+			makepath.c	procval.c	progress.c	\
 			pidfile.c	pidfilefn.c	popenf.c	\
 			reallocarray.c	rsync.c		strtrim.c	\
 			strlcpy.c 	strlcat.c 	strtonum.c	\
