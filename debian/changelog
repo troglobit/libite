@@ -1,3 +1,16 @@
+libite (2.6.0) stable; urgency=medium
+
+  * New APIs from Infix Project:
+    - fexistf()
+    - vfopenf()
+    - popenf()
+    - vreadsnf(), readsnf(), writesf()
+    - vreadllf(), readllf(), readdf()
+    - writellf(), writedf()
+  * Spellchecking of API docs
+
+ -- Joachim Wiberg <troglobit@gmail.com>  Sun, 17 Sep 2023 12:16:47 +0200
+
 libite (2.5.3) stable; urgency=medium
 
  * rsync() does not copy single files correctly
