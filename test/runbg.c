@@ -9,12 +9,12 @@ int main(void)
 	};
 
 	erase(file);
-	test(runbg(cmd, 200000), "Calling runbg");
+	test(runbg(cmd, 100000), "Calling runbg");
 
 	if (test(fexist(file), "Verifying %s does not yet exist", file))
 		return 1;
 
-	test(usleep(500000), "Waiting for runbg");
+	test(sleep(1), "Waiting for runbg");
 
 	if (test(!fexist(file), "Verifying %s has been created", file))
 		return 1;
