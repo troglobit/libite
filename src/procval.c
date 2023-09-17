@@ -107,7 +107,7 @@ int writesf(const char *str, const char *mode, const char *fmt, ...)
 }
 
 /**
- * Same as readllf() exectp it takes a @a va_list argument.
+ * Same as readllf() except it takes a @a va_list argument.
  */
 int vreadllf(long long *value, const char *fmt, va_list ap)
 {
