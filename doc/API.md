@@ -124,7 +124,7 @@ Generic Functions
 
   Check for the existence of a directory, returns True(1) or False(0).
 
-- `fopenf(mode, fmt, ...)`
+- `fopenf(mode, fmt, ...)` and `vfopenf(mode, fmt, ap)`
 
   Like `fopen()`, but takes a formatted string as argument.  This
   greatly simplifies operations that usually consist of composing a
@@ -318,6 +318,76 @@ Generic Functions
 
   Pose a question to user, appended with `(y/N)?`, returns `TRUE` for
   yes (both `y` and `Y` are handled) and `FALSE` for everything else.
+
+
+Procfile Functions
+------------------
+
+These functions can be used to simplify access to data in `/proc` and
+`/sys` on a Linux system.
+
+### String Functions
+
+- `readsnf(line, len, fmt, ...)`
+
+  Read first line from a file composed from `fmt`, with optional args.
+  At most `len` bytes from the file are stored in `line`.
+
+  On success this function returns `line` with any trailing newlines
+  `chomp()`ed off.  On error `NULL` is returned.
+
+- `vreadsnf(line, len, fmt, ap)`
+
+  Similar to `readsnf()` but takes a `va_list` argument instead.
+
+- `writesf(str, mode, fmt, ...)`
+
+  Write the string buffer `str`, with an additional newline, to a file
+  composed from `fmt`, with optional args.  The file is opened with the
+  given `mode`, e.g. "w+", which allows for both replacing and appending
+  file content.
+
+  The function returns POSIX OK(0) on success or -1 on failure with the
+  `errno` variable set to a value from either `fopen()` or `fclose()`.
+
+### Integer Functions
+
+Read and write 32-bit and 64-bit signed values from/to files.
+
+- `vreadllf(value, fmt, ap)` and `readllf(value, fmt, ...)`
+
+  Only the first line is read.  If the line has newline that is stripped
+  before calling `strtoll()` on the line.  The arguments to the latter
+  function is such that it can convert also from a hexadecimal value.
+
+  This function may fail and return -1 on opening the file, reading a
+  line, or if the `strtoll()` function fails.  All of which set the
+  `errno` variable.  Otherwise this function return POSIX OK(0).
+
+- `readdf(value, fmt, ...)`
+
+  Read a signed 32-bit value from a file composed from `fmt`, with
+  optional args.  This function use `vreadllf()` with an additional
+  range checking for `INT_MIN` and `INT_MAX`.  Values outside that
+  cause this function to return -1 with `errno` set to `ERANGE`.
+
+- `writedf(value, mode, fmt, ...)`
+
+  Write a signed 32-bit `value` to a file composed from `fmt`, with
+  optional args.  The file is opened with the given `mode`, e.g. "w+",
+  which allows for both replacing and appending file content.
+
+  The function returns POSIX OK(0) on success or -1 on failure with the
+  `errno` variable set to a value from either `fopen()` or `fclose()`.
+
+- `writellf(value, mode, fmt, ...)`
+
+  Write a signed 64-bit `value` to a file composed from `fmt`, with
+  optional args.  The file is opened with the given `mode`, e.g. "w+",
+  which allows for both replacing and appending file content.
+
+  The function returns POSIX OK(0) on success or -1 on failure with the
+  `errno` variable set to a value from either `fopen()` or `fclose()`.
 
 
 GNU Functions
