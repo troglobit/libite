@@ -14,7 +14,7 @@ int main(void)
 	if (test(fexist(file), "Verifying %s does not yet exist", file))
 		return 1;
 
-	test(usleep(300000), "Waiting for runbg");
+	test(usleep(500000), "Waiting for runbg");
 
 	if (test(!fexist(file), "Verifying %s has been created", file))
 		return 1;
