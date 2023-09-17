@@ -4,8 +4,8 @@ Change Log
 All notable changes to the project are documented in this file.
 
 
-[v2.6.0][UNRELEASED]
---------------------
+[v2.6.0][] - 2023-09-17
+-----------------------
 
 ### Changes
 - New APIs from the [Infix Project](https://github.com/kernelkit/infix):
