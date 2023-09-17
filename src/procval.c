@@ -47,8 +47,8 @@ char *vreadsnf(char *line, size_t len, const char *fmt, va_list ap)
 	FILE *fp;
 
 	va_copy(apc, ap);
-	fp = vfopenf("r", fmt, ap);
-	va_end(ap);
+	fp = vfopenf("r", fmt, apc);
+	va_end(apc);
 	if (!fp)
 		return NULL;
 
