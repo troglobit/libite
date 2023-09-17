@@ -249,6 +249,19 @@ Generic Functions
   `delete`, it is now called `opt`.  The APIs are 100% compatible if the
   value `1` was used.
 
+- `runbg(cmd, delay)`
+
+  Run a command in the background, after delay microseconds, essentially
+  a background `execvp()` with a delay.  The function employs double-fork
+  to prevent zombies and closes all open files, including stdio.
+  
+```C
+    char *cmd[] = { "sh", "-c", "echo 'hej' >/tmp/foo", NULL};
+
+    runbg(cmd, 200000); /* Create /tmp/foo after 200 millisec */
+    /* Execution continues here immediately */
+```
+
 - `strmatch(str, list)`, `strnmatch(str, list, len)`
 
   Find matching string in an array of strings.  Returns index in array on

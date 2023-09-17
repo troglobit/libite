@@ -128,6 +128,7 @@ void   *reallocarray(void *optr, size_t nmemb, size_t size);
 void    progress       (int percent, int max_width);
 void    progress_simple(int percent);
 
+int     runbg          (char *const cmd[], int delay);
 int     systemf        (const char *fmt, ...) __attribute__ ((format (printf, 1, 2)));
 
 sdbuf_t*telnet_open    (int addr, short port);

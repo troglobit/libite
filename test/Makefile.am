@@ -30,6 +30,7 @@ TESTS          += pidfile
 TESTS          += printhdr
 TESTS          += progress
 TESTS          += rsync
+TESTS          += runbg
 TESTS          += str
 TESTS          += strmatch
 TESTS          += systemf

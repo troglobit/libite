@@ -11,12 +11,12 @@ libite_la_SOURCES     = chomp.c		copyfile.c			\
 			ifconfig.c	lfile.c				\
 			makepath.c	procval.c	progress.c	\
 			pidfile.c	pidfilefn.c	popenf.c	\
-			reallocarray.c	rsync.c		strtrim.c	\
+			reallocarray.c	rsync.c		runbg.c		\
 			strlcpy.c 	strlcat.c 	strtonum.c	\
 			strdupa.h	strndupa.h	strnlen.h	\
-			strmatch.c	systemf.c	touchf.c	\
+			strmatch.c	systemf.c	strtrim.c	\
 			telnet.c	tempfile.c	truncatef.c	\
-			yorn.c		which.c				\
+			touchf.c	yorn.c		which.c		\
 			lite.h		strlite.h			\
 			queue.h		tree.h
 
