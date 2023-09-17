@@ -1,4 +1,4 @@
-AC_INIT(libite, 2.6.0-dev, https://github.com/troglobit/libite/issues)
+AC_INIT(libite, 2.6.0-rc1, https://github.com/troglobit/libite/issues)
 AC_CONFIG_AUX_DIR(aux)
 AM_INIT_AUTOMAKE([1.11 foreign dist-xz])
 AM_SILENT_RULES([yes])

@@ -8,7 +8,16 @@ All notable changes to the project are documented in this file.
 --------------------
 
 ### Changes
+- New APIs from the [Infix Project](https://github.com/kernelkit/infix):
+  - `fexistf()`
+  - `vfopenf()`
+  - `popenf()`
+  - `vreadsnf()`, `readsnf()`, `writesf()`
+  - `vreadllf()`, `readllf()`, `readdf()`
+  - `writellf()`, `writedf()`
+
 ### Fixes
+- Spellchecking of API docs
 
 
 [v2.5.3][] - 2023-04-08
