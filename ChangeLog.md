@@ -4,6 +4,13 @@ Change Log
 All notable changes to the project are documented in this file.
 
 
+[v2.6.1][] - 2023-10-15
+-----------------------
+
+### Fixes
+- FTBFS uClibc and musl libc, `lite.h` missing `stdarg.h` include
+
+
 [v2.6.0][] - 2023-09-17
 -----------------------
 
@@ -504,7 +511,8 @@ problems this may cause!
 Initial extraction of frog DNA from [Finit][].  See [README][] for API details.
 
 
-[UNRELEASED]: https://github.com/troglobit/libite/compare/v2.5.3...HEAD
+[UNRELEASED]: https://github.com/troglobit/libite/compare/v2.6.1...HEAD
+[v2.6.1]: https://github.com/troglobit/libite/compare/v2.6.0...v2.6.1
 [v2.6.0]: https://github.com/troglobit/libite/compare/v2.5.3...v2.6.0
 [v2.5.3]: https://github.com/troglobit/libite/compare/v2.5.2...v2.5.3
 [v2.5.2]: https://github.com/troglobit/libite/compare/v2.5.1...v2.5.2
