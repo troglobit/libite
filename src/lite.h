@@ -44,6 +44,7 @@ extern "C"
 #include <errno.h>
 #include <fcntl.h>     /* Definition of AT_* constants for utimensat() */
 #include <stdio.h>
+#include <stdarg.h>
 #include <stdint.h>    /* uint8_t, uint16_t, uint32_t, INT32_MAX, etc. */
 #include <sys/stat.h>
 #include <sys/types.h>
