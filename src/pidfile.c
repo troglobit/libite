@@ -45,6 +45,7 @@
 #include <paths.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 
 #ifndef pidfile
@@ -93,7 +94,10 @@ int pidfile(const char *basename)
 	}
 
 	if (basename[0] != '/') {
-		if (asprintf(&pidfile_path, "%s%s.pid", __pidfile_path, basename) == -1)
+		size_t len = strlen(__pidfile_path);
+		int slash = __pidfile_path[len > 0 ? len - 1 : 0] != '/';
+
+		if (asprintf(&pidfile_path, "%s%s%s.pid", __pidfile_path, slash ? "/" : "", basename) == -1)
 			return (-1);
 	} else {
 		if (asprintf(&pidfile_path, "%s", basename) == -1)
