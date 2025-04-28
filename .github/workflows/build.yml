@@ -28,7 +28,7 @@ jobs:
         run: |
           sudo apt-get -y update
           sudo apt-get -y install tree doxygen
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Configure
         run: |
           ./autogen.sh
@@ -44,7 +44,7 @@ jobs:
         run: |
           make check || (cat test/test-suite.log; false)
       - name: Upload Test Results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: libite-test-${{ matrix.compiler }}
           path: test/*
@@ -55,7 +55,7 @@ jobs:
     env:
       MAKEFLAGS: -j3
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Installing dependencies
         run: |
           apt-get update
