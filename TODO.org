@@ -1,1 +1,15 @@
 * TODO Write tests for new APIs
+
+* More formatted variants?
+- symlinkf()
+- accessf()
+- statf() / lstatf()
+
+* Relocate from Finit
+
+- fnread()
+- fnwrite()
+- fngetint()
+- paste()
+- unquote()
+
