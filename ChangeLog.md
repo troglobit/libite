@@ -4,6 +4,14 @@ Change Log
 All notable changes to the project are documented in this file.
 
 
+[v2.6.2][] - 2025-11-22
+-----------------------
+
+### Fixes
+- Fix memory leak in `which()` on `realloc()` failure
+- Fix `pidfile()` to handle missing trailing slash in prefix path
+
+
 [v2.6.1][] - 2023-10-15
 -----------------------
 
@@ -511,7 +519,8 @@ problems this may cause!
 Initial extraction of frog DNA from [Finit][].  See [README][] for API details.
 
 
-[UNRELEASED]: https://github.com/troglobit/libite/compare/v2.6.1...HEAD
+[UNRELEASED]: https://github.com/troglobit/libite/compare/v2.6.2...HEAD
+[v2.6.2]: https://github.com/troglobit/libite/compare/v2.6.1...v2.6.2
 [v2.6.1]: https://github.com/troglobit/libite/compare/v2.6.0...v2.6.1
 [v2.6.0]: https://github.com/troglobit/libite/compare/v2.5.3...v2.6.0
 [v2.5.3]: https://github.com/troglobit/libite/compare/v2.5.2...v2.5.3
