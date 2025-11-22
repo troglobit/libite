@@ -53,8 +53,9 @@ static char *strip_args(char *path)
  */
 char *which(const char *cmd)
 {
+	char *ptr, *env, *path = NULL;
 	size_t pathlen = 0;
-	char *ptr, *tok, *env, *path = NULL;
+	const char *tok;
 
 	if (!cmd) {
 		errno = EINVAL;
@@ -69,9 +70,7 @@ char *which(const char *cmd)
 		if (!access(path, X_OK))
 			return path;
 
-		if (path)
-			free(path);
-
+		free(path);
 		return NULL;
 	}
 
@@ -88,11 +87,15 @@ char *which(const char *cmd)
 		size_t len = strlen(tok) + strlen(cmd) + 2;
 
 		if (pathlen < len) {
-			path = realloc(path, len);
-			if (!path) {
+			char *tmp = realloc(path, len);
+
+			if (!tmp) {
+				free(path);
 				free(env);
 				return NULL;
 			}
+
+			path = tmp;
 			pathlen = len;
 		}
 
