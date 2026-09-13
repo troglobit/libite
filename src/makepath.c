@@ -35,6 +35,9 @@
  * @param dir   Directory to created, relative or absolute
  * @param mode  A &mode_t mode to create @a dir with
  *
+ * Directories are created with exactly @a mode, the process umask is
+ * not applied like it is for mkdir(2).
+ *
  * @returns POSIX OK(0) on success, otherwise -1 with @a errno set.
  */
 int mkpath(const char *dir, mode_t mode)
@@ -51,7 +54,10 @@ int mkpath(const char *dir, mode_t mode)
 
 	mkpath(dirname(strdupa(dir)), mode);
 
-	return mkdir(dir, mode);
+	if (mkdir(dir, mode))
+		return -1;
+
+	return chmod(dir, mode);
 }
 
 /**

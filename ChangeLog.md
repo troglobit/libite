@@ -4,6 +4,14 @@ Change Log
 All notable changes to the project are documented in this file.
 
 
+[UNRELEASED][]
+--------------
+
+### Fixes
+- Fix `mkpath()`, and `fmkpath()`, not applying the given mode when the
+  process umask is more restrictive, e.g., requesting 0755 with umask
+  0027 silently created a 0750 directory
+
 [v2.6.2][] - 2025-11-22
 -----------------------
 

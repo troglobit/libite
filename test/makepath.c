@@ -50,6 +50,34 @@ int test_fmkpath(const char *subdir)
 	return ret;
 }
 
+/* mkpath() must apply mode as given, not mode & ~umask */
+int test_umask(void)
+{
+	const char *dirs[] = { BASEDIR "/um", BASEDIR "/um/sub", NULL };
+	mode_t old = umask(0077);
+	struct stat sb;
+	int i, ret;
+
+	ret = mkpath(dirs[1], 0755);
+	umask(old);
+	if (ret) {
+		perror("Failed");
+		return ret;
+	}
+
+	for (i = 0; dirs[i]; i++) {
+		if (checkpath(dirs[i]) || stat(dirs[i], &sb))
+			return 1;
+		if ((sb.st_mode & 07777) != 0755) {
+			fprintf(stderr, "Failed: %s mode %04o, expected 0755\n",
+				dirs[i], sb.st_mode & 07777);
+			return 1;
+		}
+	}
+
+	return 0;
+}
+
 int main(void)
 {
 	int i, ret = 0;
@@ -66,13 +94,17 @@ int main(void)
 
 	mkdir(BASEDIR, 0755);
 
-	printf("Pass 1/2: makepath() =========================\n");
+	printf("Pass 1/3: makepath() =========================\n");
 	for (i = 0; list[i] && !ret; i++)
 		ret |= test_makepath(list[i]);
 
-	printf("Pass 2/2: fmkpath() ==========================\n");
+	printf("Pass 2/3: fmkpath() ==========================\n");
 	for (i = 0; list[i] && !ret; i++)
 		ret |= test_fmkpath(list[i] + strlen(BASEDIR) + 1);
+
+	printf("Pass 3/3: mkpath() with umask ================\n");
+	if (!ret)
+		ret |= test_umask();
 
 	printf("Done: Cleaning up ============================\n");
 	system("rm -rf " BASEDIR);
