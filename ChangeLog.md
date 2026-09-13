@@ -8,6 +8,8 @@ All notable changes to the project are documented in this file.
 --------------
 
 ### Fixes
+- Fix `copyfile()` not preserving the source file mode when the process
+  umask is more restrictive
 - Fix `mkpath()`, and `fmkpath()`, not applying the given mode when the
   process umask is more restrictive, e.g., requesting 0755 with umask
   0027 silently created a 0750 directory

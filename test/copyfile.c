@@ -123,9 +123,32 @@ static int _copyfile()
 	return rc;
 }
 
+/* copyfile() must preserve source mode, even with a restrictive umask */
+static int _mode(void)
+{
+	const char *src = "/tmp/libite-mode-src", *dst = "/tmp/libite-mode-dst";
+	struct stat st;
+	mode_t old;
+	int rc = 1;
+
+	if (touch(src) || chmod(src, 0644))
+		return test(1, "copyfile() mode, prepare %s", src);
+
+	old = umask(0077);
+	if (copyfile(src, dst, 0, 0) >= 0 && !stat(dst, &st))
+		rc = (st.st_mode & 07777) != 0644;
+	umask(old);
+
+	erase(src);
+	erase(dst);
+
+	return test(rc, "copyfile() preserves mode 0644 with umask 0077");
+}
+
 int main(void)
 {
 	return	_fcopyfile() ||
 		_copyfile()  ||
-		_sz();
+		_sz()        ||
+		_mode();
 }

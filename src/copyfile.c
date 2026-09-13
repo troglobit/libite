@@ -208,12 +208,20 @@ ssize_t copyfile(const char *src, const char *dst, int len, int opt)
 		goto exit;
 	}
 
+	/* open(2) applies umask, we want the source file mode */
+	if (fchmod(out, st.st_mode & 07777)) {
+		saved_errno = errno;
+		size = -1;
+		goto close_exit;
+	}
+
 	size = do_copy(in, out, num, buffer, BUFSIZ);
 	if (size < 0)
 		saved_errno = errno;
 	else if (keep_mtim)
 		set_mtime(in, out);
 
+close_exit:
 	close(out);
 	close(in);
 
