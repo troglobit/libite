@@ -4,6 +4,7 @@
 .deps/
 /chomp
 /copyfile
+/fcopyfile
 /dir
 /fexist
 /fisdir
