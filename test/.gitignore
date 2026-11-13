@@ -4,6 +4,7 @@
 .deps/
 /chomp
 /copyfile
+/copyfile-symlink
 /dir
 /fexist
 /fisdir

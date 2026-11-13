@@ -157,7 +157,13 @@ ssize_t copyfile(const char *src, const char *dst, int len, int opt)
 	if (!buffer)
 		return 0;
 
-	if (fisdir(src)) {
+	if (sym ? lstat(src, &st) : stat(src, &st)) {
+		saved_errno = errno;
+		size = -1;
+		goto exit;
+	}
+
+	if (S_ISDIR(st.st_mode)) {
 		saved_errno = EISDIR;	/* Error: source is a directory */
 		goto exit;
 	}
@@ -165,13 +171,7 @@ ssize_t copyfile(const char *src, const char *dst, int len, int opt)
 	/* Check if target is a directory, then append src filename. */
 	isdir = adjust_target(src, &dest);
 
-	/* Check if the source file is a symlink ... */
-	if (stat(src, &st)) {
-		size = -1;
-		goto exit;
-	}
-
-	/* ... only try readlink() if symlink and @sym is set. */
+	/* Only try readlink() if symlink and @sym is set. */
 	if (sym && (st.st_mode & S_IFMT) == S_IFLNK) {
 		size = readlink(src, buffer, BUFSIZ);
 		if (size > 0) {
@@ -181,8 +181,16 @@ ssize_t copyfile(const char *src, const char *dst, int len, int opt)
 			} else {
 				buffer[size] = 0;
 				size = !symlink(buffer, dest);
+				if (!size)
+					saved_errno = errno;
+				else if (keep_mtim) {
+					struct timespec tv[2] = { st.st_atim, st.st_mtim };
+
+					utimensat(AT_FDCWD, dest, tv, AT_SYMLINK_NOFOLLOW);
+				}
 			}
-		}
+		} else
+			saved_errno = errno;
 
 		/* Don't fall back to copy, that is a potentially
 		 * dangerous race condition, see CWE-367. */

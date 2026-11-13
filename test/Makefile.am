@@ -19,6 +19,7 @@ clean-local:
 TESTS           =
 TESTS          += chomp
 TESTS          += copyfile
+TESTS          += copyfile-symlink
 TESTS          += dir
 TESTS          += fexist
 TESTS          += fisdir
@@ -40,3 +41,4 @@ TESTS          += which
 TESTS          += yorn
 
 check_PROGRAMS  = $(TESTS)
+copyfile_symlink_SOURCES = copyfile-symlink.c

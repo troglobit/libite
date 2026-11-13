@@ -24,6 +24,7 @@
 
 #include <errno.h>
 #include <fcntl.h>	/* AT_* macros */
+#include <libgen.h>	/* dirname() */
 #include <stdlib.h>	/* NULL, free() */
 #include <string.h>	/* strlen() */
 #include <strings.h>	/* rindex() */
@@ -159,15 +160,49 @@ int rsync(char *src, char *dst, int opt, int (*filter)(const char *file))
 
 static int copy(char *src, char *dst, int opt)
 {
+	char *dest = NULL, *temp = NULL, *file = NULL;
+	int result = 1, saved_errno, made_temp = 0;
+
 	copyfile(src, dst, 0, opt | LITE_FOPT_COPYFILE_SYM);
-	if (errno) {
-		if (errno != EEXIST)
+	if (errno != EEXIST)
+		return errno ? 1 : 0;
+
+	/* Replace an existing destination only after the new link is ready. */
+	if (fisdir(dst)) {
+		char *base = strrchr(src, '/');
+
+		if (asprintf(&dest, "%s%s%s", dst, fisslashdir(dst) ? "" : "/", base ? base + 1 : src) < 0)
 			return 1;
-
-		errno = 0;
+	} else {
+		dest = strdup(dst);
+		if (!dest)
+			return 1;
 	}
+	if (asprintf(&temp, "%s/.rsync-XXXXXX", dirname(strdupa(dest))) < 0)
+		goto exit;
+	if (!mkdtemp(temp))
+		goto exit;
+	made_temp = 1;
+	if (asprintf(&file, "%s/link", temp) < 0)
+		goto exit;
 
-	return 0;
+	copyfile(src, file, 0, opt | LITE_FOPT_COPYFILE_SYM);
+	if (errno)
+		goto exit;
+	result = rename(file, dest) != 0;
+
+exit:
+	saved_errno = errno;
+	if (file)
+		unlink(file);
+	if (made_temp)
+		rmdir(temp);
+	free(file);
+	free(temp);
+	free(dest);
+	errno = saved_errno;
+
+	return result;
 }
 
 /* Creates dir/name @mode ... skipping / if dir already ends so. */
