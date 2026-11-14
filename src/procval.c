@@ -95,6 +95,7 @@ int writesf(const char *str, const char *mode, const char *fmt, ...)
 {
 	va_list ap;
 	FILE *fp;
+	int saved_errno;
 
 	va_start(ap, fmt);
 	fp = vfopenf(mode, fmt, ap);
@@ -102,7 +103,12 @@ int writesf(const char *str, const char *mode, const char *fmt, ...)
 	if (!fp)
 		return -1;
 
-	fprintf(fp, "%s\n", str);
+	if (fprintf(fp, "%s\n", str) < 0) {
+		saved_errno = errno;
+		fclose(fp);
+		errno = saved_errno;
+		return -1;
+	}
 	return fclose(fp);
 }
 
