@@ -26,6 +26,7 @@ TESTS          += fexist
 TESTS          += fisdir
 TESTS          += fopenf
 TESTS          += fsendfile
+TESTS          += fsendfile_errors
 TESTS          += lfile
 TESTS          += makepath
 TESTS          += pidfile
