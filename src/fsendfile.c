@@ -53,6 +53,7 @@ ssize_t fsendfile(FILE *src, FILE *dst, size_t len)
 	char *buf;
 	size_t tot = 0;
 	ssize_t blk = BUFSIZ, num = 0;
+	int saved_errno;
 
         if (!src) {
                 errno = EINVAL;
@@ -68,8 +69,11 @@ ssize_t fsendfile(FILE *src, FILE *dst, size_t len)
 			blk = len - tot;
 
 		num = fread(buf, 1, blk, src);
-		if (num == 0)
+		if (num == 0) {
+			if (ferror(src))
+				num = -1;
 			break;
+		}
 
 		if (dst && (fwrite(buf, num, 1, dst) != 1)) {
 			num = -1;
@@ -79,7 +83,9 @@ ssize_t fsendfile(FILE *src, FILE *dst, size_t len)
 		tot += num;
 	}
 
+	saved_errno = errno;
 	free(buf);
+	errno = saved_errno;
 
 	return (num == -1) ? -1 : (ssize_t)tot;
 }

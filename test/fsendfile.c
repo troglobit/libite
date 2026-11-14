@@ -2,6 +2,39 @@
 #include <unistd.h>
 #include "check.h"
 
+/* A failed read is an error, not EOF */
+static void read_error(void)
+{
+	int fd[2];
+	ssize_t rc;
+	FILE *src;
+
+	if (pipe(fd) || fcntl(fd[0], F_SETFL, O_NONBLOCK))
+		err(1, "Failed creating nonblocking pipe");
+	if (write(fd[1], "data", 4) != 4)
+		err(1, "Failed writing to pipe");
+
+	src = fdopen(fd[0], "r");
+	if (!src)
+		err(1, "Failed fdopen()");
+
+	printf("fsendfile(pipe, NULL, 4)\t");
+	rc = fsendfile(src, NULL, 4);
+	if (rc != 4)
+		errx(1, "Failed, got %zd, expected 4", rc);
+	printf("OK\n");
+
+	printf("fsendfile(empty pipe, NULL, 0)\t");
+	errno = 0;
+	rc = fsendfile(src, NULL, 0);
+	if (rc != -1 || errno != EAGAIN)
+		errx(1, "Failed, got %zd errno %d, expected -1 and EAGAIN", rc, errno);
+	printf("OK\n");
+
+	fclose(src);
+	close(fd[1]);
+}
+
 int main(void)
 {
 	int i = 0;
@@ -26,6 +59,8 @@ int main(void)
 		remove(files[i + 1]);
 		i += 2;
 	}
+
+	read_error();
 
 	return 0;
 }
