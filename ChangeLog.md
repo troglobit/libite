@@ -15,6 +15,8 @@ All notable changes to the project are documented in this file.
 - Fix #23: `copyfile()` ignored `LITE_FOPT_COPYFILE_SYM` and always
   copied what a symlink points to.  It now recreates the symlink, also
   when it is dangling or points to a directory
+- Fix #22: `fcopyfile()` truncated binary data at the first NUL byte in
+  each chunk, and returned success on read and write errors
 - Fix `copyfile()` not preserving the source file mode when the process
   umask is more restrictive
 - Fix `mkpath()`, and `fmkpath()`, not applying the given mode when the
