@@ -286,6 +286,8 @@ int movefile(const char *src, const char *dst)
 int fcopyfile(FILE *src, FILE *dst)
 {
 	char *buf;
+	size_t len;
+	int rc, saved_errno;
 
 	if (!src || !dst) {
 		errno = EINVAL;
@@ -296,12 +298,21 @@ int fcopyfile(FILE *src, FILE *dst)
 	if (!buf)
 		return -1;
 
-	while (fgets(buf, BUFSIZ, src))
-		fputs(buf, dst);
-	
-	free(buf);
+	rc = 0;
+	while ((len = fread(buf, 1, BUFSIZ, src)) > 0) {
+		if (fwrite(buf, 1, len, dst) != len) {
+			rc = -1;
+			break;
+		}
+	}
+	if (ferror(src))
+		rc = -1;
 
-	return 0;
+	saved_errno = errno;
+	free(buf);
+	errno = saved_errno;
+
+	return rc;
 }
 
 /**

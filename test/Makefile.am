@@ -19,6 +19,7 @@ clean-local:
 TESTS           =
 TESTS          += chomp
 TESTS          += copyfile
+TESTS          += fcopyfile
 TESTS          += dir
 TESTS          += fexist
 TESTS          += fisdir
