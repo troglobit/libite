@@ -5,6 +5,7 @@
 /chomp
 /copyfile
 /fcopyfile
+/copyfile-symlink
 /dir
 /fexist
 /fisdir
