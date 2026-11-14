@@ -15,6 +15,7 @@
 /makepath
 /pidfile
 /printhdr
+/procval
 /progress
 /rsync
 /runbg

@@ -83,6 +83,20 @@ char *readsnf(char *line, size_t len, const char *fmt, ...)
 	return ln;
 }
 
+/* Close fp, keeping errno from a failed fprintf(), its result in rc */
+static int wclose(FILE *fp, int rc)
+{
+	int err = errno;
+
+	if (rc >= 0)
+		return fclose(fp);
+
+	fclose(fp);
+	errno = err;
+
+	return -1;
+}
+
 /**
  * Write a string buffer to a file composed from fmt and optional args.
  * @param str  Pointer to string buffer, may be multiple lines.
@@ -102,8 +116,7 @@ int writesf(const char *str, const char *mode, const char *fmt, ...)
 	if (!fp)
 		return -1;
 
-	fprintf(fp, "%s\n", str);
-	return fclose(fp);
+	return wclose(fp, fprintf(fp, "%s\n", str));
 }
 
 /**
@@ -192,8 +205,7 @@ int writellf(long long value, const char *mode, const char *fmt, ...)
 	if (!fp)
 		return -1;
 
-	fprintf(fp, "%lld\n", value);
-	return fclose(fp);
+	return wclose(fp, fprintf(fp, "%lld\n", value));
 }
 
 
@@ -216,8 +228,7 @@ int writedf(int value, const char *mode, const char *fmt, ...)
 	if (!fp)
 		return -1;
 
-	fprintf(fp, "%d\n", value);
-	return fclose(fp);
+	return wclose(fp, fprintf(fp, "%d\n", value));
 }
 
 

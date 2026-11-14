@@ -30,6 +30,7 @@ TESTS          += lfile
 TESTS          += makepath
 TESTS          += pidfile
 TESTS          += printhdr
+TESTS          += procval
 TESTS          += progress
 TESTS          += rsync
 TESTS          += runbg
