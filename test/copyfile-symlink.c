@@ -15,6 +15,39 @@ static void check_link(const char *path, const char *target)
 	fail_unless(memcmp(buf, target, len) == 0);
 }
 
+/* A link left in the destination by an earlier run must never be written through. */
+static void rsync_stale_links(void)
+{
+	struct stat st;
+	FILE *fp;
+
+	fail_unless(mkdir("src", 0700) == 0 && mkdir("dst", 0700) == 0);
+	fail_unless(touch("victim") == 0);
+	fail_unless(symlink("../victim", "src/a") == 0);
+	fail_unless(symlink("../victims", "src/d") == 0);
+	fail_unless(rsync("src/", "dst/", LITE_FOPT_RSYNC_LINKS, NULL) == 0);
+	check_link("dst/a", "../victim");
+	check_link("dst/d", "../victims");
+
+	/* The source links become a file and a directory, and dst/d stops dangling. */
+	fail_unless(unlink("src/a") == 0 && unlink("src/d") == 0);
+	fp = fopen("src/a", "w");
+	fail_unless(fp && fputs("data", fp) >= 0 && fclose(fp) == 0);
+	fail_unless(mkdir("src/d", 0700) == 0 && touch("src/d/f") == 0);
+	fail_unless(mkdir("victims", 0700) == 0);
+	fail_unless(rsync("src/", "dst/", LITE_FOPT_RSYNC_LINKS, NULL) == 0);
+
+	fail_unless(lstat("dst/a", &st) == 0 && S_ISREG(st.st_mode) && st.st_size == 4);
+	fail_unless(stat("victim", &st) == 0 && st.st_size == 0);
+	fail_unless(lstat("dst/d", &st) == 0 && S_ISDIR(st.st_mode));
+	fail_unless(fexist("dst/d/f") && !fexist("victims/f"));
+
+	fail_unless(unlink("src/a") == 0 && unlink("src/d/f") == 0 && rmdir("src/d") == 0);
+	fail_unless(unlink("dst/a") == 0 && unlink("dst/d/f") == 0 && rmdir("dst/d") == 0);
+	fail_unless(rmdir("src") == 0 && rmdir("dst") == 0);
+	fail_unless(unlink("victim") == 0 && rmdir("victims") == 0);
+}
+
 int main(void)
 {
 	char tmp[] = "/tmp/libite-copylink-XXXXXX";
@@ -106,6 +139,7 @@ int main(void)
 		fail_unless(unlink("protected/link") == 0 && rmdir("protected") == 0);
 	}
 	fail_unless(unlink("copied") == 0 && unlink("link") == 0);
+	rsync_stale_links();
 
 	errno = 0;
 	fail_unless(copyfile("dir", "copied", 0, LITE_FOPT_COPYFILE_SYM) == 0 && errno == EISDIR);

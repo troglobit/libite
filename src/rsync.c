@@ -36,7 +36,7 @@
 #include "lite.h"
 
 static int copy(char *src, char *dst, int opt);
-static int mdir(char *buf, size_t buf_len, char *dir, char *name, struct stat *st);
+static int mdir(char *buf, size_t buf_len, char *dir, char *name, struct stat *st, int opt);
 static int prune(char *dst, char **new_files, int new_num);
 static int set_mtime(char *fn, struct stat *st);
 
@@ -68,6 +68,10 @@ static int set_mtime(char *fn, struct stat *st);
  * or a dangling symlink, is recreated in @p dst with the same target
  * text, replacing any file or symlink already there.  Symlinks to
  * directories in @p src are always followed.
+ *
+ * With ::LITE_FOPT_RSYNC_LINKS a symlink in @p dst is never followed.
+ * If one sits where a file or directory from @p src goes, it is removed
+ * first.
  *
  * The filter callback, @p filter, if provided, is used to determine
  * what files to include from the source directory when backing up.  If
@@ -113,7 +117,7 @@ int rsync(char *src, char *dst, int opt, int (*filter)(const char *file))
 		if (stat(src, &st))
 			return 1;
 
-		if (mdir(dest, sizeof(dest), dst, ptr, &st))
+		if (mdir(dest, sizeof(dest), dst, ptr, &st, opt))
 			return 1;
 		dst = dest;
 		do_mtim = keep_mtim;
@@ -133,7 +137,7 @@ int rsync(char *src, char *dst, int opt, int (*filter)(const char *file))
 				continue;
 			}
 
-			if (mdir(dst2, sizeof(dst2), dst, files[i], &sb)) {
+			if (mdir(dst2, sizeof(dst2), dst, files[i], &sb, opt)) {
 				result++;
 				continue;
 			}
@@ -166,20 +170,30 @@ int rsync(char *src, char *dst, int opt, int (*filter)(const char *file))
 	return result;
 }
 
+/* Leaves errno alone, a missing @path is not an error to rsync() */
+static int islink(const char *path)
+{
+	int rc, saved_errno = errno;
+	struct stat st;
+
+	rc = !lstat(path, &st) && S_ISLNK(st.st_mode);
+	errno = saved_errno;
+
+	return rc;
+}
+
 static int copy(char *src, char *dst, int opt)
 {
 	char *dest = NULL, *temp = NULL, *file = NULL;
 	int result = 1, saved_errno, made_temp = 0;
 	int copt = opt & LITE_FOPT_KEEP_MTIME;
 
-	if (opt & LITE_FOPT_RSYNC_LINKS)
-		copt |= LITE_FOPT_COPYFILE_SYM;
-
-	copyfile(src, dst, 0, copt);
-	if (errno != EEXIST)
+	if (!(opt & LITE_FOPT_RSYNC_LINKS)) {
+		copyfile(src, dst, 0, copt);
 		return errno ? 1 : 0;
+	}
+	copt |= LITE_FOPT_COPYFILE_SYM;
 
-	/* Replace an existing destination only after the new link is ready. */
 	if (fisdir(dst)) {
 		char *base = strrchr(src, '/');
 
@@ -190,6 +204,21 @@ static int copy(char *src, char *dst, int opt)
 		if (!dest)
 			return 1;
 	}
+
+	/*
+	 * A link in the destination, e.g. from a previous run, may point
+	 * anywhere.  Remove it so copyfile() cannot write through it.
+	 */
+	if (islink(dest) && !islink(src))
+		unlink(dest);
+
+	copyfile(src, dst, 0, copt);
+	if (errno != EEXIST) {
+		result = errno ? 1 : 0;
+		goto exit;
+	}
+
+	/* Replace an existing destination only after the new link is ready. */
 	if (asprintf(&temp, "%s/.rsync-XXXXXX", dirname(strdupa(dest))) < 0)
 		goto exit;
 	if (!mkdtemp(temp))
@@ -218,9 +247,14 @@ exit:
 }
 
 /* Creates dir/name @mode ... skipping / if dir already ends so. */
-static int mdir(char *buf, size_t buf_len, char *dir, char *name, struct stat *st)
+static int mdir(char *buf, size_t buf_len, char *dir, char *name, struct stat *st, int opt)
 {
 	snprintf(buf, buf_len, "%s%s%s", dir, fisslashdir(dir) ? "" : "/", name);
+
+	/* Same as in copy(), do not descend into a stale link. */
+	if ((opt & LITE_FOPT_RSYNC_LINKS) && islink(buf))
+		unlink(buf);
+
 	if (mkdir(buf, st->st_mode)) {
 		if (EEXIST != errno)
 			return 1;

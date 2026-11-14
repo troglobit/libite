@@ -250,6 +250,10 @@ Generic Functions
   gets a copy of what they point to.  With `LITE_FOPT_RSYNC_LINKS` a
   symlink to a file, or a dangling symlink, is recreated in the
   destination instead.  Symlinks to directories are always followed.
+
+  With `LITE_FOPT_RSYNC_LINKS` a symlink in the destination is never
+  followed.  If one sits where a file or directory from the source
+  goes, it is removed first.
   
   In releases prior to v2.0 the argument controlling pruning was called
   `delete`, it is now called `opt`.  The APIs are 100% compatible if the
