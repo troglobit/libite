@@ -244,6 +244,12 @@ Generic Functions
   
   - `LITE_FOPT_RSYNC_DELETE (0x01)`
   - `LITE_FOPT_KEEP_MTIME   (0x02)`
+  - `LITE_FOPT_RSYNC_LINKS  (0x04)`
+  
+  Symlinks in the source tree are followed by default, the destination
+  gets a copy of what they point to.  With `LITE_FOPT_RSYNC_LINKS` a
+  symlink to a file, or a dangling symlink, is recreated in the
+  destination instead.  Symlinks to directories are always followed.
   
   In releases prior to v2.0 the argument controlling pruning was called
   `delete`, it is now called `opt`.  The APIs are 100% compatible if the

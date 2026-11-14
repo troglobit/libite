@@ -45,7 +45,8 @@ static int set_mtime(char *fn, struct stat *st);
  * Synchronize contents and optionally remove non-existing backups
  * @param src     Source directory
  * @param dst     Destination directory
- * @param opt     An option mask of ::LITE_FOPT_RSYNC_DELETE, ::LITE_FOPT_KEEP_MTIME
+ * @param opt     An option mask of ::LITE_FOPT_RSYNC_DELETE, ::LITE_FOPT_KEEP_MTIME,
+ *                ::LITE_FOPT_RSYNC_LINKS
  * @param filter  Optional filtering function for source directory.
  *
  * This is a miniature implementation of the famous rsync for local use
@@ -60,6 +61,13 @@ static int set_mtime(char *fn, struct stat *st);
  *
  * %LITE_FOPT_RSYNC_DELETE: Prune files from @p dst that no longer exist in @p src.
  * %LITE_FOPT_KEEP_MTIME:   Preserve modification time
+ * %LITE_FOPT_RSYNC_LINKS:  Recreate symlinks to files in @p dst
+ *
+ * Symlinks in @p src are followed by default, so @p dst gets a copy of
+ * what they point to.  With ::LITE_FOPT_RSYNC_LINKS a symlink to a file,
+ * or a dangling symlink, is recreated in @p dst with the same target
+ * text, replacing any file or symlink already there.  Symlinks to
+ * directories in @p src are always followed.
  *
  * The filter callback, @p filter, if provided, is used to determine
  * what files to include from the source directory when backing up.  If
@@ -87,7 +95,7 @@ int rsync(char *src, char *dst, int opt, int (*filter)(const char *file))
 		if (!fexist(src))
 			return 1;
 
-		if (copy(src, dst, keep_mtim))
+		if (copy(src, dst, opt))
 			return 1;
 
 		return 0;
@@ -137,7 +145,7 @@ int rsync(char *src, char *dst, int opt, int (*filter)(const char *file))
 			continue;	/* Next file/dir in @src to copy... */
 		}
 
-		if (copy(source, dst, keep_mtim))
+		if (copy(source, dst, opt))
 			result++;
 	}
 
@@ -162,8 +170,12 @@ static int copy(char *src, char *dst, int opt)
 {
 	char *dest = NULL, *temp = NULL, *file = NULL;
 	int result = 1, saved_errno, made_temp = 0;
+	int copt = opt & LITE_FOPT_KEEP_MTIME;
 
-	copyfile(src, dst, 0, opt | LITE_FOPT_COPYFILE_SYM);
+	if (opt & LITE_FOPT_RSYNC_LINKS)
+		copt |= LITE_FOPT_COPYFILE_SYM;
+
+	copyfile(src, dst, 0, copt);
 	if (errno != EEXIST)
 		return errno ? 1 : 0;
 
@@ -186,7 +198,7 @@ static int copy(char *src, char *dst, int opt)
 	if (asprintf(&file, "%s/link", temp) < 0)
 		goto exit;
 
-	copyfile(src, file, 0, opt | LITE_FOPT_COPYFILE_SYM);
+	copyfile(src, file, 0, copt);
 	if (errno)
 		goto exit;
 	result = rename(file, dest) != 0;

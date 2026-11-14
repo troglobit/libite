@@ -7,7 +7,14 @@ All notable changes to the project are documented in this file.
 [UNRELEASED][]
 --------------
 
+### Changes
+- Add `LITE_FOPT_RSYNC_LINKS` option to `rsync()`, recreates symlinks to
+  files in the destination instead of copying what they point to
+
 ### Fixes
+- Fix #23: `copyfile()` ignored `LITE_FOPT_COPYFILE_SYM` and always
+  copied what a symlink points to.  It now recreates the symlink, also
+  when it is dangling or points to a directory
 - Fix `copyfile()` not preserving the source file mode when the process
   umask is more restrictive
 - Fix `mkpath()`, and `fmkpath()`, not applying the given mode when the

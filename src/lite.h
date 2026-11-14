@@ -67,6 +67,7 @@ extern "C"
 #define LITE_FOPT_RSYNC_DELETE  0x01	/**< Prune files from destination that are not in source */
 #define LITE_FOPT_COPYFILE_SYM  0x01	/**< Recreate symlink or follow to copy target */
 #define LITE_FOPT_KEEP_MTIME    0x02	/**< Preserve modification time */
+#define LITE_FOPT_RSYNC_LINKS   0x04	/**< Recreate symlinks to files instead of copying their target */
 
 typedef struct lfile lfile_t;		/**< Opqaue context struct for lfile APIs */
 typedef struct sdbuf sdbuf_t;		/**< Opqaue context struct for telnet APIs */
