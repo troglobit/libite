@@ -36,7 +36,8 @@
  * @param mode  A &mode_t mode to create @a dir with
  *
  * Directories are created with exactly @a mode, the process umask is
- * not applied like it is for mkdir(2).
+ * not applied like it is for mkdir(2).  An existing non-directory is
+ * rejected with ENOTDIR.
  *
  * @returns POSIX OK(0) on success, otherwise -1 with @a errno set.
  */
@@ -49,8 +50,13 @@ int mkpath(const char *dir, mode_t mode)
 		return -1;
 	}
 
-	if (!stat(dir, &sb))
-		return 0;
+	if (!stat(dir, &sb)) {
+		if (S_ISDIR(sb.st_mode))
+			return 0;
+
+		errno = ENOTDIR;
+		return -1;
+	}
 
 	mkpath(dirname(strdupa(dir)), mode);
 

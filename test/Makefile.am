@@ -28,6 +28,7 @@ TESTS          += fopenf
 TESTS          += fsendfile
 TESTS          += lfile
 TESTS          += makepath
+TESTS          += makepath-existing
 TESTS          += pidfile
 TESTS          += printhdr
 TESTS          += progress
@@ -43,3 +44,5 @@ TESTS          += yorn
 
 check_PROGRAMS  = $(TESTS)
 copyfile_symlink_SOURCES = copyfile-symlink.c
+
+makepath_existing_SOURCES = makepath-existing.c
