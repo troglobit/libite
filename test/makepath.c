@@ -78,6 +78,42 @@ int test_umask(void)
 	return 0;
 }
 
+static int notdir(int rc)
+{
+	return rc == -1 && errno == ENOTDIR;
+}
+
+/* An existing non-directory is not a created directory */
+int test_nondir(void)
+{
+	const char *bad[] = { BASEDIR "/file", BASEDIR "/file-link", NULL };
+	const char *dirlink = BASEDIR "/dir-link";
+	int i;
+
+	if (touch(bad[0]) ||
+	    symlink("file", bad[1]) ||
+	    symlink("um", dirlink)) {
+		perror("Failed setup");
+		return 1;
+	}
+
+	for (i = 0; bad[i]; i++) {
+		if (!notdir(mkpath(bad[i], 0755)) ||
+		    !notdir(fmkpath(0755, "%s", bad[i])) ||
+		    !notdir(makepath(bad[i]))) {
+			fprintf(stderr, "Failed: %s accepted as a directory\n", bad[i]);
+			return 1;
+		}
+	}
+
+	if (mkpath(dirlink, 0755)) {
+		perror("Failed symlink to directory");
+		return 1;
+	}
+
+	return 0;
+}
+
 int main(void)
 {
 	int i, ret = 0;
@@ -94,17 +130,21 @@ int main(void)
 
 	mkdir(BASEDIR, 0755);
 
-	printf("Pass 1/3: makepath() =========================\n");
+	printf("Pass 1/4: makepath() =========================\n");
 	for (i = 0; list[i] && !ret; i++)
 		ret |= test_makepath(list[i]);
 
-	printf("Pass 2/3: fmkpath() ==========================\n");
+	printf("Pass 2/4: fmkpath() ==========================\n");
 	for (i = 0; list[i] && !ret; i++)
 		ret |= test_fmkpath(list[i] + strlen(BASEDIR) + 1);
 
-	printf("Pass 3/3: mkpath() with umask ================\n");
+	printf("Pass 3/4: mkpath() with umask ================\n");
 	if (!ret)
 		ret |= test_umask();
+
+	printf("Pass 4/4: mkpath() on non-directories ========\n");
+	if (!ret)
+		ret |= test_nondir();
 
 	printf("Done: Cleaning up ============================\n");
 	system("rm -rf " BASEDIR);
