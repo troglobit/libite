@@ -39,7 +39,10 @@ TESTS          += systemf
 TESTS          += touch
 TESTS          += tempfile
 TESTS          += which
+TESTS          += which-path
 TESTS          += yorn
 
 check_PROGRAMS  = $(TESTS)
 copyfile_symlink_SOURCES = copyfile-symlink.c
+
+which_path_SOURCES = which-path.c

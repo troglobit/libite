@@ -26,7 +26,7 @@
 #include <errno.h>
 #include <stdio.h>		/* snprintf() */
 #include <stdlib.h>		/* realloc(), free() */
-#include <string.h>		/* strtok_r() */
+#include <string.h>		/* strchr() */
 #include <unistd.h>		/* access() */
 
 /* Strip any arguments in "/path/to/bin --some args", modifies input string */
@@ -48,6 +48,9 @@ static char *strip_args(char *path)
 /**
  * Like which(1), or `command -v foo`
  * @param cmd  Command to look for in $PATH
+ *
+ * Empty PATH components search the current directory, in the same order as
+ * explicitly named directories.
  *
  * @returns A malloc()'ed path to @a cmd on success, or @c NULL.
  */
@@ -82,9 +85,16 @@ char *which(const char *cmd)
 	if (!env)
 		return NULL;
 
-	tok = strtok_r(env, ":", &ptr);
+	tok = env;
 	while (tok) {
-		size_t len = strlen(tok) + strlen(cmd) + 2;
+		const char *dir;
+		size_t len;
+
+		ptr = strchr(tok, ':');
+		if (ptr)
+			*ptr++ = 0;
+		dir = *tok ? tok : ".";
+		len = strlen(dir) + strlen(cmd) + 2;
 
 		if (pathlen < len) {
 			char *tmp = realloc(path, len);
@@ -99,14 +109,14 @@ char *which(const char *cmd)
 			pathlen = len;
 		}
 
-		snprintf(path, pathlen, "%s/%s", tok, cmd);
+		snprintf(path, pathlen, "%s/%s", dir, cmd);
 		path = strip_args(path);
 		if (!path || !access(path, X_OK)) {
 			free(env);
 			return path;
 		}
 
-		tok = strtok_r(NULL, ":", &ptr);
+		tok = ptr;
 	}
 
 	if (path)
