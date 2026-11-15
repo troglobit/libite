@@ -6,6 +6,41 @@ struct tc {
 	int   res;
 };
 
+/* Empty PATH components are skipped, they do not mean current directory */
+static int empty(void)
+{
+	const char *cmd = "executable";
+	char *path[] = {
+		"",
+		":",
+		":/nonexistent",
+		"/nonexistent:",
+		"/nonexistent::/nonexistent",
+		NULL
+	};
+	int result = 0;
+	size_t i;
+
+	if (chdir("data/which"))
+		return 1;
+
+	for (i = 0; path[i]; i++) {
+		setenv("PATH", path[i], 1);
+		if (whichp(cmd)) {
+			fprintf(stderr, "%20s : found in cwd with PATH='%s'\n", cmd, path[i]);
+			result++;
+		}
+	}
+
+	setenv("PATH", "/nonexistent:.", 1);
+	if (!whichp(cmd)) {
+		fprintf(stderr, "%20s : not found with . in PATH\n", cmd);
+		result++;
+	}
+
+	return result;
+}
+
 int main(void)
 {
 	int result = 0;
@@ -38,7 +73,7 @@ int main(void)
 	for (i = 0; test[i].cmd; i++)
 		result += test[i].exp != test[i].res;
 
-	return result;
+	return result + empty();
 }
 
 /**

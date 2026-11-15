@@ -49,6 +49,9 @@ static char *strip_args(char *path)
  * Like which(1), or `command -v foo`
  * @param cmd  Command to look for in $PATH
  *
+ * Empty components in $PATH are skipped, they do not mean the current
+ * directory.  To search it, list it, e.g., as ".".
+ *
  * @returns A malloc()'ed path to @a cmd on success, or @c NULL.
  */
 char *which(const char *cmd)
