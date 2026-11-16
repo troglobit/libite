@@ -22,6 +22,12 @@ All notable changes to the project are documented in this file.
 - Fix `mkpath()`, and `fmkpath()`, not applying the given mode when the
   process umask is more restrictive, e.g., requesting 0755 with umask
   0027 silently created a 0750 directory
+- Fix `mkpath()`, `fmkpath()`, and `makepath()` returning success when
+  the path exists but is not a directory, they now fail with `ENOTDIR`
+- Fix `fsendfile()` returning the number of bytes copied, instead of
+  -1, when reading from the source stream fails
+- Fix `writesf()`, `writellf()`, and `writedf()` returning success when
+  the write fails, e.g., on a file opened read-only
 
 [v2.6.2][] - 2025-11-22
 -----------------------
