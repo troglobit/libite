@@ -10,6 +10,8 @@ All notable changes to the project are documented in this file.
 ### Changes
 - Add `LITE_FOPT_RSYNC_LINKS` option to `rsync()`, recreates symlinks to
   files in the destination instead of copying what they point to
+- Document that `which()` and `whichp()` skip empty components in
+  `PATH`, the current directory is only searched when listed, e.g., `.`
 
 ### Fixes
 - Fix #23: `copyfile()` ignored `LITE_FOPT_COPYFILE_SYM` and always
@@ -28,6 +30,9 @@ All notable changes to the project are documented in this file.
   -1, when reading from the source stream fails
 - Fix `writesf()`, `writellf()`, and `writedf()` returning success when
   the write fails, e.g., on a file opened read-only
+- Fix `copyfile()`, and `movefile()` across file systems, reporting
+  success when reading or writing fails after the first block.  A
+  failed `movefile()` could leave a truncated copy and remove the source
 
 [v2.6.2][] - 2025-11-22
 -----------------------
