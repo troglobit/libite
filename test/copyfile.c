@@ -1,5 +1,7 @@
 #include <err.h>
 #include <errno.h>
+#include <signal.h>
+#include <sys/resource.h>
 #include "check.h"
 
 #define ERR(fmt, args...)  { printf(fmt ": %s\n", ##args, strerror(errno));  rc = 1; }
@@ -145,10 +147,37 @@ static int _mode(void)
 	return test(rc, "copyfile() preserves mode 0644 with umask 0077");
 }
 
+/* A write error halfway through is an error, not a shorter copy */
+static int _werr(void)
+{
+	const char *dst = "/tmp/libite-werr";
+	struct rlimit old, lim;
+	ssize_t len;
+	int rc;
+
+	signal(SIGXFSZ, SIG_IGN);
+	if (getrlimit(RLIMIT_FSIZE, &old))
+		return test(1, "copyfile() write error, getrlimit()");
+
+	lim = old;
+	lim.rlim_cur = BUFSIZ + BUFSIZ / 2;
+	if (setrlimit(RLIMIT_FSIZE, &lim))
+		return test(1, "copyfile() write error, setrlimit()");
+
+	len = copyfile("/dev/zero", dst, 4 * BUFSIZ, 0);
+	rc = len != -1 || errno != EFBIG;
+
+	setrlimit(RLIMIT_FSIZE, &old);
+	erase(dst);
+
+	return test(rc, "copyfile() reports write error");
+}
+
 int main(void)
 {
 	return	_fcopyfile() ||
 		_copyfile()  ||
 		_sz()        ||
-		_mode();
+		_mode()      ||
+		_werr();
 }

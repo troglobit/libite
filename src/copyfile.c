@@ -71,33 +71,38 @@ static int adjust_target(const char *src, char **dst)
 	return isdir;
 }
 
-/*
- * Actual copy loop, used by both copyfile() and fcopyfile() breaks loop
- * on error and EOF
- */
+/* Copy up to num bytes, stops at EOF.  Returns bytes copied, or -1 */
 static ssize_t do_copy(int in, int out, size_t num, char *buffer, size_t len)
 {
-	ssize_t ret = 0, size = -1;
+	ssize_t size = 0;
 
-	do {
+	while (num > 0) {
 		size_t count = num > len ? len : num;
+		ssize_t ret, off = 0;
 
 		ret = read(in, buffer, count);
-		if (ret <= 0) {
-			if (ret == -1 && EINTR == errno)
+		if (ret == -1) {
+			if (errno == EINTR)
 				continue;
-			if (ret == 0 && size == -1)
-				size = 0;
+			return -1;
+		}
+		if (ret == 0)
 			break;
+
+		while (off < ret) {
+			ssize_t n = write(out, buffer + off, ret - off);
+
+			if (n == -1) {
+				if (errno == EINTR)
+					continue;
+				return -1;
+			}
+			off += n;
 		}
 
-		if (ret > 0) {
-			if (size == -1)
-				size = 0;
-			size += write(out, buffer, ret);
-		}
-		num  -= count;
-	} while (num > 0);
+		size += ret;
+		num  -= ret;
+	}
 
 	return size;
 }
@@ -137,7 +142,8 @@ static void set_mtime(int in, int out)
  *
  * @returns The number of bytes copied, or zero, which may be an error
  * (check @a errno, see Exceptions below), but it may also indicate that
- * @a src was empty.  See exceptions, below.
+ * @a src was empty.  If reading or writing fails -1 is returned, with
+ * @a errno set.  See exceptions, below.
  *
  * @exception EISDIR if @a src is a directory, since copyfile() is not recursive.
  */
@@ -230,7 +236,10 @@ ssize_t copyfile(const char *src, const char *dst, int len, int opt)
 		set_mtime(in, out);
 
 close_exit:
-	close(out);
+	if (close(out) && size >= 0) {
+		saved_errno = errno;
+		size = -1;
+	}
 	close(in);
 
 exit:
